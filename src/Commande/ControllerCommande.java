@@ -32,56 +32,92 @@ public class ControllerCommande extends Control implements ActionListener {
 
         // ajouter un article dans la base de données
         if(source == vue.getVueCommandes().boutonAjouter) {
-            vue.getVueArticles().afficherVueNouvelArticle(this);
+            vue.getVueCommandes().afficherVueNouvelleCommande(this, modelCommande.recupererListeClients());
             return;
         }
 
         /*
-         * Vérifie l'écouteur des boutons de modification de la liste des articles
+         * Vérifie l'écouteur des boutons de modification de la liste des commandes
          */
         List<JButton> boutonsModifCommande = vue.getVueCommandes().getListBoutonsModificationCommandes();
         for (int i = 0; i < boutonsModifCommande.size(); i++) {
             if(source == boutonsModifCommande.get(i)) {
-                System.out.println("Clic sur le bouton de modification " + i + " aka " + modelCommande.recupererListeCommandes().get(i).getIdentifiant());
-                vue.getVueCommandes().afficherVueModifierCommande(this, modelCommande.recupererListeCommandes().get(i));
+                vue.getVueCommandes().afficherVueModifierCommande(this, modelCommande.recupererListeCommandes().get(i), modelCommande.recupererListeClients());
                 return;
             }
         }
 
         /*
-         * Vérifie l'écouteur des boutons de suppression de la liste des articles
+         * Vérifie l'écouteur des boutons de suppression de la liste des commandes
          */
         List<JButton> boutonsSupprCommande = vue.getVueCommandes().getListBoutonsSuppressionCommandes();
         for (int i = 0; i < boutonsSupprCommande.size(); i++) {
             if(source == boutonsSupprCommande.get(i)) {
-                System.out.println("Clic sur le bouton de suppression " + i + " aka " + modelCommande.recupererListeCommandes().get(i).getIdentifiant());
                 modelCommande.supprimerCommande(modelCommande.recupererListeCommandes().get(i));
                 vue.getVueCommandes().afficherListeCommandes(modelCommande.recupererListeCommandes(), this);
                 return;
             }
         }
 
-        // boutons de la fenêtre d'ajout/modification d'article
+        /*
+         * écouteurs de la fenêtre de modification/création de commande
+         */
         if (vue.getVueCommandes().getFenetreCreationOuModificationCommande() != null) {
-            // validation de l'ajout d'un nouvel article
-            if (source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().boutonAjouter) {
-                //modelCommande.ajouterArticle(vue.getVueArticles().validerCreation());
-                //vue.getVueArticles().afficherListeArticles(modelCommande.recupererListeArticles(), this);
-                return;
-            }
-            // annuler l'ajout/la modification d'un article
-            if (source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().boutonAnnulerModification) {
-                vue.getVueCommandes().fermerFenetreCreationModification();
-                return;
-            }
-            // valider la modification d'un article
-            if (source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().boutonValiderModification) {
-                Commande commande = vue.getVueCommandes().getFenetreCreationOuModificationCommande().validerModification();
-                //System.out.println("Modifier commande : " + commande);
-                modelCommande.modifierCommande(commande);
+            // validation de l'ajout d'une nouvelle commande
+            if (source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().boutonValider) {
+                modelCommande.ajouterCommande(vue.getVueCommandes().getFenetreCreationOuModificationCommande().validerCreation());
                 vue.getVueCommandes().afficherListeCommandes(modelCommande.recupererListeCommandes(), this);
                 vue.getVueCommandes().fermerFenetreCreationModification();
                 return;
+            }
+            // annuler l'ajout/la modification d'une commande
+            if (source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().boutonAnnulerModification) {
+                modelCommande.actualiserListeCommandes();
+                vue.getVueCommandes().afficherListeCommandes(modelCommande.recupererListeCommandes(), this);
+                vue.getVueCommandes().fermerFenetreCreationModification();
+                return;
+            }
+            // valider la modification de la commande
+            if (source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().boutonValiderModification) {
+                Commande commande = vue.getVueCommandes().getFenetreCreationOuModificationCommande().validerModification();
+                modelCommande.modifierCommande(commande, vue.getVueCommandes().getFenetreCreationOuModificationCommande().changementDateActive());
+                vue.getVueCommandes().afficherListeCommandes(modelCommande.recupererListeCommandes(), this);
+                vue.getVueCommandes().fermerFenetreCreationModification();
+                return;
+            }
+
+            // ajouter un article dans la base de données
+            if(source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().boutonAjout) {
+                vue.getVueCommandes().getFenetreCreationOuModificationCommande().afficherFenetreAjouterArticle(this, modelCommande.recupererListeArticles());
+                return;
+            }
+
+            /*
+             * Vérifie l'écouteur des boutons de suppression d'un article de la liste d'une commande
+             */
+            List<JButton> boutonsSupprArticleDansCommande = vue.getVueCommandes().getFenetreCreationOuModificationCommande().getListeBoutonsSupprimerArticles();
+            for (int i = 0; i < boutonsSupprArticleDansCommande.size(); i++) {
+                if(source == boutonsSupprArticleDansCommande.get(i)) {
+                    vue.getVueCommandes().getFenetreCreationOuModificationCommande().supprimerArticleCommande(i, this);
+                    return;
+                }
+            }
+
+            /*
+             * écouteurs de la fenêtre de création d'article d'une commande
+             */
+            if (vue.getVueCommandes().getFenetreCreationOuModificationCommande().getAjouterArticle() != null) {
+                // valider l'ajout de l'article à la commande
+                if(source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().getAjouterArticle().boutonValider) {
+                    vue.getVueCommandes().getFenetreCreationOuModificationCommande().validerAjoutArticle();
+                    vue.getVueCommandes().getFenetreCreationOuModificationCommande().afficherListeArticles(this);
+                    return;
+                }
+                // annuler l'ajout de l'article à la commande
+                if(source == vue.getVueCommandes().getFenetreCreationOuModificationCommande().getAjouterArticle().boutonAnnuler) {
+                    vue.getVueCommandes().getFenetreCreationOuModificationCommande().annulerAjoutArticle();
+                    return;
+                }
             }
         }
 

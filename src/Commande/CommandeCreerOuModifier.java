@@ -3,6 +3,12 @@ package Commande;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import Article.Article;
+import Client.Client;
 
 
 /**
@@ -31,84 +37,79 @@ public class CommandeCreerOuModifier extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * zone de texte pour le champ designation
+     * choix du client de la commande
      */
-    private JTextField textFieldDesignation;
+    private JComboBox<Client> comboBoxClient;
 
     /**
-     * zone de texte pour le prix unitaire hors taxe
+     * check box de la mise à jour de la date de la commande
      */
-    private JTextField textFieldPuHt;
+    private JCheckBox checkBoxUpdateDate;
 
     /**
-     * zone de texte pour la quantite en stock
+     * label client
      */
-    private JTextField textFieldQteStock;
+    private JLabel labelClient;
 
     /**
-     * label reference
+     * label date
      */
-    private JLabel labelReference;
+    private JLabel labelDate;
 
     /**
-     * label designation
+     * bouton d'envoi de création de commande
      */
-    private JLabel labelDesignation;
+    public final JButton boutonValider = new JButton("Valider");
 
     /**
-     * label prix unitaire hors taxe
+     * bouton d'ajout d'article
      */
-    private JLabel labelPu_ht;
+    public final JButton boutonAjout = new JButton("Ajouter un article");
 
     /**
-     * label quantité en stock
-     */
-    private JLabel labelQtestock;
-
-    /**
-     * bouton d'envoi de l'commande
-     */
-    public final JButton boutonAjouter = new JButton("Ajouter");
-
-    /**
-     * bouton d'envoi de l'commande
+     * bouton d'envoi de modification de commande
      */
     public final JButton boutonValiderModification = new JButton("Modifier");
 
     /**
-     * bouton d'envoi de l'commande
+     * bouton d'annulation de modification/création de commande
      */
     public final JButton boutonAnnulerModification = new JButton("Annuler");
 
     /**
-     * Panel contenant les bouton pour valider ou annuler une modification d'commande
-     */
-    private JPanel conteneurBoutons;
-
-    /**
-     * Vue.Vue de l'application
+     * Vue de l'application
      */
     private JFrame JF;
 
     /**
-     * Sauvegarde la référence de l'commande sujet à une modification si il y en a une en cours
+     * Sauvegarde la commande sujete à une modification si il y en a une en cours
      */
     private Commande commande;
+
+    /**
+     * Zone de texte pour afficher les articles
+     */
+    private JPanel pan;
+
+    /**
+     * Liste des boutons associés aux articles pour leur suppression
+     */
+    private List<JButton> listeBoutonsSupprimerArticles;
+
+    /**
+     * Fenetre d'ajout d'article à la commande
+     */
+    private AjouterArticle ajouterArticle;
 
     /**
      * Constructeur
      * Définit la fenêtre et ses composants - affiche la fenêtre
      * Si commande est null, on va créer un nouvel commande, sinon on modifie celui passé en paramètre
      */
-    public CommandeCreerOuModifier(JFrame JF, Commande commande) {
+    public CommandeCreerOuModifier(JFrame JF, Commande commande, Client[] clients) {
         this.JF = JF;
         this.commande = commande;
-
-        //on fixe le titre de la fenêtre
-        JF.setTitle("Article");
-
-        //création du conteneur
-        //containerPanel = new JPanel();
+        listeBoutonsSupprimerArticles = new ArrayList<>();
 
         //choix du Layout pour ce conteneur
         //il permet de gérer la position des éléments
@@ -119,100 +120,217 @@ public class CommandeCreerOuModifier extends JPanel {
         //choix de la couleur pour le conteneur
         setBackground(Color.LIGHT_GRAY);
 
-
         //instantiation des  composants graphiques
-        textFieldDesignation=new JTextField();
-        textFieldPuHt=new JTextField();
-        textFieldQteStock=new JTextField();
-        labelReference=new JLabel("La Référence sera générée par la base de données");
-        labelDesignation=new JLabel("Désignation :");
-        labelPu_ht=new JLabel("Prix unitaire HT :");
-        labelQtestock=new JLabel("Quantité :");
+        comboBoxClient = new JComboBox<>(clients);
+        labelClient = new JLabel("Client :");
+        labelDate = new JLabel("La date de la commande sera la date au moment de validation.");
+        checkBoxUpdateDate = new JCheckBox("Mettre à jour la date de la commande");
+        checkBoxUpdateDate.setOpaque(false);
 
         //ajout des composants sur le container
-        add(labelDesignation);
+        add(labelClient);
         //introduire une espace constant entre le label et le champ texte
         add(Box.createRigidArea(new Dimension(0,5)));
-        add(textFieldDesignation);
+        add(comboBoxClient);
         //introduire une espace constant entre le champ texte et le composant suivant
         add(Box.createRigidArea(new Dimension(0,10)));
 
-        add(labelPu_ht);
-        add(Box.createRigidArea(new Dimension(0,5)));
-        add(textFieldPuHt);
+        if (commande == null)
+            add(labelDate);
+        else {
+            add(checkBoxUpdateDate);
+        }
         add(Box.createRigidArea(new Dimension(0,10)));
 
-        add(labelQtestock);
-        add(Box.createRigidArea(new Dimension(0,5)));
-        add(textFieldQteStock);
-        add(Box.createRigidArea(new Dimension(0,10)));
+        add(boutonAjout);
 
-        add(labelReference);
-        add(Box.createRigidArea(new Dimension(0,5)));
+        pan = new JPanel();
 
-        conteneurBoutons = new JPanel();
+        JScrollPane zoneDefilement = new JScrollPane(pan);
+        zoneDefilement.setPreferredSize(new Dimension(500, 200));
+
+        add(zoneDefilement);
+
+        JPanel conteneurBoutons = new JPanel();
         conteneurBoutons.setOpaque(false);
         if (commande == null)
-            conteneurBoutons.add(boutonAjouter);
-        else {
+            conteneurBoutons.add(boutonValider);
+        else
             conteneurBoutons.add(boutonValiderModification);
-            //remplirChampsModification();
-        }
+
+
         add(conteneurBoutons);
         conteneurBoutons.add(boutonAnnulerModification);
         add(Box.createRigidArea(new Dimension(0,5)));
-
 
         //ajouter une bordure vide de taille constante autour de l'ensemble des composants
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         JF.setContentPane(this);
 
+        if (commande == null) {
+            this.commande = new Commande();
+            JF.setTitle("Création de Commande");
+        } else {
+            JF.setTitle("Modification de Commande");
+        }
+
         JF.pack();
+    }
+
+    /**
+     * Affiche la liste des articles de la commande et leur quantité ainsi qu'un bouton pour les supprimer
+     */
+    public void afficherListeArticles(ActionListener listener) {
+        pan.removeAll();
+        listeBoutonsSupprimerArticles.clear();
+
+        if (commande == null || commande.getArticles().isEmpty()) {
+            pan.setLayout(new GridLayout(1,1));
+            pan.add(creerLabelListeArticles("Il n'y a aucun article dans la commande"));
+            JF.pack();
+            return;
+        }
+
+        pan.setLayout(new GridLayout(commande.getArticles().size()+1,1));
+        pan.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+
+        // créé tous les labels avec à chaque fois une lineBorder et un texte aligné au centre
+        pan.add(creerLabelListeArticles("Article"));
+        pan.add(creerLabelListeArticles("Quantite"));
+        pan.add(creerLabelListeArticles("Supprimer"));
+
+        for(Map.Entry<Article, Integer> article : commande.getArticles().entrySet()) {
+            pan.add(creerLabelListeArticles((article.getKey().getDesignation())));
+            pan.add(creerLabelListeArticles(Integer.toString(article.getValue())));
+
+            JPanel conteneurActions = new JPanel();
+            conteneurActions.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            JButton boutonSuppr = new JButton("Supprimer");
+            listeBoutonsSupprimerArticles.add(boutonSuppr);
+            conteneurActions.add(boutonSuppr);
+            pan.add(conteneurActions);
+        }
+
+        for (JButton bouton : listeBoutonsSupprimerArticles) {
+            bouton.addActionListener(listener);
+        }
+        JF.pack();
+    }
+
+    /**
+     * Affiche la fenêtre d'ajout d'article à la commande
+     * @param listener écouteurs pour les boutons
+     * @param articles liste des articles disponibles
+     */
+    public void afficherFenetreAjouterArticle(ActionListener listener, Article[] articles) {
+        ajouterArticle = new AjouterArticle(JF, commande, articles);
+        ajouterArticle.ajouterListener(listener);
+    }
+
+    /**
+     * Créé un JLabel avec le texte passé en paramètre avec une bordure noire et le texte aligné au centre
+     * @param texte texte qui sera placé dans le JLabel
+     * @return JLabel créé
+     */
+    public JLabel creerLabelListeArticles(String texte) {
+        JLabel label = new JLabel(texte);
+        label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        label.setHorizontalAlignment(JLabel.CENTER);
+        return label;
     }
 
     /**
      * Ajoute des écouteurs sur les boutons du panel
      */
     public void ajouterListener(ActionListener listener) {
-        boutonAjouter.addActionListener(listener);
+        boutonValider.addActionListener(listener);
+        boutonAjout.addActionListener(listener);
         boutonAnnulerModification.addActionListener(listener);
         boutonValiderModification.addActionListener(listener);
     }
 
     /**
-     * Ajoute des écouteurs sur les boutons de la liste des articles
+     * Valide l'ajout d'un article à la commande et ferme la fenêtre d'ajout d'article
      */
-    public JTextField getTextFieldDesignation() {
-        return textFieldDesignation;
+    public void validerAjoutArticle() {
+        ajouterArticle.validerAjout();
+        ajouterArticle = null;
+        JF.setContentPane(this);
+        JF.setTitle("Commande");
+        JF.pack();
     }
 
     /**
-     * Ajoute des écouteurs sur les boutons de la liste des articles
+     * Valide la modification de la commande
+     * @return la commande à modifier dans la base
      */
-    public JTextField getTextFieldPuHt() {
-        return textFieldPuHt;
-    }
-
-    /*public void remplirChampsModification() {
-        textFieldPuHt.setText(Double.toString(commande.getPuHt()));
-        textFieldDesignation.setText(commande.getDesignation());
-        textFieldQteStock.setText(Integer.toString(commande.getQteStock()));
-    }*/
-
     public Commande validerModification() {
-        /*commande.setDesignation(textFieldDesignation.getText());
-        commande.setPuHt(Double.parseDouble(textFieldPuHt.getText()));
-        commande.setQteStock(Integer.parseInt(textFieldQteStock.getText()));*/
-
+        Client client = (Client)comboBoxClient.getSelectedItem();
+        commande.setClient(client);
         return commande;
     }
 
-    /*public Commande validerCreation() {
-        commande = new Commande.Commande(textFieldDesignation.getText(),
-                Double.parseDouble(textFieldPuHt.getText()),
-                Integer.parseInt(textFieldQteStock.getText()));
-
+    /**
+     * Valide la création de la commande
+     * @return la commande à insérer dans la base
+     */
+    public Commande validerCreation() {
+        Client client = (Client)comboBoxClient.getSelectedItem();
+        commande.setClient(client);
         return commande;
-    }*/
+    }
+
+    /**
+     * Récupère la fenêtre d'ajout d'article à la commande
+     * @return fenêtre d'ajout d'article
+     */
+    public AjouterArticle getAjouterArticle() {
+        return ajouterArticle;
+    }
+
+    /**
+     * Annuler l'ajout d'un article et ferme la fenêtre d'ajout d'article
+     */
+    public void annulerAjoutArticle() {
+        ajouterArticle = null;
+        JF.setContentPane(this);
+        JF.setTitle("Commande");
+        JF.pack();
+    }
+
+    /**
+     * Récupère la liste des boutons de suppression des articles de la commande
+     * @return liste des boutons de suppression
+     */
+    public List<JButton> getListeBoutonsSupprimerArticles() {
+        return listeBoutonsSupprimerArticles;
+    }
+
+    /**
+     * Supprime un article de la commande en fonction de son index et met à jour la liste des articles
+     * @param index index de l'article à supprimer
+     * @param listener écouteurs à placer sur la liste des articles de la commande une fois mise à jour
+     */
+    public void supprimerArticleCommande(int index, ActionListener listener) {
+        Article article = null;
+        for(Map.Entry<Article, Integer> art : commande.getArticles().entrySet()) {
+            if (index == 0) {
+                article = art.getKey();
+                break;
+            }
+            index--;
+        }
+        commande.supprimerArticle(article);
+        afficherListeArticles(listener);
+        JF.pack();
+    }
+
+    /**
+     * Vérifie que le checkbox de mise à jour de la date pour une modification d'article est activé ou non
+     * @return modification de date activée ou non
+     */
+    public boolean changementDateActive() {
+        return checkBoxUpdateDate.isSelected();
+    }
 }

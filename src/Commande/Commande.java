@@ -1,6 +1,7 @@
 package Commande;
 
 import Article.Article;
+import Client.Client;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Map;
 public class Commande {
 
 	/** 
-	 * référence de la commande
+	 * identifiant de la commande
 	 */
 	private int identifiant;
 
@@ -25,8 +26,7 @@ public class Commande {
 	/**
 	 * Client de la commande
 	 */
-	//private Client client;
-	private int client;
+	private Client client;
 
 	/**
 	 * Date de la commande
@@ -39,7 +39,7 @@ public class Commande {
 	 * @param client client de la commande
 	 * @param articles articles de la commande
 	 */
-	public Commande(int identifiant, int client, HashMap<Article, Integer> articles) {
+	public Commande(int identifiant, Client client, HashMap<Article, Integer> articles) {
 		this.identifiant = identifiant;
 		this.client = client;
 		this.articles = articles;
@@ -51,7 +51,7 @@ public class Commande {
 	 * @param client client de la commande
 	 * @param date date de la commande
 	 */
-	public Commande(int identifiant, int client, java.sql.Timestamp date) {
+	public Commande(int identifiant, Client client, java.sql.Timestamp date) {
 		this.identifiant = identifiant;
 		this.client = client;
 		this.date = date;
@@ -63,7 +63,7 @@ public class Commande {
 	 * @param client client de la commande
 	 * @param articles articles de la commande
 	 */
-	public Commande(int client, HashMap<Article, Integer> articles) {
+	public Commande(Client client, HashMap<Article, Integer> articles) {
 		identifiant = 0;
 		this.client = client;
 		this.articles = articles;
@@ -73,9 +73,18 @@ public class Commande {
 	 * Constructeur - la référence n'est pas fixée dans le programme
 	 * @param client client de la commande
 	 */
-	public Commande(int client) {
+	public Commande(Client client) {
 		identifiant = 0;
 		this.client = client;
+		articles = new HashMap<>();
+	}
+
+	/**
+	 * Constructeur - commande vide
+	 */
+	public Commande() {
+		identifiant = 0;
+		this.client = null;
 		articles = new HashMap<>();
 	}
 
@@ -97,7 +106,7 @@ public class Commande {
 
 	/**
 	 * getter pour l'attribut articles
-	 * @return liste des articles
+	 * @return liste des articles avec leur quantité
 	 */
 	public HashMap<Article, Integer> getArticles() {
 		return articles;
@@ -107,7 +116,7 @@ public class Commande {
 	 * getter pour l'attribut client
 	 * @return valeur de l'id du client
 	 */
-	public int getClient() {
+	public Client getClient() {
 		return client;
 	}
 
@@ -115,7 +124,7 @@ public class Commande {
 	 * setter pour l'attribut client
 	 * @param client nouvelle valeur de l'id du client
 	 */
-	public void setClient(int client) {
+	public void setClient(Client client) {
 		this.client = client;
 	}
 
@@ -141,7 +150,22 @@ public class Commande {
 	 * @param quantite quantite d'article
 	 */
 	public void ajouterArticle(Article article, int quantite) {
+		for(Map.Entry<Article, Integer> art : articles.entrySet()) {
+			// si article déja dans le hashmap
+			if (article.getReference() == art.getKey().getReference()) {
+				articles.put(art.getKey(), quantite);
+				return;
+			}
+		}
 		articles.put(article, quantite);
+	}
+
+	/**
+	 * Supprime l'article de la liste
+	 * @param article article à supprimer
+	 */
+	public void supprimerArticle(Article article) {
+		articles.remove(article);
 	}
 
 	/**

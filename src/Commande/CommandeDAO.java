@@ -1,13 +1,11 @@
 package Commande;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import Client.Client;
 import Article.Article;
 
 /**
@@ -37,13 +35,14 @@ public class CommandeDAO {
 	}
 
 	/**
-	 * Permet d'ajouter un article dans la table article
-	 * la référence de l'article est produite automatiquement par la base de données en utilisant une séquence
+	 * Permet d'ajouter une commande dans la table commande
+	 * l'identifiant de la commande est produit automatiquement par la base de données en utilisant une séquence
 	 * Le mode est auto-commit par défaut : chaque insertion est validée
 	 * @param nouvCommande l'article à ajouter
+	 * @param changerDate si true, enregistrer la date courante, sinon la date enregistrée dans la commande
 	 * @return le nombre de ligne ajoutées dans la table
 	 */
-	public int ajouter(Commande nouvCommande) {
+	public int ajouter(Commande nouvCommande, boolean changerDate) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
@@ -54,16 +53,30 @@ public class CommandeDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
 			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvCommande
-			ps = con.prepareStatement("INSERT INTO commande (Client, DateCommande) VALUES (?, ?)");
-			ps.setInt(1, nouvCommande.getClient());
-			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			ps = con.prepareStatement("INSERT INTO commande (Client, DateCommande) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, nouvCommande.getClient().getIdentifiant());
+			java.sql.Timestamp date;
+			if (changerDate)
+				date = new java.sql.Timestamp(new java.util.Date().getTime());
+			else
+				date = nouvCommande.getDate();
+
 			ps.setTimestamp(2, date);
 
 			//Exécution de la requête
 			retour=ps.executeUpdate();
 
+			// récupère l'identifiant de la commande insérée
+			ResultSet generatedKeys = ps.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				nouvCommande.setIdentifiant(generatedKeys.getInt(1));
+			}
+
 			// ajoute les articles
 			retour += ajouterArticles(nouvCommande);
+
+
+
 
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -90,15 +103,25 @@ public class CommandeDAO {
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM commande WHERE Identifiant = ?");
+			//ps = con.prepareStatement("SELECT * FROM commande WHERE Identifiant = ?");
+			ps = con.prepareStatement("SELECT c.Identifiant idComm, c.DateCommande, cl.* FROM commande c INNER JOIN client cl ON c.Client = cl.Identifiant WHERE idComm = ?");
+
 			ps.setInt(1,identifiant);
 
 			//on exécute la requête
 			//rs contient un pointeur situé juste avant la première ligne retournée
 			rs=ps.executeQuery();
 			//passe à la première (et unique) ligne retournée
-			while(rs.next())
-				retour = getArticlesCommande(new Commande(rs.getInt("Identifiant"), rs.getInt("Client"), rs.getTimestamp("DateCommande")));
+
+			while(rs.next()) {
+				Client client = new Client(rs.getInt("Identifiant"),
+						rs.getString("Nom"),
+						rs.getString("Prenom"),
+						rs.getString("Adresse"),
+						rs.getString("Telephone"),
+						rs.getString("Email"));
+				retour = getArticlesCommande(new Commande(rs.getInt("idComm"), client, rs.getTimestamp("DateCommande")));
+			}
 
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -111,10 +134,21 @@ public class CommandeDAO {
 		return retour;
 	}
 
-	public int modifier(Commande commande) {
-		return supprimer(commande) + ajouter(commande);
+	/**
+	 * Modifie une commande en la supprimant puis la réinsérant dans la base avec les bons paramètres
+	 * @param commande commande à modifier
+	 * @param changerDate indique si il faut mettre à jour la date ou pas
+	 * @return nombre de lignes modifiées
+	 */
+	public int modifier(Commande commande, boolean changerDate) {
+		return supprimer(commande) + ajouter(commande, changerDate);
 	}
 
+	/**
+	 * Supprime la commande passé en paramètre de la base de données avec les articles associés
+	 * @param commande commande à supprimer
+	 * @return nombre de lignes modifiées
+	 */
 	public int supprimer(Commande commande) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -159,7 +193,7 @@ public class CommandeDAO {
 
 	/**
 	 * Permet de récupérer toutes les commandes stockées dans la table commande
-	 * @return une ArrayList de commandes
+	 * @return un ArrayList de commandes
 	 */
 	public List<Commande> getListeCommandes() {
 		Connection con = null;
@@ -170,13 +204,19 @@ public class CommandeDAO {
 		//connexion à la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM commande");
+			ps = con.prepareStatement("SELECT c.Identifiant idComm, c.DateCommande, cl.* FROM commande c INNER JOIN client cl ON c.Client = cl.Identifiant");
 
 			//on exécute la requête
 			rs=ps.executeQuery();
 			//on parcourt les lignes du résultat
 			while(rs.next()) {
-				retour.add(getArticlesCommande(new Commande(rs.getInt("Identifiant"), rs.getInt("Client"), rs.getTimestamp("DateCommande"))));
+				Client client = new Client(rs.getInt("Identifiant"),
+						rs.getString("Nom"),
+						rs.getString("Prenom"),
+						rs.getString("Adresse"),
+						rs.getString("Telephone"),
+						rs.getString("Email"));
+				retour.add(getArticlesCommande(new Commande(rs.getInt("idComm"), client, rs.getTimestamp("DateCommande"))));
 			}
 
 		} catch (Exception ee) {
@@ -188,8 +228,83 @@ public class CommandeDAO {
 			try {if (con != null)con.close();} catch (Exception ignored) {}
 		}
 		return retour;
-
 	}
+
+    /**
+     * Permet de récupérer tous les clients afin de les afficher pour créer/modifier une commande
+     * @return tableau de tous les clients
+     */
+    public Client[] getListeClients() {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs=null;
+
+        List<Client> clients = new ArrayList<Client>();
+
+        //connexion à la base de données
+        try {
+            con = DriverManager.getConnection(URL, LOGIN, PASS);
+            ps = con.prepareStatement("SELECT * FROM client");
+
+            //on exécute la requête
+            rs=ps.executeQuery();
+            //on parcourt les lignes du résultat
+            while(rs.next()) {
+                clients.add(new Client(rs.getInt("Identifiant"),
+                        rs.getString("Nom"),
+                        rs.getString("Prenom"),
+                        rs.getString("Adresse"),
+                        rs.getString("Telephone"),
+                        rs.getString("Email")));
+            }
+
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        } finally {
+            //fermeture du rs, du preparedStatement et de la connexion
+            try {if (rs != null)rs.close();} catch (Exception ignored) {}
+            try {if (ps != null)ps.close();} catch (Exception ignored) {}
+            try {if (con != null)con.close();} catch (Exception ignored) {}
+        }
+        return clients.toArray(new Client[clients.size()]);
+    }
+
+    /**
+     * Permet de récupérer tous les articles afin de les afficher pour ajouter un article dans une commande
+     * @return tableau de tous les articles
+     */
+    public Article[] getListeArticles() {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs=null;
+
+        List<Article> articles = new ArrayList<Article>();
+
+        //connexion à la base de données
+        try {
+            con = DriverManager.getConnection(URL, LOGIN, PASS);
+            ps = con.prepareStatement("SELECT * FROM article");
+
+            //on exécute la requête
+            rs=ps.executeQuery();
+            //on parcourt les lignes du résultat
+            while(rs.next()) {
+                articles.add(new Article(rs.getInt("Reference"),
+                        rs.getString("Designation"),
+                        rs.getDouble("PrixUnitaireHT"),
+                        rs.getInt("StockReel")));
+            }
+
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        } finally {
+            //fermeture du rs, du preparedStatement et de la connexion
+            try {if (rs != null)rs.close();} catch (Exception ignored) {}
+            try {if (ps != null)ps.close();} catch (Exception ignored) {}
+            try {if (con != null)con.close();} catch (Exception ignored) {}
+        }
+        return articles.toArray(new Article[articles.size()]);
+    }
 
 	/**
 	 * Permet de récupérer les articles d'une commande

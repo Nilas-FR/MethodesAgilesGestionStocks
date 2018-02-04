@@ -1,23 +1,25 @@
 package Commande;
 
+import Article.Article;
 import Model.Model;
+import Client.Client;
 
 import java.util.List;
 
 public class ModelCommande extends Model {
 
     /**
-     * Gestionnaire des articles de la base de données
+     * Gestionnaire des commandes de la base de données
      */
     private final CommandeDAO commandeDAO;
 
     /**
-     * Liste des articles
+     * Liste des commandes
      */
     private List<Commande> listeCommandes;
 
     /**
-     * UtilisateurDAO de gestion des articles
+     * CommandeDAO de gestion des commandes
      */
     public ModelCommande() {
         commandeDAO = new CommandeDAO();
@@ -26,13 +28,13 @@ public class ModelCommande extends Model {
     }
 
     /**
-     * Ajoute un commande dans la base de données avec la désignation et le prix passés en paramètre
+     * Ajoute un commande dans la base de données
      * @param commande commande à ajouter à la base
      * @return le succès de l'opération
      */
     public int ajouterCommande(Commande commande) {
         //on demande à la classe de communication d'envoyer l'commande dans la table commande
-        int retour = commandeDAO.ajouter(commande);
+        int retour = commandeDAO.ajouter(commande, true);
         // affichage du nombre de lignes ajoutées dans la bdd pour vérification
         System.out.println(retour + " ligne ajoutée");
 
@@ -43,11 +45,12 @@ public class ModelCommande extends Model {
     /**
      * Modifie la commande passée en paramètre dans la base de données
      * @param commande commande à modifier
+     * @param changerDate indique si il faut modifier la date de la commande ou non
      * @return le succès de l'opération
      */
-    public int modifierCommande(Commande commande) {
+    public int modifierCommande(Commande commande, boolean changerDate) {
         //on demande à la classe de communication d'envoyer l'commande dans la table commande
-        int retour = commandeDAO.modifier(commande);
+        int retour = commandeDAO.modifier(commande, changerDate);
         // affichage du nombre de lignes modifiées dans la bdd pour vérification
         System.out.println(retour + " ligne modifiée");
 
@@ -79,9 +82,25 @@ public class ModelCommande extends Model {
     }
 
     /**
-     * Permet d'actualiser la liste des articles, à appeler à chaque changement dans la table des articles
+     * Renvoie tous les clients de la base
+     * @return tableau des clients
      */
-    private void actualiserListeCommandes() {
+    public Client[] recupererListeClients() {
+        return commandeDAO.getListeClients();
+    }
+
+    /**
+     * Renvoie tous les articles de la base
+     * @return tableau des articles
+     */
+    public Article[] recupererListeArticles() {
+        return commandeDAO.getListeArticles();
+    }
+
+    /**
+     * Permet d'actualiser la liste des commandes, à appeler à chaque changement dans la table des commandes
+     */
+    public void actualiserListeCommandes() {
        listeCommandes = commandeDAO.getListeCommandes();
     }
 }

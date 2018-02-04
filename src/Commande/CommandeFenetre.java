@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import Client.Client;
+
 
 /**
  * Classe CommandeFenetre
@@ -34,37 +36,32 @@ public class CommandeFenetre extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * bouton d'envoi de l'article
+	 * bouton de création de commande
 	 */
-	public final JButton boutonAjouter = new JButton("Ajouter");
+	public final JButton boutonAjouter = new JButton("Créer une commande");
 
 	/**
-	 * Zone de texte pour afficher les articles
+	 * Zone de texte pour afficher les commandes
 	 */
 	private JPanel pan;
 
 	/**
-	 * Liste des boutons associés aux articles pour leur modification
+	 * Liste des boutons associés aux commandes pour leur modification
 	 */
 	private List<JButton> listeBoutonsModifierCommande;
 
 	/**
-	 * Liste des boutons associés aux articles pour leur suppression
+	 * Liste des boutons associés aux commandes pour leur suppression
 	 */
 	private List<JButton> listeBoutonsSupprimerCommande;
 
-	/**
-	 * Zone de défilement pour la zone de texte
-	 */
-	private JScrollPane zoneDefilement;
-
-	/**
-	 * Vue.Vue de l'application
+    /**
+	 * Vue de l'application
 	 */
 	private JFrame JF;
 
 	/**
-	 * Panel de modification/ajout d'article
+	 * Fenêtre de création/modification de commande
 	 */
 	private CommandeCreerOuModifier fenetreCreerOuModifierCommande;
 
@@ -77,7 +74,7 @@ public class CommandeFenetre extends JPanel {
 		this.JF = JF;
 
 		//on fixe le titre de la fenêtre
-		JF.setTitle("Article");
+		JF.setTitle("Commande");
 
 		//choix du Layout pour ce conteneur
 		//il permet de gérer la position des éléments
@@ -91,7 +88,7 @@ public class CommandeFenetre extends JPanel {
 
 		//instantiation des  composants graphiques
 		pan = new JPanel();
-		zoneDefilement = new JScrollPane(pan);
+        JScrollPane zoneDefilement = new JScrollPane(pan);
 		zoneDefilement.setPreferredSize(new Dimension(500, 250));
 
 		add(zoneDefilement);
@@ -109,46 +106,32 @@ public class CommandeFenetre extends JPanel {
 	}
 
 	/**
-	 * Ajoute des écouteurs sur les boutons du panel
+	 * Affiche la vue de création de nouvelle commande
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
+	 * @param clients liste des clients de la base
 	 */
-	public void ajouterListener(ActionListener listener) {
-		boutonAjouter.addActionListener(listener);
-	}
-
-	/**
-	 * Affiche la vue d'ajout d'article
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 */
-	public void afficherVueNouvelleCommande(ActionListener listener) {
-		fenetreCreerOuModifierCommande = new CommandeCreerOuModifier(JF, null);
+	public void afficherVueNouvelleCommande(ActionListener listener, Client[] clients) {
+		fenetreCreerOuModifierCommande = new CommandeCreerOuModifier(JF, null, clients);
 		fenetreCreerOuModifierCommande.ajouterListener(listener);
+		fenetreCreerOuModifierCommande.afficherListeArticles(listener);
 	}
 
 	/**
-	 * Affiche la vue de modification d'commande
+	 * Affiche la vue de modification de commande
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 * @param commande commande sujet à la modification
+	 * @param commande commande sujette à la modification
+	 * @param clients liste des clients de la base
 	 */
-	public void afficherVueModifierCommande(ActionListener listener, Commande commande) {
-
-		fenetreCreerOuModifierCommande = new CommandeCreerOuModifier(JF, commande);
+	public void afficherVueModifierCommande(ActionListener listener, Commande commande, Client[] clients) {
+        System.out.println("modifier commande ");
+        System.out.println(commande);
+		fenetreCreerOuModifierCommande = new CommandeCreerOuModifier(JF, commande, clients);
 		fenetreCreerOuModifierCommande.ajouterListener(listener);
+        fenetreCreerOuModifierCommande.afficherListeArticles(listener);
 	}
 
 	/**
-	 * Valider la création d'un article
-	 * @return article à entrer dans la base
-	 */
-	/*public Commande validerCreation() {
-		Commande commande = fenetreCreerOuModifierCommande.validerCreation();
-		fenetreCreerOuModifierCommande = null;
-		fermerFenetreCreationModification();
-		return commande;
-	}*/
-
-	/**
-	 * ferme la fenêtre de modification/création d'article et revient sur la page générale des articles
+	 * ferme la fenêtre de modification/création de commande et revient sur la page générale des commandes
 	 */
 	public void fermerFenetreCreationModification() {
 		fenetreCreerOuModifierCommande = null;
@@ -157,11 +140,14 @@ public class CommandeFenetre extends JPanel {
 	}
 
 	/**
-	 * Affiche la liste des commandes avec leur désignation, prix et quantité ainsi qu'un bouton pour les modifier
+	 * Affiche la liste des commandes avec l'identifiant, le client et la date de validation
+     * ainsi qu'un bouton pour les modifier ou les supprimer
 	 * @param commandes liste des commandes à afficher
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
+	 * @param listener écouteurs à placer sur les boutons de la liste
 	 */
 	public void afficherListeCommandes(List<Commande> commandes, ActionListener listener) {
+		boutonAjouter.addActionListener(listener);
+
 		pan.removeAll();
 		listeBoutonsModifierCommande.clear();
 		listeBoutonsSupprimerCommande.clear();
@@ -184,7 +170,7 @@ public class CommandeFenetre extends JPanel {
 
 		for (Commande commande : commandes) {
 			pan.add(creerLabelListeCommandes(Integer.toString(commande.getIdentifiant())));
-			pan.add(creerLabelListeCommandes(Integer.toString(commande.getClient())));
+			pan.add(creerLabelListeCommandes(commande.getClient().getNom() + " " + commande.getClient().getPrenom()));
 			pan.add(creerLabelListeCommandes(commande.getDate().toString()));
 
 			JPanel conteneurActions = new JPanel();
@@ -198,13 +184,13 @@ public class CommandeFenetre extends JPanel {
 			pan.add(conteneurActions);
 		}
 
-		ajouterListenerListeArticles(listener);
+		ajouterListenerListeCommandes(listener);
 
 		JF.pack();
 	}
 
 	/**
-	 * Créé un JLabel avec le texte passé en paramètr avec une bordure noire et le texte aligné au centre
+	 * Créé un JLabel avec le texte passé en paramètre avec une bordure noire et le texte aligné au centre
 	 * @param texte texte qui sera placé dans le JLabel
 	 * @return JLabel créé
 	 */
@@ -216,10 +202,10 @@ public class CommandeFenetre extends JPanel {
 	}
 
 	/**
-	 * Ajoute des écouteurs sur les boutons de modification et de suppression des articles
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
+	 * Ajoute des écouteurs sur les boutons de modification et de suppression des commandes
+	 * @param listener écouteurs à placer sur les boutons
 	 */
-	public void ajouterListenerListeArticles(ActionListener listener) {
+	public void ajouterListenerListeCommandes(ActionListener listener) {
 		for (JButton bouton : listeBoutonsModifierCommande) {
 			bouton.addActionListener(listener);
 		}
@@ -229,7 +215,7 @@ public class CommandeFenetre extends JPanel {
 	}
 
 	/**
-	 * Renvoie la liste des boutons correspondant aux modification des articles
+	 * Renvoie la liste des boutons correspondant aux modification des commandes
 	 * @return liste des boutons de modification
 	 */
 	public List<JButton> getListBoutonsModificationCommandes() {
@@ -237,7 +223,7 @@ public class CommandeFenetre extends JPanel {
 	}
 
 	/**
-	 * Renvoie la liste des boutons correspondant aux modification des articles
+	 * Renvoie la liste des boutons correspondant aux suppressions des commandes
 	 * @return liste des boutons de suppression
 	 */
 	public List<JButton> getListBoutonsSuppressionCommandes() {
@@ -245,8 +231,8 @@ public class CommandeFenetre extends JPanel {
 	}
 
 	/**
-	 * renvoie la fenêtre de modification/ajout d'article
-	 * @return fenêtre de modification/ajout d'article
+	 * renvoie la fenêtre de modification/ajout de commandes
+	 * @return fenêtre de modification/ajout de commandes
 	 */
 	public CommandeCreerOuModifier getFenetreCreationOuModificationCommande() {
 		return fenetreCreerOuModifierCommande;

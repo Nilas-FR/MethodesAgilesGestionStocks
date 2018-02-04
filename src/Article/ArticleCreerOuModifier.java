@@ -188,20 +188,6 @@ public class ArticleCreerOuModifier extends JPanel {
         boutonValiderModification.addActionListener(listener);
     }
 
-    /**
-     * Ajoute des écouteurs sur les boutons de la liste des articles
-     */
-    public JTextField getTextFieldDesignation() {
-        return textFieldDesignation;
-    }
-
-    /**
-     * Ajoute des écouteurs sur les boutons de la liste des articles
-     */
-    public JTextField getTextFieldPuHt() {
-        return textFieldPuHt;
-    }
-
     public void remplirChampsModification() {
         textFieldPuHt.setText(Double.toString(article.getPuHt()));
         textFieldDesignation.setText(article.getDesignation());

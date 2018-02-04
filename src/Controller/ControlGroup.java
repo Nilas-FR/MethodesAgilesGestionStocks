@@ -6,7 +6,7 @@ import Commande.ControllerCommande;
 import Commande.ModelCommande;
 import Menu.ControllerMenu;
 import Vue.Vue;
-import login.LoginUtilisateur;
+import login.LoginController;
 import login.LoginModel;
 
 public class ControlGroup {
@@ -14,7 +14,7 @@ public class ControlGroup {
     private Vue vue;
 
     public final ControllerArticle controllerArticle;
-    public final LoginUtilisateur controllerUtilisateur;
+    public final LoginController controllerUtilisateur;
     public final ControllerCommande controllerCommande;
     public final ControllerMenu controllerMenu;
 
@@ -32,7 +32,7 @@ public class ControlGroup {
         controllerArticle = new ControllerArticle(modelArticle, vue);
 
         modelUtilisateur = new LoginModel();
-        controllerUtilisateur = new LoginUtilisateur(modelUtilisateur, vue);
+        controllerUtilisateur = new LoginController(modelUtilisateur, vue);
 
         modelCommande = new ModelCommande();
         controllerCommande = new ControllerCommande(modelCommande, vue);

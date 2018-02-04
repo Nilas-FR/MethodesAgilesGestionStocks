@@ -2,6 +2,7 @@ package Vue;
 
 import Article.ArticleFenetre;
 import Commande.CommandeFenetre;
+import fournisseur.FournisseurFenetre;
 import login.LoginFenetre;
 
 import javax.swing.*;
@@ -16,12 +17,17 @@ public class Vue extends JFrame {
     private ArticleFenetre vueArticle;
 
     /**
+     * Vue de gestion des fournisseurs
+     */
+    private FournisseurFenetre vueFournisseur;
+
+    /**
      * Vue de gestion des commandes
      */
     private CommandeFenetre vueCommande;
 
     /**
-     * Vue de gestion des articles
+     * Vue de gestion de la connection
      */
     private LoginFenetre vueLogin;
 
@@ -62,6 +68,7 @@ public class Vue extends JFrame {
          * Initialise les différentes vues
          */
         vueArticle = new ArticleFenetre(this);
+        vueFournisseur = new FournisseurFenetre(this);
         vueCommande = new CommandeFenetre(this);
         vueLogin = new LoginFenetre(this);
 
@@ -110,6 +117,14 @@ public class Vue extends JFrame {
     }
 
     /**
+     * Place les écouteurs sur la vue des fournisseurs
+     * @param listener écouteur
+     */
+    public void setFournisseurController(ActionListener listener) {
+        vueFournisseur.ajouterListener(listener);
+    }
+
+    /**
      * Renvoie la vue de gestion des articles
      * @return JPanel de gestion des articles
      */
@@ -123,6 +138,14 @@ public class Vue extends JFrame {
      */
     public LoginFenetre getVueLogin() {
         return vueLogin;
+    }
+
+    /**
+     * Renvoie la vue de gestion des fournisseurs
+     * @return JPanel de gestion des fournisseurs
+     */
+    public FournisseurFenetre getVueFournisseur() {
+        return vueFournisseur;
     }
 
     /**

@@ -2,30 +2,31 @@ package login;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
-public class LoginFenetre extends JPanel {
+import principale.Vue;
+
+public class LoginVue extends Vue {
 	
 	private final JTextField TFLogin 	= new JTextField();
 	private final JPasswordField TFMdp = new JPasswordField();
 	public final JButton BValider = new JButton("Se connecter");
 	public final JButton BSpecta = new JButton("Spectateur");
 	
-	public LoginFenetre(JFrame JF) {
+	/** On construit le panel */
+	public LoginVue() {
 		//On divise l'écran en 3 parties
 		this.setLayout(new GridLayout(3, 2));
-		//Une partie Login
+		//Partie 1 - Login
 		this.add(new JLabel("Login : "));
 		this.add(TFLogin);
-		//Une partie Mot de Passe
+		//Partie 2 - Mot de Passe
 		add(new JLabel("Mot de passe : "));
 		add(TFMdp);
-		//On ajoute les 2 boutons dans la 3ème partie
+		//Partie 3 - Boutons
 		this.add(BValider);
 		this.add(BSpecta);
-
-		//On définit le titre de la fenêtre
-		JF.setTitle("Login");
 	}
 	
 	/**Retourne le login entré par l'utilisateur
@@ -45,5 +46,13 @@ public class LoginFenetre extends JPanel {
 	public void ajouterListener(ActionListener listener) {
 		BValider.addActionListener(listener);
 		BSpecta.addActionListener(listener);
+	}
+	
+	/**On ajoute le panel à la fenêtre principale, on change son titre et sa taille
+	 * @param JF est la fenêtre principale
+	 */
+	public void setActive(JFrame JF) {
+		JF.setTitle("Login");
+		JF.add(this);
 	}
 }

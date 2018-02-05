@@ -9,6 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import principale.PrincipaleVue;
+import principale.Vue;
+import variables.Variables;
+
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
@@ -35,7 +40,7 @@ import java.util.List;
  * */
 
 
-public class ArticleFenetre extends JPanel {
+public class ArticleVue extends Vue {
 
 	/**
 	 * numero de version pour classe serialisable
@@ -79,11 +84,6 @@ public class ArticleFenetre extends JPanel {
 	private JScrollPane zoneDefilement;
 
 	/**
-	 * Vue de l'application
-	 */
-	private JFrame JF;
-
-	/**
 	 * Panel de modification/ajout d'article
 	 */
 	private ArticleCreerOuModifier fenetreCreerOuModifierArticle;
@@ -93,11 +93,7 @@ public class ArticleFenetre extends JPanel {
 	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 * @param JF JFrame globale de l'application
 	 */
-	public ArticleFenetre(JFrame JF) {
-		this.JF = JF;
-		
-		//on fixe le titre de la fenêtre
-		JF.setTitle("Article");
+	public ArticleVue() {
 		
 		//choix du Layout pour ce conteneur
 		//il permet de gérer la position des éléments
@@ -143,8 +139,6 @@ public class ArticleFenetre extends JPanel {
 
 		listeBoutonsModifierArticle = new ArrayList<>();
 		listeBoutonsSupprimerArticle = new ArrayList<>();
-
-		JF.pack();
 	}
 
 	/**
@@ -298,5 +292,10 @@ public class ArticleFenetre extends JPanel {
 	 */
 	public ArticleCreerOuModifier getFenetreCreationOuModificationArticle() {
 		return fenetreCreerOuModifierArticle;
+	}
+	
+	public void setActive(PrincipaleVue JF) {
+		JF.setTitle("Article");
+		JF.add(this);
 	}
 }

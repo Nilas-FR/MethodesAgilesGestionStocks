@@ -5,27 +5,28 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import principale2.PrincipaleVue;
-import principale2.Vue;
+import principale.PrincipaleVue;
+import principale.Vue;
 import variables.Variables;
 
 public class FournisseurVue extends Vue {
 	
-	private final JTextField TFSiret	= new JTextField();
-	private final JTextField TFNom		= new JTextField();
-	private final JTextField TFAdresse	= new JTextField();
+	public final JTextField TFSiret		= new JTextField();
+	public final JTextField TFNom		= new JTextField();
+	public final JTextField TFAdresse	= new JTextField();
 	
 	public final JButton BAjouter = new JButton("Ajouter");
 	
 	public FournisseurVue() {
-		MaJ(new Vector<Fournisseur>());
+		MaJ(new Vector<Fournisseur>(), null);
 	}
 	
-	public void MaJ(Vector<Fournisseur> Fournisseurs) {
+	public void MaJ(Vector<Fournisseur> Fournisseurs, ActionListener listener) {
 		this.removeAll();
 		this.setLayout(new GridLayout(2 + Fournisseurs.size(), 4));
 		//Partie 1 - Titre
@@ -43,7 +44,10 @@ public class FournisseurVue extends Vue {
 			this.add(new JLabel(Fournisseurs.elementAt(i).Siret));
 			this.add(new JLabel(Fournisseurs.elementAt(i).Nom));
 			this.add(new JLabel(Fournisseurs.elementAt(i).Adresse));
-			this.add(new JLabel(""));
+			JButton JB = new JButton("Supprimer");
+			JB.setToolTipText(Fournisseurs.elementAt(i).Siret);
+			JB.addActionListener(listener);
+			this.add(JB);
 		}
 	}
 	
@@ -56,9 +60,8 @@ public class FournisseurVue extends Vue {
 	/**On ajoute le panel à la fenêtre principale, on change son titre et sa taille
 	 * @param JF est la fenêtre principale
 	 */
-	public void setActive(PrincipaleVue JF) {
+	public void setActive(JFrame JF) {
 		JF.setTitle("Fournisseur");
-		JF.setSize(Variables.EcranLargeurDefaut,Variables.EcranHauteurDefaut);
 		JF.add(this);
 	}
 }

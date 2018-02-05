@@ -45,5 +45,47 @@ public class FournisseurDAO {
 		}
 		return fournisseurs;
 	}
+	
+	public void supprimerFournisseur(String Siret) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		//connexion à la base de données
+		
+		try {
+			con = DriverManager.getConnection(Variables.URL, Variables.LOGIN, Variables.PASS);
+			ps = con.prepareStatement("DELETE FROM fournisseur WHERE  Siret = ?");
+			ps.setString(1,Siret);
+			//on exécute la requète
+			ps.executeUpdate();
+		} catch (Exception e) {
+			Message.MessageErreur("Erreur : Connection Base de Données", e.getMessage());
+		} finally {
+			//fermeture du PreparedStatement et Connection
+			try {if (ps  != null) ps.close();} catch (Exception t) {}
+			try {if (con != null) con.close();}catch (Exception t) {}
+		}
+	}
+	
+	public void ajouterFournisseur(Fournisseur F) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		//connexion à la base de données
+		
+		try {
+			con = DriverManager.getConnection(Variables.URL, Variables.LOGIN, Variables.PASS);
+			ps = con.prepareStatement("INSERT INTO fournisseur (Siret, Nom, Adresse) VALUES (?, ?, ?)");
+			ps.setString(1,F.Siret);
+			ps.setString(2,F.Nom);
+			ps.setString(3,F.Adresse);
+			//on exécute la requète
+			ps.executeUpdate();
+		} catch (Exception e) {
+			Message.MessageErreur("Erreur : Connection Base de Données", e.getMessage());
+		} finally {
+			//fermeture du PreparedStatement et Connection
+			try {if (ps  != null) ps.close();} catch (Exception t) {}
+			try {if (con != null) con.close();}catch (Exception t) {}
+		}
+	}
 
 }

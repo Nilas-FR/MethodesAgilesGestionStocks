@@ -1,23 +1,27 @@
 package Article;
 
 import javax.swing.*;
+
+import fournisseur.FournisseurVue;
+
 import java.awt.event.*;
 import java.util.List;
-import Controller.Control;
-import Vue.Vue;
+import principale.Controller;
+import principale.PrincipaleController;
 
-public class ControllerArticle extends Control implements ActionListener {
+public class ArticleController extends Controller implements ActionListener {
 
+	private ModelArticle Model = new ModelArticle();
+	
     /**
      * Créé le controleur des articles
      * @param modelArticle model gérant les articles
      * @param vue JFrame globale de l'application
      */
-    public ControllerArticle(ModelArticle modelArticle, Vue vue) {
-		super(modelArticle, vue);
-		vue.setArticleController(this);
-
-		vue.getVueArticles().afficherListeArticles(modelArticle.recupererListeArticles(), this);
+    public ArticleController(PrincipaleController PC) {
+    	super(PC);
+    	this.Vue = new ArticleVue();
+    	Vue.ajouterListener(this);
     }
 
     /**

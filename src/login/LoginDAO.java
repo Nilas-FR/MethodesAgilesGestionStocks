@@ -7,6 +7,7 @@ import variables.*;
 
 public class LoginDAO {
 	
+	/**Constructeur */
 	public LoginDAO() {
 		// chargement du pilote de bases de données
 		try {
@@ -16,8 +17,14 @@ public class LoginDAO {
 		}
 	}
 	
+	/**Vérifie si l'utilisateur existe dans la base de données
+	 * @param login Identifiant de l'utilisateur
+	 * @param pswd Mot de passe de l'utilisateur
+	 * @return vrai si l'utilisateur existe dans la base de données
+	 */
 	public boolean VerificationConnection(String login, String pswd)
 	{
+		//On prépare les variables
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
@@ -25,13 +32,14 @@ public class LoginDAO {
 
 		//connexion à la base de données
 		try {
+			//On initialise les variables
 			con = DriverManager.getConnection(Variables.URL, Variables.LOGIN, Variables.PASS);
+			//On prépare la requète
 			ps = con.prepareStatement(
-					"SELECT * FROM utilisateur" +
+					"SELECT * FROM utilisateur " +
 					"WHERE Login = ? AND Mdp = ?");
 			ps.setString(1,login);
 			ps.setString(2,pswd);
-
 			//on exécute la requète et on récupère dans rs un pointeur situé avant la première ligne de résultat
 			rs = ps.executeQuery();
 			//Si le nombre d'enregistrement est supérieur à 0, alors il y a bien un compte avec ces identifiants

@@ -1,8 +1,4 @@
-package principale2;
-
-import javax.swing.JPanel;
-
-import login2.LoginVue;
+package principale;
 
 public class Controller {
 	

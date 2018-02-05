@@ -1,10 +1,8 @@
 package Article;
 
-import Model.Model;
-
 import java.util.List;
 
-public class ModelArticle extends Model {
+public class ModelArticle{
 
     /**
      * Gestionnaire des articles de la base de données

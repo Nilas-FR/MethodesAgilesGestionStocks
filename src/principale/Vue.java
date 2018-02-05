@@ -1,10 +1,9 @@
-package principale2;
+package principale;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import variables.Variables;
 
 public class Vue extends JPanel {
 	
@@ -16,14 +15,14 @@ public class Vue extends JPanel {
 	/**On ajoute le panel à la fenêtre principale
 	 * @param JF est la fenêtre principale
 	 */
-	public void setActive(PrincipaleVue JF) {
+	public void setActive(JFrame JF) {
 		JF.add(this);
 	}
 	
 	/**On enlève le panel de la fenêtre principale
 	 * @param JF est la fenêtre principale
 	 */
-	public void setUnactive(PrincipaleVue JF) {
+	public void setUnactive(JFrame JF) {
 		JF.remove(this);
 	}
 }

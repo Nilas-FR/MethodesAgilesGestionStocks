@@ -1,6 +1,10 @@
 package Client;
 
 import javax.swing.*;
+
+import principale.PrincipaleVue;
+import principale.Vue;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,7 +29,7 @@ import java.util.List;
  * */
 
 
-public class ClientFenetre extends JPanel {
+public class ClientVue extends Vue {
 
 	/**
 	 * numero de version pour classe serialisable
@@ -69,11 +73,6 @@ public class ClientFenetre extends JPanel {
 	private JScrollPane zoneDefilement;
 
 	/**
-	 * Vue de l'application
-	 */
-	private JFrame JF;
-
-	/**
 	 * Panel de modification/ajout du client
 	 */
 	private ClientCreerOuModifier fenetreCreerOuModifierClient;
@@ -83,11 +82,7 @@ public class ClientFenetre extends JPanel {
 	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 * @param JF JFrame globale de l'application
 	 */
-	public ClientFenetre(JFrame JF) {
-		this.JF = JF;
-		
-		//on fixe le titre de la fenêtre
-		JF.setTitle("Client");
+	public ClientVue() {
 		
 		//choix du Layout pour ce conteneur
 		//il permet de gérer la position des éléments
@@ -133,18 +128,9 @@ public class ClientFenetre extends JPanel {
 
 		listeBoutonsModifierClient = new ArrayList<>();
 		listeBoutonsSupprimerClient = new ArrayList<>();
-
-		JF.pack();
 	}
 
-	/**
-	 * Ajoute des écouteurs sur les boutons du panel
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 */
-	public void ajouterListener(ActionListener listener) {
-		boutonAjouter.addActionListener(listener);
-		boutonRecherche.addActionListener(listener);
-	}
+	
 
 	/**
 	 * Ajoute des écouteurs sur les boutons de la liste des clients
@@ -155,23 +141,15 @@ public class ClientFenetre extends JPanel {
 	}
 
 	/**
-	 * Affiche la vue d'ajout du client
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 */
-	public void afficherVueNouvelClient(ActionListener listener) {
-		fenetreCreerOuModifierClient = new ClientCreerOuModifier(JF, null);
-		fenetreCreerOuModifierClient.ajouterListener(listener);
-	}
-
-	/**
 	 * Affiche la vue de modification du client
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 * @param client client sujet à la modification
 	 */
-	public void afficherVueModifierClient(ActionListener listener, Client client) {
-		fenetreCreerOuModifierClient = new ClientCreerOuModifier(JF, client);
-		fenetreCreerOuModifierClient.ajouterListener(listener);
-	}
+	//TODO
+	//public void afficherVueModifierClient(ActionListener listener, Client client) {
+	//	fenetreCreerOuModifierClient = new ClientCreerOuModifier(JF, client);
+	//	fenetreCreerOuModifierClient.ajouterListener(listener);
+	//}
 
 	/**
 	 * Valider la création d'un client
@@ -180,18 +158,19 @@ public class ClientFenetre extends JPanel {
 	public Client validerCreation() {
 		Client client = fenetreCreerOuModifierClient.validerCreation();
 		fenetreCreerOuModifierClient = null;
-		fermerFenetreCreationModification();
+		//fermerFenetreCreationModification();
 		return client;
 	}
 
 	/**
 	 * ferme la fenêtre de modification/création du client et revient sur la page générale des clients
 	 */
-	public void fermerFenetreCreationModification() {
-		fenetreCreerOuModifierClient = null;
-		JF.setContentPane(this);
-		JF.pack();
-	}
+	//TODO
+	//public void fermerFenetreCreationModification() {
+	//	fenetreCreerOuModifierClient = null;
+	//	JF.setContentPane(this);
+	//	JF.pack();
+	//}
 
 	/**
 	 * Affiche la liste des clients avec leur paramètres ainsi qu'un bouton pour les modifier
@@ -206,7 +185,6 @@ public class ClientFenetre extends JPanel {
 		if (clients.isEmpty()) {
 			pan.setLayout(new GridLayout(1,1));
 			pan.add(creerLabelListeClients("Il n'y a aucun client dans la base de données"));
-			JF.pack();
 			return;
 		}
 
@@ -240,8 +218,6 @@ public class ClientFenetre extends JPanel {
 		}
 
 		ajouterListenerListeClients(listener);
-
-		JF.pack();
 	}
 
 	/**
@@ -291,5 +267,19 @@ public class ClientFenetre extends JPanel {
 	 */
 	public ClientCreerOuModifier getFenetreCreationOuModificationClient() {
 		return fenetreCreerOuModifierClient;
+	}
+	
+	/**
+	 * Ajoute des écouteurs sur les boutons du panel
+	 * @param listener écouteurs à placer sur les boutons de la fenêtre
+	 */
+	public void ajouterListener(ActionListener listener) {
+		boutonAjouter.addActionListener(listener);
+		boutonRecherche.addActionListener(listener);
+	}
+	
+	public void setActive(JFrame JF) {
+		JF.setTitle("Client");
+		JF.add(this);
 	}
 }

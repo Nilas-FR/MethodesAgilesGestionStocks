@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import variables.Variables;
+
 /**
  * Classe d'accès aux données contenues dans la table article
  * @version 1.1
@@ -17,9 +19,9 @@ public class ClientDAO {
 	 * Paramètres de connexion à la base de données MySQL
 	 * URL, LOGIN et PASS sont des constantes
 	 */
-	private final static String URL = "jdbc:mysql://localhost/stocks";
-	private final static String LOGIN="root";
-	private final static String PASS="";
+	private final static String URL  = Variables.URL;
+	private final static String LOGIN= Variables.LOGIN;
+	private final static String PASS = Variables.PASS;
 
 	/**
 	 * Constructeur de la classe

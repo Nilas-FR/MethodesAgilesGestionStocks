@@ -1,13 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS stocks;
+DROP DATABASE IF EXISTS stocks;
+CREATE DATABASE stocks;
 USE stocks;
-
-DROP TABLE IF EXISTS ARTICLE;
-DROP TABLE IF EXISTS FOURNISSEUR;
-DROP TABLE IF EXISTS FOURNI_ARTICLE;
-DROP TABLE IF EXISTS CLIENT;
-DROP TABLE IF EXISTS COMMANDE;
-DROP TABLE IF EXISTS INCLU_ARTICLE;
-DROP TABLE IF EXISTS UTILISATEUR;
 
 CREATE TABLE IF NOT EXISTS ARTICLE (
 	Reference int(15) NOT NULL AUTO_INCREMENT,
@@ -37,7 +30,7 @@ CREATE TABLE IF NOT EXISTS CLIENT (
 	Nom varchar(30) NOT NULL,
 	Prenom varchar(30) NOT NULL,
 	Adresse varchar(60),
-	Telephone int(10),
+	Telephone varchar(10),
 	Email varchar(60),
 	PRIMARY KEY (Identifiant)
 );
@@ -86,9 +79,9 @@ INSERT INTO `article` (`Reference`, `Designation`, `PrixUnitaireHT`, `StockReel`
 (5, 'Pain', 2, 120, 120);
 
 INSERT INTO `client` (`Identifiant`, `Nom`, `Prenom`, `Adresse`, `Telephone`, `Email`) VALUES
-(1, 'Jules', 'Ducroz', '10 Avenue XXX', 0384123456, 'jules.ducroz@uha.fr'),
-(2, 'Adrien', 'Couchot', '3 Rue ZZZ', 0666666666, 'adrien.couchot@uha.fr'),
-(3, 'Karim', 'Hammoudi', '28 Boulevard AAA', 0389987654, 'karim.hammoudi@uha.fr');
+(1, 'Jules', 'Ducroz', '10 Avenue XXX', '0384123456', 'jules.ducroz@uha.fr'),
+(2, 'Adrien', 'Couchot', '3 Rue ZZZ', '0666666666', 'adrien.couchot@uha.fr'),
+(3, 'Karim', 'Hammoudi', '28 Boulevard AAA', '0389987654', 'karim.hammoudi@uha.fr');
 
 
 INSERT INTO `fournisseur` (`Siret`, `Adresse`, `Nom`) VALUES

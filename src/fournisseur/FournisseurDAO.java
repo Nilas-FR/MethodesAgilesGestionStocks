@@ -31,7 +31,7 @@ public class FournisseurDAO {
 
 			//on exécute la requète et on récupère dans rs un pointeur situé avant la première ligne de résultat
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			while (rs.next()) {
 				fournisseurs.addElement(new Fournisseur(rs.getString("Siret"),rs.getString("Nom"),rs.getString("Adresse")));
 			}
 		} catch (Exception e) {

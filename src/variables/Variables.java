@@ -27,9 +27,9 @@ public class Variables {
 	/** Hauteur de l'écran */
 	public final static int EcranHauteur = 480;
 	/** Largeur par défaut de l'écran de login */
-	public final static int EcranLargeurLogin = 500;
+	public final static int EcranLargeurLogin = 250;
 	/** Hauteur par défaut de l'écran de login */
-	public final static int EcranHauteurLogin = 500;
+	public final static int EcranHauteurLogin = 150;
 	/** Largeur par défaut de l'écran */
 	public final static int EcranLargeurDefaut = 720;
 	/** Hauteur par défaut de l'écran */

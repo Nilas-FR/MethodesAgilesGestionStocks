@@ -6,13 +6,13 @@ import Model.Model;
 
 public class FournisseurModel extends Model {
 
-    private final FournisseurDAO loginDAO;
+    private final FournisseurDAO fournisseurDAO;
 
     public FournisseurModel() {
-    	loginDAO = new FournisseurDAO();
+    	fournisseurDAO = new FournisseurDAO();
     }
 
     public Vector<Fournisseur> getListeFournisseurs() {
-        return loginDAO.getListeFournisseurs();
+        return fournisseurDAO.getListeFournisseurs();
     }
 }

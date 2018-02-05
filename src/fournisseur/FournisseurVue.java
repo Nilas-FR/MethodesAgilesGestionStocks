@@ -19,15 +19,14 @@ public class FournisseurVue extends Vue {
 	private final JTextField TFNom		= new JTextField();
 	private final JTextField TFAdresse	= new JTextField();
 	
-	private Vector<Fournisseur> Fournisseurs = new Vector<Fournisseur>();
-	
 	public final JButton BAjouter = new JButton("Ajouter");
 	
 	public FournisseurVue() {
-		
+		MaJ(new Vector<Fournisseur>());
 	}
 	
-	public void MaJ() {
+	public void MaJ(Vector<Fournisseur> Fournisseurs) {
+		this.removeAll();
 		this.setLayout(new GridLayout(2 + Fournisseurs.size(), 4));
 		//Partie 1 - Titre
 		this.add(new JLabel("Siret"));
@@ -39,7 +38,13 @@ public class FournisseurVue extends Vue {
 		this.add(TFNom);
 		this.add(TFAdresse);
 		this.add(BAjouter);
-		this.removeAll();
+		//Partie N - Fournisseur N
+		for (int i = 0; i < Fournisseurs.size(); i++) {
+			this.add(new JLabel(Fournisseurs.elementAt(i).Siret));
+			this.add(new JLabel(Fournisseurs.elementAt(i).Nom));
+			this.add(new JLabel(Fournisseurs.elementAt(i).Adresse));
+			this.add(new JLabel(""));
+		}
 	}
 	
 	/**Ajoute le listener sur les boutons

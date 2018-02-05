@@ -2,8 +2,7 @@ package Client;
 
 /**
  * Classe Client
- * @version 1.1
- * */
+ */
 
 public class Client {
 

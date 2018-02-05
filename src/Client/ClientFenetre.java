@@ -1,18 +1,8 @@
-package Article;
+package Client;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.Box;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +25,7 @@ import java.util.List;
  * */
 
 
-public class ArticleFenetre extends JPanel {
+public class ClientFenetre extends JPanel {
 
 	/**
 	 * numero de version pour classe serialisable
@@ -44,34 +34,34 @@ public class ArticleFenetre extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * zone de texte pour la recherche d'article
+	 * zone de texte pour la recherche de client
 	 */
 	private JTextField textFieldRecherche;
 
 	/**
-	 * bouton d'envoi de l'article
+	 * bouton d'envoi du client
 	 */
 	public final JButton boutonAjouter = new JButton("Ajouter");
 
 	/**
-	 * bouton de recherche d'article
+	 * bouton de recherche du client
 	 */
-	public final JButton boutonRecherche = new JButton("Rechercher un article selon sa désignation");
+	public final JButton boutonRecherche = new JButton("Rechercher un client selon son nom");
 
 	/**
-	 * Zone de texte pour afficher les articles
+	 * Zone de texte pour afficher les clients
 	 */
 	private JPanel pan;
 
 	/**
-	 * Liste des boutons associés aux articles pour leur modification
+	 * Liste des boutons associés aux clients pour leur modification
 	 */
-	private List<JButton> listeBoutonsModifierArticle;
+	private List<JButton> listeBoutonsModifierClient;
 
 	/**
-	 * Liste des boutons associés aux articles pour leur suppression
+	 * Liste des boutons associés aux clients pour leur suppression
 	 */
-	private List<JButton> listeBoutonsSupprimerArticle;
+	private List<JButton> listeBoutonsSupprimerClient;
 
 	/**
 	 * Zone de défilement pour la zone de texte
@@ -84,20 +74,20 @@ public class ArticleFenetre extends JPanel {
 	private JFrame JF;
 
 	/**
-	 * Panel de modification/ajout d'article
+	 * Panel de modification/ajout du client
 	 */
-	private ArticleCreerOuModifier fenetreCreerOuModifierArticle;
+	private ClientCreerOuModifier fenetreCreerOuModifierClient;
 
 	/**
 	 * Constructeur
 	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 * @param JF JFrame globale de l'application
 	 */
-	public ArticleFenetre(JFrame JF) {
+	public ClientFenetre(JFrame JF) {
 		this.JF = JF;
 		
 		//on fixe le titre de la fenêtre
-		JF.setTitle("Article");
+		JF.setTitle("Client");
 		
 		//choix du Layout pour ce conteneur
 		//il permet de gérer la position des éléments
@@ -141,8 +131,8 @@ public class ArticleFenetre extends JPanel {
 		//ajouter une bordure vide de taille constante autour de l'ensemble des composants
 		setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-		listeBoutonsModifierArticle = new ArrayList<>();
-		listeBoutonsSupprimerArticle = new ArrayList<>();
+		listeBoutonsModifierClient = new ArrayList<>();
+		listeBoutonsSupprimerClient = new ArrayList<>();
 
 		JF.pack();
 	}
@@ -157,7 +147,7 @@ public class ArticleFenetre extends JPanel {
 	}
 
 	/**
-	 * Ajoute des écouteurs sur les boutons de la liste des articles
+	 * Ajoute des écouteurs sur les boutons de la liste des clients
 	 * @return valeur du champ de recherche
 	 */
 	public String getDesignationRecherche() {
@@ -165,98 +155,101 @@ public class ArticleFenetre extends JPanel {
 	}
 
 	/**
-	 * Affiche la vue d'ajout d'article
+	 * Affiche la vue d'ajout du client
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
-	public void afficherVueNouvelArticle(ActionListener listener) {
-		fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(JF, null);
-		fenetreCreerOuModifierArticle.ajouterListener(listener);
+	public void afficherVueNouvelClient(ActionListener listener) {
+		fenetreCreerOuModifierClient = new ClientCreerOuModifier(JF, null);
+		fenetreCreerOuModifierClient.ajouterListener(listener);
 	}
 
 	/**
-	 * Affiche la vue de modification d'article
+	 * Affiche la vue de modification du client
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 * @param article article sujet à la modification
+	 * @param client client sujet à la modification
 	 */
-	public void afficherVueModifierArticle(ActionListener listener, Article article) {
-
-		fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(JF, article);
-		fenetreCreerOuModifierArticle.ajouterListener(listener);
+	public void afficherVueModifierClient(ActionListener listener, Client client) {
+		fenetreCreerOuModifierClient = new ClientCreerOuModifier(JF, client);
+		fenetreCreerOuModifierClient.ajouterListener(listener);
 	}
 
 	/**
-	 * Valider la création d'un article
-	 * @return article à entrer dans la base
+	 * Valider la création d'un client
+	 * @return client à entrer dans la base
 	 */
-	public Article validerCreation() {
-		Article article = fenetreCreerOuModifierArticle.validerCreation();
-		fenetreCreerOuModifierArticle = null;
+	public Client validerCreation() {
+		Client client = fenetreCreerOuModifierClient.validerCreation();
+		fenetreCreerOuModifierClient = null;
 		fermerFenetreCreationModification();
-		return article;
+		return client;
 	}
 
 	/**
-	 * ferme la fenêtre de modification/création d'article et revient sur la page générale des articles
+	 * ferme la fenêtre de modification/création du client et revient sur la page générale des clients
 	 */
 	public void fermerFenetreCreationModification() {
-		fenetreCreerOuModifierArticle = null;
+		fenetreCreerOuModifierClient = null;
 		JF.setContentPane(this);
 		JF.pack();
 	}
 
 	/**
-	 * Affiche la liste des articles avec leur désignation, prix et quantité ainsi qu'un bouton pour les modifier
-	 * @param articles liste des articles à afficher
+	 * Affiche la liste des clients avec leur paramètres ainsi qu'un bouton pour les modifier
+	 * @param clients liste des clients à afficher
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
-	public void afficherListeArticles(List<Article> articles, ActionListener listener) {
+	public void afficherListeClients(List<Client> clients, ActionListener listener) {
 		pan.removeAll();
-		listeBoutonsModifierArticle.clear();
-		listeBoutonsSupprimerArticle.clear();
+		listeBoutonsModifierClient.clear();
+		listeBoutonsSupprimerClient.clear();
 
-		if (articles.isEmpty()) {
+		if (clients.isEmpty()) {
 			pan.setLayout(new GridLayout(1,1));
-			pan.add(creerLabelListeArticles("Il n'y a aucun article dans la base de données"));
+			pan.add(creerLabelListeClients("Il n'y a aucun client dans la base de données"));
 			JF.pack();
 			return;
 		}
 
-		pan.setLayout(new GridLayout(articles.size()+1,1));
+		pan.setLayout(new GridLayout(clients.size()+1,1));
 		pan.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 
 		// créé tous les labels avec à chaque fois une lineBorder et un texte aligné au centre
-		pan.add(creerLabelListeArticles("Désignation"));
-		pan.add(creerLabelListeArticles("Prix/u HT"));
-		pan.add(creerLabelListeArticles("Quantité"));
-		pan.add(creerLabelListeArticles("Actions"));
+		pan.add(creerLabelListeClients("Nom"));
+		pan.add(creerLabelListeClients("Prénom"));
+		pan.add(creerLabelListeClients("Adresse"));
+		pan.add(creerLabelListeClients("Téléphone"));
+		pan.add(creerLabelListeClients("Email"));
+		pan.add(creerLabelListeClients("Actions"));
 
-		for (Article article : articles) {
-			pan.add(creerLabelListeArticles(article.getDesignation()));
-			pan.add(creerLabelListeArticles(Double.toString(article.getPuHt())));
-			pan.add(creerLabelListeArticles(Integer.toString(article.getQteStock())));
+		for (Client client : clients) {
+			pan.add(creerLabelListeClients(client.getNom()));
+			pan.add(creerLabelListeClients(client.getPrenom()));
+			pan.add(creerLabelListeClients(client.getAdresse()));
+			pan.add(creerLabelListeClients(client.getTelephone()));
+			pan.add(creerLabelListeClients(client.getEmail()));
 
 			JPanel conteneurActions = new JPanel();
 			conteneurActions.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			JButton boutonModif = new JButton("Modifier");
 			JButton boutonSuppr = new JButton("Supprimer");
-			listeBoutonsModifierArticle.add(boutonModif);
-			listeBoutonsSupprimerArticle.add(boutonSuppr);
+			listeBoutonsModifierClient.add(boutonModif);
+			listeBoutonsSupprimerClient.add(boutonSuppr);
 			conteneurActions.add(boutonModif);
 			conteneurActions.add(boutonSuppr);
 			pan.add(conteneurActions);
 		}
 
-		ajouterListenerListeArticles(listener);
+		ajouterListenerListeClients(listener);
 
 		JF.pack();
 	}
 
 	/**
-	 * Créé un JLabel avec le texte passé en paramètr avec une bordure noire et le texte aligné au centre
+	 * Créé un JLabel avec le texte passé en paramètre avec une bordure noire et le texte aligné au centre
 	 * @param texte texte qui sera placé dans le JLabel
 	 * @return JLabel créé
 	 */
-	public JLabel creerLabelListeArticles(String texte) {
+	public JLabel creerLabelListeClients(String texte) {
 		JLabel label = new JLabel(texte);
 		label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		label.setHorizontalAlignment(JLabel.CENTER);
@@ -264,39 +257,39 @@ public class ArticleFenetre extends JPanel {
 	}
 
 	/**
-	 * Ajoute des écouteurs sur les boutons de modification et de suppression des articles
+	 * Ajoute des écouteurs sur les boutons de modification et de suppression des clients
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
-	public void ajouterListenerListeArticles(ActionListener listener) {
-		for (JButton bouton : listeBoutonsModifierArticle) {
+	public void ajouterListenerListeClients(ActionListener listener) {
+		for (JButton bouton : listeBoutonsModifierClient) {
 			bouton.addActionListener(listener);
 		}
-		for (JButton bouton : listeBoutonsSupprimerArticle) {
+		for (JButton bouton : listeBoutonsSupprimerClient) {
 			bouton.addActionListener(listener);
 		}
 	}
 
 	/**
-	 * Renvoie la liste des boutons correspondant aux modification des articles
+	 * Renvoie la liste des boutons correspondant aux modification des clients
 	 * @return liste des boutons de modification
 	 */
-	public List<JButton> getListBoutonsModificationArticles() {
-		return listeBoutonsModifierArticle;
+	public List<JButton> getListBoutonsModificationClients() {
+		return listeBoutonsModifierClient;
 	}
 
 	/**
-	 * Renvoie la liste des boutons correspondant aux modification des articles
+	 * Renvoie la liste des boutons correspondant aux modification des clients
 	 * @return liste des boutons de suppression
 	 */
-	public List<JButton> getListBoutonsSuppressionArticles() {
-		return listeBoutonsSupprimerArticle;
+	public List<JButton> getListBoutonsSuppressionClients() {
+		return listeBoutonsSupprimerClient;
 	}
 
 	/**
-	 * renvoie la fenêtre de modification/ajout d'article
-	 * @return fenêtre de modification/ajout d'article
+	 * renvoie la fenêtre de modification/ajout du clien
+	 * @return fenêtre de modification/ajout du client
 	 */
-	public ArticleCreerOuModifier getFenetreCreationOuModificationArticle() {
-		return fenetreCreerOuModifierArticle;
+	public ClientCreerOuModifier getFenetreCreationOuModificationClient() {
+		return fenetreCreerOuModifierClient;
 	}
 }

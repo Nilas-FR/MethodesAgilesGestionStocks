@@ -1,9 +1,8 @@
 package Article;
 
 /**
- * Classe Commande
- * @version 1.1
- * */
+ * Classe Article
+ */
 
 public class Article {
 

@@ -1,16 +1,8 @@
-package Article;
+package Client;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.Box;
 
 
 /**
@@ -31,7 +23,7 @@ import javax.swing.Box;
  * */
 
 
-public class ArticleCreerOuModifier extends JPanel {
+public class ClientCreerOuModifier extends JPanel {
     /**
      * numero de version pour classe serialisable
      * Permet d'eviter le warning "The serializable class CommandeFenetre does not declare a static final serialVersionUID field of type long"
@@ -39,19 +31,29 @@ public class ArticleCreerOuModifier extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * zone de texte pour le champ designation
+     * zone de texte pour le  nom
      */
-    private JTextField textFieldDesignation;
+    private JTextField textFieldNom;
 
     /**
-     * zone de texte pour le prix unitaire hors taxe
+     * zone de texte pour le  prénom
      */
-    private JTextField textFieldPuHt;
+    private JTextField textFieldPrenom;
 
     /**
-     * zone de texte pour la quantite en stock
+     * zone de texte pour l'adresse
      */
-    private JTextField textFieldQteStock;
+    private JTextField textFieldAdresse;
+
+    /**
+     * zone de texte pour le téléphone
+     */
+    private JTextField textFieldTelephone;
+
+    /**
+     * zone de texte pour l'email
+     */
+    private JTextField textFieldEmail;
 
     /**
      * label reference
@@ -59,64 +61,71 @@ public class ArticleCreerOuModifier extends JPanel {
     private JLabel labelReference;
 
     /**
-     * label designation
+     * label nom
      */
-    private JLabel labelDesignation;
+    private JLabel labelNom;
 
     /**
-     * label prix unitaire hors taxe
+     * label prénom
      */
-    private JLabel labelPu_ht;
+    private JLabel labelPrenom;
 
     /**
      * label quantité en stock
      */
-    private JLabel labelQtestock;
+    private JLabel labelAdresse;
 
     /**
-     * bouton d'envoi de l'article
+     * label téléphone
+     */
+    private JLabel labelTelephone;
+
+    /**
+     * label email
+     */
+    private JLabel labelEmail;
+
+    /**
+     * bouton d'envoi du client
      */
     public final JButton boutonAjouter = new JButton("Ajouter");
 
     /**
-     * bouton d'envoi de l'article
+     * bouton d'envoi du client
      */
     public final JButton boutonValiderModification = new JButton("Modifier");
 
     /**
-     * bouton d'envoi de l'article
+     * bouton d'envoi du client
      */
     public final JButton boutonAnnulerModification = new JButton("Annuler");
 
     /**
-     * Panel contenant les bouton pour valider ou annuler une modification d'article
+     * Panel contenant les bouton pour valider ou annuler une modification du client
      */
     private JPanel conteneurBoutons;
 
     /**
-     * Vue.Vue de l'application
+     * Vue de l'application
      */
     private JFrame JF;
 
     /**
-     * Sauvegarde la référence de l'article sujet à une modification si il y en a une en cours
+     * Sauvegarde la référence du client sujet à une modification si il y en a une en cours
      */
-    private Article article;
+    private Client client;
 
     /**
      * Constructeur
      * Définit la fenêtre et ses composants - affiche la fenêtre
-     * Si article est null, on va créer un nouvel article, sinon on modifie celui passé en paramètre
+     * Si client est null, on va créer un nouveau client, sinon on modifie celui passé en paramètre
      */
-    public ArticleCreerOuModifier(JFrame JF, Article article) {
+    public ClientCreerOuModifier(JFrame JF, Client client) {
         this.JF = JF;
-        this.article = article;
+        this.client = client;
 
         //on fixe le titre de la fenêtre
-        JF.setTitle("Article");
-
-        //création du conteneur
-        //containerPanel = new JPanel();
+        JF.setTitle("Client");
 
         //choix du Layout pour ce conteneur
         //il permet de gérer la position des éléments
@@ -127,32 +136,45 @@ public class ArticleCreerOuModifier extends JPanel {
         //choix de la couleur pour le conteneur
         setBackground(Color.LIGHT_GRAY);
 
-
         //instantiation des  composants graphiques
-        textFieldDesignation=new JTextField();
-        textFieldPuHt=new JTextField();
-        textFieldQteStock=new JTextField();
+        textFieldNom =new JTextField();
+        textFieldPrenom =new JTextField();
+        textFieldTelephone =new JTextField();
+        textFieldAdresse =new JTextField();
+        textFieldEmail =new JTextField();
         labelReference=new JLabel("La Référence sera générée par la base de données");
-        labelDesignation=new JLabel("Désignation :");
-        labelPu_ht=new JLabel("Prix unitaire HT :");
-        labelQtestock=new JLabel("Quantité :");
+        labelNom =new JLabel("Nom :");
+        labelPrenom =new JLabel("Prénom :");
+        labelTelephone =new JLabel("Téléphone :");
+        labelAdresse =new JLabel("Adresse :");
+        labelEmail =new JLabel("Email :");
 
         //ajout des composants sur le container
-        add(labelDesignation);
+        add(labelNom);
         //introduire une espace constant entre le label et le champ texte
         add(Box.createRigidArea(new Dimension(0,5)));
-        add(textFieldDesignation);
+        add(textFieldNom);
         //introduire une espace constant entre le champ texte et le composant suivant
         add(Box.createRigidArea(new Dimension(0,10)));
 
-        add(labelPu_ht);
+        add(labelPrenom);
         add(Box.createRigidArea(new Dimension(0,5)));
-        add(textFieldPuHt);
+        add(textFieldPrenom);
         add(Box.createRigidArea(new Dimension(0,10)));
 
-        add(labelQtestock);
+        add(labelTelephone);
         add(Box.createRigidArea(new Dimension(0,5)));
-        add(textFieldQteStock);
+        add(textFieldTelephone);
+        add(Box.createRigidArea(new Dimension(0,10)));
+
+        add(labelAdresse);
+        add(Box.createRigidArea(new Dimension(0,5)));
+        add(textFieldAdresse);
+        add(Box.createRigidArea(new Dimension(0,10)));
+
+        add(labelEmail);
+        add(Box.createRigidArea(new Dimension(0,5)));
+        add(textFieldEmail);
         add(Box.createRigidArea(new Dimension(0,10)));
 
         add(labelReference);
@@ -160,7 +182,7 @@ public class ArticleCreerOuModifier extends JPanel {
 
         conteneurBoutons = new JPanel();
         conteneurBoutons.setOpaque(false);
-        if (article == null)
+        if (client == null)
             conteneurBoutons.add(boutonAjouter);
         else {
             conteneurBoutons.add(boutonValiderModification);
@@ -169,7 +191,6 @@ public class ArticleCreerOuModifier extends JPanel {
         add(conteneurBoutons);
         conteneurBoutons.add(boutonAnnulerModification);
         add(Box.createRigidArea(new Dimension(0,5)));
-
 
         //ajouter une bordure vide de taille constante autour de l'ensemble des composants
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -189,35 +210,41 @@ public class ArticleCreerOuModifier extends JPanel {
     }
 
     /**
-     * Rempli automatiquement les champs text field si un article est à modifier
+     * Rempli automatiquement les champs text field si un client est à modifier
      */
     public void remplirChampsModification() {
-        textFieldPuHt.setText(Double.toString(article.getPuHt()));
-        textFieldDesignation.setText(article.getDesignation());
-        textFieldQteStock.setText(Integer.toString(article.getQteStock()));
+        textFieldNom.setText(client.getNom());
+        textFieldPrenom.setText(client.getPrenom());
+        textFieldAdresse.setText(client.getAdresse());
+        textFieldTelephone.setText(client.getTelephone());
+        textFieldEmail.setText(client.getEmail());
     }
 
     /**
-     * Renvoie l'article à modifier avec les nouveaux paramètres
-     * @return article sujet à la modification
+     * Renvoie le client à modifier avec les nouveaux paramètres
+     * @return client sujet à la modification
      */
-    public Article validerModification() {
-        article.setDesignation(textFieldDesignation.getText());
-        article.setPuHt(Double.parseDouble(textFieldPuHt.getText()));
-        article.setQteStock(Integer.parseInt(textFieldQteStock.getText()));
+    public Client validerModification() {
+        client.setNom(textFieldNom.getText());
+        client.setPrenom(textFieldPrenom.getText());
+        client.setAdresse(textFieldAdresse.getText());
+        client.setTelephone(textFieldTelephone.getText());
+        client.setEmail(textFieldEmail.getText());
 
-        return article;
+        return client;
     }
 
     /**
-     * Renvoie le nouvel article avec ses paramètres
-     * @return article à ajouter
+     * Renvoie le nouveau client avec ses paramètres
+     * @return client à ajouter
      */
-    public Article validerCreation() {
-        article = new Article(textFieldDesignation.getText(),
-                Double.parseDouble(textFieldPuHt.getText()),
-                Integer.parseInt(textFieldQteStock.getText()));
+    public Client validerCreation() {
+        client = new Client(textFieldNom.getText(),
+                textFieldPrenom.getText(),
+                textFieldAdresse.getText(),
+                textFieldTelephone.getText(),
+                textFieldEmail.getText());
 
-        return article;
+        return client;
     }
 }

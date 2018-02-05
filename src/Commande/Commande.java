@@ -8,8 +8,7 @@ import java.util.Map;
 
 /**
  * Classe Commande
- * @version 1.1
- * */
+ */
 
 public class Commande {
 

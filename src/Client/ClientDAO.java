@@ -1,6 +1,9 @@
-package Article;
+package Client;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +11,7 @@ import java.util.List;
  * Classe d'accès aux données contenues dans la table article
  * @version 1.1
  * */
-public class ArticleDAO {
+public class ClientDAO {
 
 	/**
 	 * Paramètres de connexion à la base de données MySQL
@@ -20,10 +23,9 @@ public class ArticleDAO {
 
 	/**
 	 * Constructeur de la classe
-	 * 
+	 *
 	 */
-	public ArticleDAO()
-	{
+	public ClientDAO() {
 		// chargement du pilote de bases de données
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -35,13 +37,13 @@ public class ArticleDAO {
 	
 
 	/**
-	 * Permet d'ajouter un article dans la table article
-	 * la référence de l'article est produite automatiquement par la base de données en utilisant une séquence
+	 * Permet d'ajouter un client dans la table client
+	 * l'identifiant du client est produit automatiquement par la base de données en utilisant une séquence
 	 * Le mode est auto-commit par défaut : chaque insertion est validée
-	 * @param nouvArticle l'article à ajouter
+	 * @param nouvClient client à ajouter
 	 * @return le nombre de ligne ajoutées dans la table
 	 */
-	public int ajouter(Article nouvArticle) {
+	public int ajouter(Client nouvClient) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
@@ -52,11 +54,12 @@ public class ArticleDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
 			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
-			ps = con.prepareStatement("INSERT INTO article (Designation, PrixUnitaireHT, StockReel, StockVirt) VALUES (?, ?, ?, ?)");
-			ps.setString(1,nouvArticle.getDesignation());
-			ps.setDouble(2,nouvArticle.getPuHt());
-			ps.setInt(3,nouvArticle.getQteStock());
-			ps.setInt(4,nouvArticle.getQteStock());
+			ps = con.prepareStatement("INSERT INTO client (Nom, Prenom, Adresse, Telephone, Email) VALUES (?, ?, ?, ?, ?)");
+			ps.setString(1,nouvClient.getNom());
+			ps.setString(2,nouvClient.getPrenom());
+			ps.setString(3,nouvClient.getAdresse());
+			ps.setString(4,nouvClient.getTelephone());
+			ps.setString(5,nouvClient.getEmail());
 
 			//Exécution de la requête
 			retour=ps.executeUpdate();
@@ -74,30 +77,35 @@ public class ArticleDAO {
 	}
 
 	/**
-	 * Permet de récupérer un article à partir de sa référence
-	 * @param reference la référence de l'article à récupérer
-	 * @return l'article ou null si aucun article ne correspond à cette référence
+	 * Permet de récupérer un client à partir de son identifiant
+	 * @param identifiant l'identifiant du client à récupérer
+	 * @return le client ou null si aucun client ne correspond à cet identifiant
 	 */
-	public Article getArticle(int reference) {
+	public Client getClient(int identifiant) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
-		Article retour=null;
+		Client retour=null;
 
 		//connexion à la base de données
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM article WHERE Reference = ?");
-			ps.setInt(1,reference);
+			ps = con.prepareStatement("SELECT * FROM client WHERE Identifiant = ?");
+			ps.setInt(1,identifiant);
 
 			//on exécute la requête
 			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs=ps.executeQuery();
 			//passe à la première (et unique) ligne retournée
 			if(rs.next())
-				retour=new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("StockReel"));
+				retour=new Client(rs.getInt("Identifiant"),
+						rs.getString("Nom"),
+						rs.getString("Prenom"),
+						rs.getString("Adresse"),
+						rs.getString("Telephone"),
+						rs.getString("Email"));
 
 
 		} catch (Exception ee) {
@@ -109,35 +117,38 @@ public class ArticleDAO {
 			try {if (con != null)con.close();} catch (Exception ignored) {}
 		}
 		return retour;
-
 	}
 
 	/**
-	 * Permet de récupérer des article à partir de la désignation passée en paramètre
-	 * @param designation désignation du ou des articles à récupérer
-	 * @return le ou les articles dont la désignation correspond au paramètre
+	 * Permet de récupérer des clients à partir de leur nom passé en paramètre
+	 * @param nom nom du ou des clients à récupérer
+	 * @return le ou les clients dont le nom correspond au paramètre
 	 */
-	public List<Article> rechercherArticles(String designation) {
-		System.out.println("Recherche d'article contenant '" + designation + "'");
+	public List<Client> rechercherClients(String nom) {
+		System.out.println("Recherche d'article contenant '" + nom + "'");
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
-		List<Article> retour=new ArrayList<Article>();
+		List<Client> retour=new ArrayList<Client>();
 
 		//connexion à la base de données
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM article WHERE Designation LIKE ?");
-			ps.setString(1,"%" + designation + "%");
+			ps = con.prepareStatement("SELECT * FROM client WHERE Nom LIKE ?");
+			ps.setString(1,"%" + nom + "%");
 
 			//on exécute la requête
 			//rs contient un pointeur situé jusute avant la première ligne retournée
 			rs=ps.executeQuery();
 			//passe à la première (et unique) ligne retournée
 			while(rs.next())
-				retour.add(new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("StockReel")));
-
+				retour.add(new Client(rs.getInt("Identifiant"),
+						rs.getString("Nom"),
+						rs.getString("Prenom"),
+						rs.getString("Adresse"),
+						rs.getString("Telephone"),
+						rs.getString("Email")));
 
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -152,11 +163,11 @@ public class ArticleDAO {
 	}
 
 	/**
-	 * Permet de modifier l'article  passé en paramètre
-	 * @param article article à modifier
+	 * Permet de modifier le client  passé en paramètre
+	 * @param client client à modifier
 	 * @return nombre de lignes modifées
 	 */
-	public int modifier(Article article) {
+	public int modifier(Client client) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
@@ -167,12 +178,13 @@ public class ArticleDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
 			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
-			ps = con.prepareStatement("UPDATE article SET Designation = ?, PrixUnitaireHT = ?, StockReel = ?, StockVirt = ? WHERE Reference = ?");
-			ps.setString(1,article.getDesignation());
-			ps.setDouble(2,article.getPuHt());
-			ps.setInt(3,article.getQteStock());
-			ps.setInt(4,article.getQteStock());
-			ps.setInt(5,article.getReference());
+			ps = con.prepareStatement("UPDATE client SET Nom = ?, Prenom = ?, Adresse = ?, Telephone = ?, Email = ? WHERE Identifiant = ?");
+			ps.setString(1, client.getNom());
+			ps.setString(2, client.getPrenom());
+			ps.setString(3, client.getAdresse());
+			ps.setString(4, client.getTelephone());
+			ps.setString(5, client.getEmail());
+			ps.setInt(6, client.getIdentifiant());
 
 			//Exécution de la requ�te
 			retour=ps.executeUpdate();
@@ -187,14 +199,14 @@ public class ArticleDAO {
 		}
 		return retour;
 	}
+
 	/**
-	 * Permet de supprimer l'article passé en paramètre de la base de données
-	 * TODO Penser à supprimer les lignes des commandes dont l'article fait partie
-	 * @param article article à supprimer
+	 * Permet de supprimer le client passé en paramètre de la base de données
+	 * TODO Penser à supprimer les commandes dont le client fait partie
+	 * @param client client à supprimer
 	 * @return nombre de lignes supprimées
 	 */
-	public int supprimer(Article article) {
-		//return 1;
+	public int supprimer(Client client) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
@@ -205,8 +217,8 @@ public class ArticleDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
 			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
-			ps = con.prepareStatement("DELETE FROM article WHERE Reference = ?");
-			ps.setInt(1,article.getReference());
+			ps = con.prepareStatement("DELETE FROM client WHERE Identifiant = ?");
+			ps.setInt(1,client.getIdentifiant());
 
 			//Exécution de la requête
 			retour=ps.executeUpdate();
@@ -223,28 +235,31 @@ public class ArticleDAO {
 	}
 
 	/**
-	 * Permet de récupérer tous les articles stockés dans la table article
-	 * @return une ArrayList d'Articles
+	 * Permet de récupérer tous les clients stockés dans la table client
+	 * @return une ArrayList de Client
 	 */
-	public List<Article> getListeArticles()
-	{
-
+	public List<Client> getListeClients() {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
-		List<Article> retour=new ArrayList<Article>();
+		List<Client> retour=new ArrayList<Client>();
 
 		//connexion à la base de données
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM article");
+			ps = con.prepareStatement("SELECT * FROM client");
 
 			//on exécute la requête
 			rs=ps.executeQuery();
 			//on parcourt les lignes du résultat
 			while(rs.next())
-				retour.add(new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("StockReel")));
+				retour.add(new Client(rs.getInt("Identifiant"),
+						rs.getString("Nom"),
+						rs.getString("Prenom"),
+						rs.getString("Adresse"),
+						rs.getString("Telephone"),
+						rs.getString("Email")));
 
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -255,6 +270,5 @@ public class ArticleDAO {
 			try {if (con != null)con.close();} catch (Exception ignored) {}
 		}
 		return retour;
-
 	}
 }

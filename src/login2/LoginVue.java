@@ -15,6 +15,7 @@ public class LoginVue extends JPanel {
 	public final JButton BValider = new JButton("Se connecter");
 	public final JButton BSpecta = new JButton("Spectateur");
 	
+	/** On construit le panel */
 	public LoginVue() {
 		//On divise l'écran en 3 parties
 		this.setLayout(new GridLayout(3, 2));
@@ -48,12 +49,18 @@ public class LoginVue extends JPanel {
 		BSpecta.addActionListener(listener);
 	}
 	
+	/**On ajoute le panel à la fenêtre principale, on change son titre et sa taille
+	 * @param JF est la fenêtre principale
+	 */
 	public void setActive(PrincipaleVue JF) {
 		JF.setTitle("Login");
 		JF.setSize(Variables.EcranLargeurLogin,Variables.EcranHauteurLogin);
 		JF.add(this);
 	}
 	
+	/**On supprime le panel de la fenêtre
+	 * @param JF est la fenêtre principale
+	 */
 	public void setUnactive(PrincipaleVue JF) {
 		JF.remove(this);
 	}

@@ -6,9 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import principale2.PrincipaleVue;
+import principale2.Vue;
 import variables.Variables;
 
-public class LoginVue extends JPanel {
+public class LoginVue extends Vue {
 	
 	private final JTextField TFLogin 	= new JTextField();
 	private final JPasswordField TFMdp = new JPasswordField();
@@ -19,13 +20,13 @@ public class LoginVue extends JPanel {
 	public LoginVue() {
 		//On divise l'écran en 3 parties
 		this.setLayout(new GridLayout(3, 2));
-		//Une partie Login
+		//Partie 1 - Login
 		this.add(new JLabel("Login : "));
 		this.add(TFLogin);
-		//Une partie Mot de Passe
+		//Partie 2 - Mot de Passe
 		add(new JLabel("Mot de passe : "));
 		add(TFMdp);
-		//On ajoute les 2 boutons dans la 3ème partie
+		//Partie 3 - Boutons
 		this.add(BValider);
 		this.add(BSpecta);
 	}
@@ -56,12 +57,5 @@ public class LoginVue extends JPanel {
 		JF.setTitle("Login");
 		JF.setSize(Variables.EcranLargeurLogin,Variables.EcranHauteurLogin);
 		JF.add(this);
-	}
-	
-	/**On supprime le panel de la fenêtre
-	 * @param JF est la fenêtre principale
-	 */
-	public void setUnactive(PrincipaleVue JF) {
-		JF.remove(this);
 	}
 }

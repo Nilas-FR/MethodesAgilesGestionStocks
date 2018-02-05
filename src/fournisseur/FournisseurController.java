@@ -1,21 +1,22 @@
 package fournisseur;
 
-import Controller.Control;
-import Vue.Vue;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FournisseurController extends Control implements ActionListener {
+import login2.LoginVue;
+import principale2.Controller;
+import principale2.PrincipaleController;
 
-	public FournisseurController(FournisseurModel fournisseurModel, Vue vue) {
-		super(fournisseurModel, vue);
-		vue.setFournisseurController(this);
+public class FournisseurController extends Controller implements ActionListener {
+
+	public FournisseurController(PrincipaleController PC) {
+		super(PC);
+		this.Vue = new FournisseurVue();
+		Vue.ajouterListener(this);
 	}
 
     public void actionPerformed(ActionEvent e) {
-    	FournisseurModel modelUtilisateur = (FournisseurModel) model;
-		Object source = e.getSource();
+    	FournisseurVue vue = (FournisseurVue) Vue;
     }
 
 }

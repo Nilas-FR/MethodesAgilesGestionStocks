@@ -29,29 +29,22 @@ public class LoginController implements ActionListener {
 		Vue.setUnactive(PC.JF);
 	}
 
-    public void actionPerformed(ActionEvent e) {
-    	Variables.VueActive = 1;
-    	Variables.Droit = 1; //0 Spectateur
-    	PC.refreshActive();
-    	/*LoginModel modelUtilisateur = (LoginModel)model;
+    public void actionPerformed(ActionEvent e) {    	
+    	LoginModel model = new LoginModel();
 		Object source = e.getSource();
-
-		if (source == vue.getVueLogin().BValider) {
-			String login = vue.getVueLogin().getLogin(), pswd = vue.getVueLogin().getPassword();
+		if (source == Vue.BValider) {
+			String login = Vue.getLogin(), pswd = Vue.getPassword();
 			if (login.length() > 0 && pswd.length() > 0) {
-				if (modelUtilisateur.VerificationConnection(login, pswd)) {
+				if (model.VerificationConnection(login, pswd)) {
 					Variables.Droit = 1;
-					vue.connexionValidee();
-				}
-				else Message.MessageAlerte("Attention", "Les informations que vous avez entré sont érronées");
-			}
-			else Message.MessageAlerte("Attention", "Veuillez remplir les 2 champs");
-			return;
-		}
-		if (source == vue.getVueLogin().BSpecta) {
+					Variables.VueActive = 1;
+					PC.refreshActive();
+				} else Message.MessageAlerte("Attention", "Les informations que vous avez entré sont érronées");
+			} else Message.MessageAlerte("Attention", "Veuillez remplir les 2 champs");
+		} else if (source == Vue.BSpecta) {
 			Variables.Droit = 0;
-			return;
-		}*/
-
+			Variables.VueActive = 1;
+			PC.refreshActive();
+		}
     }
 }

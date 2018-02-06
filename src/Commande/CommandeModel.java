@@ -1,12 +1,13 @@
 package Commande;
 
 import Article.Article;
-import Model.Model;
 import Client.Client;
 
 import java.util.List;
 
-public class ModelCommande extends Model {
+import principale.Model;
+
+public class CommandeModel extends Model {
 
     /**
      * Gestionnaire des commandes de la base de données
@@ -21,7 +22,7 @@ public class ModelCommande extends Model {
     /**
      * CommandeDAO de gestion des commandes
      */
-    public ModelCommande() {
+    public CommandeModel() {
         commandeDAO = new CommandeDAO();
 
         actualiserListeCommandes();
@@ -103,5 +104,41 @@ public class ModelCommande extends Model {
     public void actualiserListeCommandes() {
        listeCommandes = commandeDAO.getListeCommandes();
     }
+
+	@Override
+	public int ajouter(Object object) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int modifier(Object object) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int supprimer(Object object) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List chercher(String pattern) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List recupererListe() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void actualiserListe() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

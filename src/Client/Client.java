@@ -1,7 +1,7 @@
-package Client;
+package client;
 
 /**
- * Classe Client
+ * Classe client
  */
 
 public class Client {

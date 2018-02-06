@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +25,7 @@ public class ClientController extends Controller implements ActionListener {
 		ClientVue vue = (ClientVue) Vue;
 		ClientModel model = (ClientModel) Model;
 
-		// ouvre la fenêtre d'ajout de nouveau Client
+		// ouvre la fenêtre d'ajout de nouveau client
 		if (source == vue.boutonAjouter) {
 			fenetreCreerOuModifierClient = new ClientCreerOuModifier(null, this);
 			PC.JF.setContentPane(fenetreCreerOuModifierClient);
@@ -39,7 +39,7 @@ public class ClientController extends Controller implements ActionListener {
 			PC.JF.refresh();
 		}
 
-		// ouvre la fenêtre de modification de Client (parcours boutons modification)
+		// ouvre la fenêtre de modification de client (parcours boutons modification)
         List<JButton> boutonsModifClient = vue.getListBoutonsModificationClients();
         for (int i = 0; i < boutonsModifClient.size(); i++) {
             if(source == boutonsModifClient.get(i)) {
@@ -64,7 +64,7 @@ public class ClientController extends Controller implements ActionListener {
         }
 
 
-		// l'évènement a été délenché sur la page de modification/création de Client
+		// l'évènement a été délenché sur la page de modification/création de client
 		if (fenetreCreerOuModifierClient != null) {
 			// valider l'ajout d'un client
 			if (source == fenetreCreerOuModifierClient.boutonAjouter) {

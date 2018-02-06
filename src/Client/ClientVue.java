@@ -1,8 +1,7 @@
-package Client;
+package client;
 
 import javax.swing.*;
 
-import principale.PrincipaleVue;
 import principale.Vue;
 
 import java.awt.*;
@@ -71,11 +70,6 @@ public class ClientVue extends Vue {
 	 * Zone de défilement pour la zone de texte
 	 */
 	private JScrollPane zoneDefilement;
-
-	/**
-	 * Panel de modification/ajout du client
-	 */
-	private ClientCreerOuModifier fenetreCreerOuModifierClient;
 
 	/**
 	 * Constructeur
@@ -230,14 +224,6 @@ public class ClientVue extends Vue {
 	 */
 	public List<JButton> getListBoutonsSuppressionClients() {
 		return listeBoutonsSupprimerClient;
-	}
-
-	/**
-	 * renvoie la fenêtre de modification/ajout du clien
-	 * @return fenêtre de modification/ajout du client
-	 */
-	public ClientCreerOuModifier getFenetreCreationOuModificationClient() {
-		return fenetreCreerOuModifierClient;
 	}
 
 	/**

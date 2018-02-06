@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -238,7 +238,7 @@ public class ClientDAO {
 
 	/**
 	 * Permet de récupérer tous les clients stockés dans la table client
-	 * @return une ArrayList de Client
+	 * @return une ArrayList de client
 	 */
 	public List<Client> getListeClients() {
 		Connection con = null;

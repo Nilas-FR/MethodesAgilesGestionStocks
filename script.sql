@@ -79,9 +79,9 @@ INSERT INTO `article` (`Reference`, `Designation`, `PrixUnitaireHT`, `StockReel`
 (5, 'Pain', 2, 120, 120);
 
 INSERT INTO `client` (`Identifiant`, `Nom`, `Prenom`, `Adresse`, `Telephone`, `Email`) VALUES
-(1, 'Jules', 'Ducroz', '10 Avenue XXX', '0384123456', 'jules.ducroz@uha.fr'),
-(2, 'Adrien', 'Couchot', '3 Rue ZZZ', '0666666666', 'adrien.couchot@uha.fr'),
-(3, 'Karim', 'Hammoudi', '28 Boulevard AAA', '0389987654', 'karim.hammoudi@uha.fr');
+(1, 'Ducroz', 'Jules', '10 Avenue XXX', '0384123456', 'jules.ducroz@uha.fr'),
+(2, 'Couchot', 'Adrien', '3 Rue ZZZ', '0666666666', 'adrien.couchot@uha.fr'),
+(3, 'Hammoudi', 'Karim', '28 Boulevard AAA', '0389987654', 'karim.hammoudi@uha.fr');
 
 
 INSERT INTO `fournisseur` (`Siret`, `Adresse`, `Nom`) VALUES

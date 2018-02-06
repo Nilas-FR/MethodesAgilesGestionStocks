@@ -1,7 +1,7 @@
-package Article;
+package article;
 
 /**
- * Classe Article
+ * Classe article
  */
 
 public class Article {
@@ -124,7 +124,7 @@ public class Article {
 	 * pour l'affichage par exemple
 	 */
 	public String toString() {
-		return "Article [réf : " + Integer.toString(reference) + " - " + designation
+		return "article [réf : " + Integer.toString(reference) + " - " + designation
 				+ ", " + Double.toString(puHt) + "€ HT, " + Integer.toString(qteStock) + " en stock]";
 	}
 }

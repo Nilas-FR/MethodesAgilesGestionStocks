@@ -1,8 +1,10 @@
-package Article;
+package article;
+
+import principale.Model;
 
 import java.util.List;
 
-public class ModelArticle{
+public class ArticleModel extends Model {
 
     /**
      * Gestionnaire des articles de la base de données
@@ -17,54 +19,60 @@ public class ModelArticle{
     /**
      * UtilisateurDAO de gestion des articles
      */
-    public ModelArticle() {
+    public ArticleModel() {
         articleDAO = new ArticleDAO();
 
-        actualiserListeArticles();
+        actualiserListe();
     }
 
     /**
      * Ajoute un article dans la base de données avec la désignation et le prix passés en paramètre
-     * @param article article à ajouter à la base
+     * @param objet article à ajouter à la base
      * @return le succès de l'opération
      */
-    public int ajouterArticle(Article article) {
+    @Override
+    public int ajouter(Object objet) {
+        Article article = (Article) objet;
         //on demande à la classe de communication d'envoyer l'article dans la table article
         int retour = articleDAO.ajouter(article);
         // affichage du nombre de lignes ajoutées dans la bdd pour vérification
         System.out.println(retour + " ligne ajoutée");
 
-        actualiserListeArticles();
+        actualiserListe();
         return retour;
     }
 
     /**
      * Modifie l'article passé en paramètre dans la base de données
-     * @param article article à modifier
+     * @param objet article à modifier
      * @return le succès de l'opération
      */
-    public int modifierArticle(Article article) {
+    @Override
+    public int modifier(Object objet) {
+        Article article = (Article) objet;
         //on demande à la classe de communication d'envoyer l'article dans la table article
         int retour = articleDAO.modifier(article);
         // affichage du nombre de lignes modifiées dans la bdd pour vérification
         System.out.println(retour + " ligne modifiée");
 
-        actualiserListeArticles();
+        actualiserListe();
         return retour;
     }
 
     /**
      * Supprime l'article passé en paramètre dans la base de données
-     * @param article article à supprimer
+     * @param objet article à supprimer
      * @return le succès de l'opération
      */
-    public int supprimerArticle(Article article) {
+    @Override
+    public int supprimer(Object objet) {
+        Article article = (Article) objet;
         //on demande à la classe de communication d'envoyer l'article dans la table article
         int retour = articleDAO.supprimer(article);
         // affichage du nombre de lignes supprimées dans la bdd pour vérification
         System.out.println(retour + " ligne supprimée");
 
-        actualiserListeArticles();
+        actualiserListe();
         return retour;
     }
 
@@ -73,6 +81,7 @@ public class ModelArticle{
      * @param designation texte contenu dans les articles à chercher
      * @return les articles correspondants
      */
+    @Override
     public List<Article> chercher(String designation) {
         //on demande à la classe de communication d'envoyer l'article dans la table article
         listeArticles = articleDAO.rechercherArticles(designation);
@@ -86,14 +95,16 @@ public class ModelArticle{
      * Renvoie la liste des articles de la table associée
      * @return liste des articles
      */
-    public List<Article> recupererListeArticles() {
+    @Override
+    public List<Article> recupererListe() {
         return listeArticles;
     }
 
     /**
      * Permet d'actualiser la liste des articles, à appeler à chaque changement dans la table des articles
      */
-    private void actualiserListeArticles() {
+    @Override
+    protected void actualiserListe() {
         listeArticles = articleDAO.getListeArticles();
     }
 }

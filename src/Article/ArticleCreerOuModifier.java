@@ -1,4 +1,4 @@
-package Article;
+package article;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -94,11 +94,6 @@ public class ArticleCreerOuModifier extends JPanel {
     private JPanel conteneurBoutons;
 
     /**
-     * Vue.Vue de l'application
-     */
-    private JFrame JF;
-
-    /**
      * Sauvegarde la référence de l'article sujet à une modification si il y en a une en cours
      */
     private Article article;
@@ -108,15 +103,8 @@ public class ArticleCreerOuModifier extends JPanel {
      * Définit la fenêtre et ses composants - affiche la fenêtre
      * Si article est null, on va créer un nouvel article, sinon on modifie celui passé en paramètre
      */
-    public ArticleCreerOuModifier(JFrame JF, Article article) {
-        this.JF = JF;
+    public ArticleCreerOuModifier(Article article, ActionListener listener) {
         this.article = article;
-
-        //on fixe le titre de la fenêtre
-        JF.setTitle("Article");
-
-        //création du conteneur
-        //containerPanel = new JPanel();
 
         //choix du Layout pour ce conteneur
         //il permet de gérer la position des éléments
@@ -174,9 +162,7 @@ public class ArticleCreerOuModifier extends JPanel {
         //ajouter une bordure vide de taille constante autour de l'ensemble des composants
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        JF.setContentPane(this);
-
-        JF.pack();
+        ajouterListener(listener);
     }
 
     /**
@@ -191,7 +177,7 @@ public class ArticleCreerOuModifier extends JPanel {
     /**
      * Rempli automatiquement les champs text field si un article est à modifier
      */
-    public void remplirChampsModification() {
+    private void remplirChampsModification() {
         textFieldPuHt.setText(Double.toString(article.getPuHt()));
         textFieldDesignation.setText(article.getDesignation());
         textFieldQteStock.setText(Integer.toString(article.getQteStock()));

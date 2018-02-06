@@ -1,4 +1,4 @@
-package Article;
+package article;
 
 import java.sql.*;
 import java.util.ArrayList;

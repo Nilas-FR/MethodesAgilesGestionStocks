@@ -134,7 +134,6 @@ public class ClientVue extends Vue {
 		return textFieldRecherche.getText();
 	}
 
-
 	/**
 	 * Affiche la liste des clients avec leur paramètres ainsi qu'un bouton pour les modifier
 	 * @param liste liste des clients à afficher

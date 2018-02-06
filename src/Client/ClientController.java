@@ -37,6 +37,7 @@ public class ClientController extends Controller implements ActionListener {
 		if (source == vue.boutonRecherche) {
 			Vue.afficherListe(Model.chercher(vue.getDesignationRecherche()), this);
 			PC.JF.refresh();
+			return;
 		}
 
 		// ouvre la fenêtre de modification de client (parcours boutons modification)
@@ -78,8 +79,6 @@ public class ClientController extends Controller implements ActionListener {
 			// Aucune action n'est requise pour l'annulation
 
 			// ferme la fenêtre de modification/ajout
-			// TODO réafficher la vue ClientVue
-
 			Vue.afficherListe(Model.recupererListe(), this);
 			PC.JF.setContentPane(Vue);
 			PC.JF.refresh();

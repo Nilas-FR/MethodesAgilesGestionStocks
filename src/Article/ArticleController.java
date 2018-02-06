@@ -1,8 +1,6 @@
-package Article;
+package article;
 
 import javax.swing.*;
-
-import fournisseur.FournisseurVue;
 
 import java.awt.event.*;
 import java.util.List;
@@ -11,17 +9,17 @@ import principale.PrincipaleController;
 
 public class ArticleController extends Controller implements ActionListener {
 
-	private ModelArticle Model = new ModelArticle();
-	
+    private ArticleCreerOuModifier fenetreCreerOuModifierArticle = null;
+
     /**
      * Créé le controleur des articles
-     * @param modelArticle model gérant les articles
-     * @param vue JFrame globale de l'application
+     * @param PC controleur principal
      */
     public ArticleController(PrincipaleController PC) {
     	super(PC);
-    	this.Vue = new ArticleVue();
-    	Vue.ajouterListener(this);
+    	this.Vue = new ArticleVue(this);
+    	Model = new ArticleModel();
+    	Vue.afficherListe(Model.recupererListe(), this);
     }
 
     /**
@@ -29,27 +27,32 @@ public class ArticleController extends Controller implements ActionListener {
      * @param e bouton qui a déclenché l'évènement
      */
     public void actionPerformed(ActionEvent e) {
-        ModelArticle modelArticle = (ModelArticle) model;
         Object source = e.getSource();
+        ArticleVue vue = (ArticleVue) Vue;
+        ArticleModel model = (ArticleModel) Model;
 
-        // ajouter un article dans la base de données
-        if(source == vue.getVueArticles().boutonAjouter) {
-            vue.getVueArticles().afficherVueNouvelArticle(this);
+        // ouvre la fenêtre d'ajout de nouveau client
+        if (source == vue.boutonAjouter) {
+            fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(null, this);
+            PC.JF.setContentPane(fenetreCreerOuModifierArticle);
+            PC.JF.refresh();
             return;
         }
-        if (source == vue.getVueArticles().boutonRecherche) {
-            vue.getVueArticles().afficherListeArticles(modelArticle.chercher(vue.getVueArticles().getDesignationRecherche()), this);
+
+        // recherche de client selon son nom
+        if (source == vue.boutonRecherche) {
+            Vue.afficherListe(Model.chercher(vue.getDesignationRecherche()), this);
+            PC.JF.refresh();
             return;
         }
 
-        /*
-         * Vérifie l'écouteur des boutons de modification de la liste des articles
-         */
-        List<JButton> boutonsModifArticle = vue.getVueArticles().getListBoutonsModificationArticles();
+        // ouvre la fenêtre de modification de client (parcours boutons modification)
+        List<JButton> boutonsModifArticle = vue.getListBoutonsModificationArticles();
         for (int i = 0; i < boutonsModifArticle.size(); i++) {
             if(source == boutonsModifArticle.get(i)) {
-                System.out.println("Clic sur le bouton de modification " + i + " aka " + modelArticle.recupererListeArticles().get(i).getDesignation());
-                vue.getVueArticles().afficherVueModifierArticle(this, modelArticle.recupererListeArticles().get(i));
+                fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(model.recupererListe().get(i), this);
+                PC.JF.setContentPane(fenetreCreerOuModifierArticle);
+                PC.JF.refresh();
                 return;
             }
         }
@@ -57,41 +60,34 @@ public class ArticleController extends Controller implements ActionListener {
         /*
          * Vérifie l'écouteur des boutons de suppression de la liste des articles
          */
-        List<JButton> boutonsSupprArticle = vue.getVueArticles().getListBoutonsSuppressionArticles();
+        List<JButton> boutonsSupprArticle = vue.getListBoutonsSuppressionArticles();
         for (int i = 0; i < boutonsSupprArticle.size(); i++) {
             if(source == boutonsSupprArticle.get(i)) {
-                System.out.println("Clic sur le bouton de suppression " + i + " aka " + modelArticle.recupererListeArticles().get(i).getDesignation());
-                modelArticle.supprimerArticle(modelArticle.recupererListeArticles().get(i));
-                vue.getVueArticles().afficherListeArticles(modelArticle.recupererListeArticles(), this);
+                model.supprimer(model.recupererListe().get(i));
+                Vue.afficherListe(Model.recupererListe(), this);
+                PC.JF.refresh();
                 return;
             }
         }
 
-        // boutons de la fenêtre d'ajout/modification d'article
-        if (vue.getVueArticles().getFenetreCreationOuModificationArticle() != null) {
-            // validation de l'ajout d'un nouvel article
-            if (source == vue.getVueArticles().getFenetreCreationOuModificationArticle().boutonAjouter) {
-                modelArticle.ajouterArticle(vue.getVueArticles().validerCreation());
-                vue.getVueArticles().afficherListeArticles(modelArticle.recupererListeArticles(), this);
-                return;
+        // l'évènement a été délenché sur la page de modification/création de client
+        if (fenetreCreerOuModifierArticle != null) {
+            // valider l'ajout d'un client
+            if (source == fenetreCreerOuModifierArticle.boutonAjouter) {
+                model.ajouter(fenetreCreerOuModifierArticle.validerCreation());
             }
-            // annuler l'ajout/la modification d'un article
-            if (source == vue.getVueArticles().getFenetreCreationOuModificationArticle().boutonAnnulerModification) {
-                vue.getVueArticles().fermerFenetreCreationModification();
-                return;
+            // valider la modification d'un client
+            if (source == fenetreCreerOuModifierArticle.boutonValiderModification) {
+                model.modifier(fenetreCreerOuModifierArticle.validerModification());
             }
-            // valider la modification d'un article
-            if (source == vue.getVueArticles().getFenetreCreationOuModificationArticle().boutonValiderModification) {
-                Article article = vue.getVueArticles().getFenetreCreationOuModificationArticle().validerModification();
-                System.out.println("Modifier article : " + article);
-                modelArticle.modifierArticle(article);
-                vue.getVueArticles().afficherListeArticles(modelArticle.recupererListeArticles(), this);
-                vue.getVueArticles().fermerFenetreCreationModification();
-                return;
-            }
-        }
+            // Annuler la modification/création d'un client
+            // Aucune action n'est requise pour l'annulation
 
-        vue.repaint();
+            // ferme la fenêtre de modification/ajout
+            Vue.afficherListe(Model.recupererListe(), this);
+            PC.JF.setContentPane(Vue);
+            PC.JF.refresh();
+        }
     }
 }
 

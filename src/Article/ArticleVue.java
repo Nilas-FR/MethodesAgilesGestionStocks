@@ -1,18 +1,16 @@
-package Article;
+package article;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import principale.PrincipaleVue;
 import principale.Vue;
-import variables.Variables;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
@@ -84,16 +82,10 @@ public class ArticleVue extends Vue {
 	private JScrollPane zoneDefilement;
 
 	/**
-	 * Panel de modification/ajout d'article
-	 */
-	private ArticleCreerOuModifier fenetreCreerOuModifierArticle;
-
-	/**
 	 * Constructeur
 	 * Définit la fenêtre et ses composants - affiche la fenêtre
-	 * @param JF JFrame globale de l'application
 	 */
-	public ArticleVue() {
+	public ArticleVue(ActionListener listener) {
 		
 		//choix du Layout pour ce conteneur
 		//il permet de gérer la position des éléments
@@ -139,13 +131,8 @@ public class ArticleVue extends Vue {
 
 		listeBoutonsModifierArticle = new ArrayList<>();
 		listeBoutonsSupprimerArticle = new ArrayList<>();
-	}
 
-	/**
-	 * Ajoute des écouteurs sur les boutons du panel
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 */
-	public void ajouterListener(ActionListener listener) {
+		// ajoute les écouteurs sur les boutons
 		boutonAjouter.addActionListener(listener);
 		boutonRecherche.addActionListener(listener);
 	}
@@ -159,51 +146,13 @@ public class ArticleVue extends Vue {
 	}
 
 	/**
-	 * Affiche la vue d'ajout d'article
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 */
-	public void afficherVueNouvelArticle(ActionListener listener) {
-		fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(JF, null);
-		fenetreCreerOuModifierArticle.ajouterListener(listener);
-	}
-
-	/**
-	 * Affiche la vue de modification d'article
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 * @param article article sujet à la modification
-	 */
-	public void afficherVueModifierArticle(ActionListener listener, Article article) {
-
-		fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(JF, article);
-		fenetreCreerOuModifierArticle.ajouterListener(listener);
-	}
-
-	/**
-	 * Valider la création d'un article
-	 * @return article à entrer dans la base
-	 */
-	public Article validerCreation() {
-		Article article = fenetreCreerOuModifierArticle.validerCreation();
-		fenetreCreerOuModifierArticle = null;
-		fermerFenetreCreationModification();
-		return article;
-	}
-
-	/**
-	 * ferme la fenêtre de modification/création d'article et revient sur la page générale des articles
-	 */
-	public void fermerFenetreCreationModification() {
-		fenetreCreerOuModifierArticle = null;
-		JF.setContentPane(this);
-		JF.pack();
-	}
-
-	/**
 	 * Affiche la liste des articles avec leur désignation, prix et quantité ainsi qu'un bouton pour les modifier
-	 * @param articles liste des articles à afficher
+	 * @param liste liste des articles à afficher
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
-	public void afficherListeArticles(List<Article> articles, ActionListener listener) {
+	@Override
+	public void afficherListe(List liste, ActionListener listener) {
+		List<Article> articles = liste;
 		pan.removeAll();
 		listeBoutonsModifierArticle.clear();
 		listeBoutonsSupprimerArticle.clear();
@@ -211,7 +160,6 @@ public class ArticleVue extends Vue {
 		if (articles.isEmpty()) {
 			pan.setLayout(new GridLayout(1,1));
 			pan.add(creerLabelListeArticles("Il n'y a aucun article dans la base de données"));
-			JF.pack();
 			return;
 		}
 
@@ -241,8 +189,6 @@ public class ArticleVue extends Vue {
 		}
 
 		ajouterListenerListeArticles(listener);
-
-		JF.pack();
 	}
 
 	/**
@@ -250,7 +196,7 @@ public class ArticleVue extends Vue {
 	 * @param texte texte qui sera placé dans le JLabel
 	 * @return JLabel créé
 	 */
-	public JLabel creerLabelListeArticles(String texte) {
+	private JLabel creerLabelListeArticles(String texte) {
 		JLabel label = new JLabel(texte);
 		label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		label.setHorizontalAlignment(JLabel.CENTER);
@@ -261,7 +207,7 @@ public class ArticleVue extends Vue {
 	 * Ajoute des écouteurs sur les boutons de modification et de suppression des articles
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
-	public void ajouterListenerListeArticles(ActionListener listener) {
+	private void ajouterListenerListeArticles(ActionListener listener) {
 		for (JButton bouton : listeBoutonsModifierArticle) {
 			bouton.addActionListener(listener);
 		}
@@ -287,15 +233,11 @@ public class ArticleVue extends Vue {
 	}
 
 	/**
-	 * renvoie la fenêtre de modification/ajout d'article
-	 * @return fenêtre de modification/ajout d'article
+	 * Ajoute des écouteurs sur les boutons du panel
+	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
-	public ArticleCreerOuModifier getFenetreCreationOuModificationArticle() {
-		return fenetreCreerOuModifierArticle;
-	}
-	
-	public void setActive(PrincipaleVue JF) {
-		JF.setTitle("Article");
-		JF.add(this);
+	@Override
+	public void ajouterListener(ActionListener listener) {
+		// Inutile
 	}
 }

@@ -202,7 +202,7 @@ public class ClientCreerOuModifier extends JPanel {
     /**
      * Rempli automatiquement les champs text field si un client est à modifier
      */
-    public void remplirChampsModification() {
+    private void remplirChampsModification() {
         textFieldNom.setText(client.getNom());
         textFieldPrenom.setText(client.getPrenom());
         textFieldAdresse.setText(client.getAdresse());

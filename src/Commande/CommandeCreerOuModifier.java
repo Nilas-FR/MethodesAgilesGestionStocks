@@ -203,7 +203,7 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Inutile
+     *
      */
     @Override
     protected void remplirChampsModification() { }

@@ -97,7 +97,7 @@ public class ArticleDAO {
 			rs=ps.executeQuery();
 			//passe à la première (et unique) ligne retournée
 			if(rs.next())
-				retour=new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("StockReel"));
+				retour=new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("Stock"));
 
 
 		} catch (Exception ee) {
@@ -136,7 +136,7 @@ public class ArticleDAO {
 			rs=ps.executeQuery();
 			//passe à la première (et unique) ligne retournée
 			while(rs.next())
-				retour.add(new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("StockReel")));
+				retour.add(new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("Stock")));
 
 
 		} catch (Exception ee) {
@@ -187,17 +187,17 @@ public class ArticleDAO {
 		}
 		return retour;
 	}
+
 	/**
 	 * Permet de supprimer l'article passé en paramètre de la base de données
-	 * TODO Penser à supprimer les lignes des commandes dont l'article fait partie
 	 * @param article article à supprimer
 	 * @return nombre de lignes supprimées
 	 */
 	public int supprimer(Article article) {
-		//return 1;
+		int retour = supprimerFourniArticle(article);
+		retour += supprimerIncluArticle(article);
 		Connection con = null;
 		PreparedStatement ps = null;
-		int retour=0;
 
 		//connexion à la base de données
 		try {
@@ -209,8 +209,71 @@ public class ArticleDAO {
 			ps.setInt(1,article.getReference());
 
 			//Exécution de la requête
+			retour += ps.executeUpdate();
+
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			//fermeture du preparedStatement et de la connexion
+			try {if (ps != null)ps.close();} catch (Exception ignored) {}
+			try {if (con != null)con.close();} catch (Exception ignored) {}
+		}
+		return retour;
+	}
+
+	/**
+	 * Permet de supprimer les références des articles fournis par les fournisseurs (table fourni_article)
+	 * @param article article dont les références sont à supprimer
+	 * @return nombre de lignes supprimées
+	 */
+	private int supprimerFourniArticle(Article article) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int retour=0;
+
+		//connexion à la base de données
+		try {
+			//tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
+			ps = con.prepareStatement("DELETE FROM fourni_article WHERE Reference = ?");
+			ps.setInt(1,article.getReference());
+
+			//Exécution de la requête
 			retour=ps.executeUpdate();
 
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			//fermeture du preparedStatement et de la connexion
+			try {if (ps != null)ps.close();} catch (Exception ignored) {}
+			try {if (con != null)con.close();} catch (Exception ignored) {}
+		}
+		return retour;
+	}
+
+	/**
+	 * Permet de supprimer les références des articles inclus dans des commandes (table inclu_article)
+	 * @param article article dont les références sont à supprimer
+	 * @return nombre de lignes supprimées
+	 */
+	private int supprimerIncluArticle(Article article) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int retour=0;
+
+		//connexion à la base de données
+		try {
+			//tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
+			ps = con.prepareStatement("DELETE FROM inclu_article WHERE Article = ?");
+			ps.setInt(1,article.getReference());
+
+			//Exécution de la requête
+			retour=ps.executeUpdate();
 
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -226,8 +289,7 @@ public class ArticleDAO {
 	 * Permet de récupérer tous les articles stockés dans la table article
 	 * @return une ArrayList d'Articles
 	 */
-	public List<Article> getListeArticles()
-	{
+	public List<Article> getListeArticles() {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -236,7 +298,6 @@ public class ArticleDAO {
 
 		//connexion à la base de données
 		try {
-
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT * FROM article");
 
@@ -244,7 +305,7 @@ public class ArticleDAO {
 			rs=ps.executeQuery();
 			//on parcourt les lignes du résultat
 			while(rs.next())
-				retour.add(new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("StockReel")));
+				retour.add(new Article(rs.getInt("Reference"),rs.getString("Designation"),rs.getDouble("PrixUnitaireHT"),rs.getInt("Stock")));
 
 		} catch (Exception ee) {
 			ee.printStackTrace();

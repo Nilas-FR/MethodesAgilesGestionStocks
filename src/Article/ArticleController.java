@@ -4,8 +4,11 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.util.List;
+
+import message.Message;
 import principale.Controller;
 import principale.PrincipaleController;
+import variables.Variables;
 
 public class ArticleController extends Controller {
 
@@ -25,12 +28,15 @@ public class ArticleController extends Controller {
      * @param e bouton qui a déclenché l'évènement
      */
     public void actionPerformed(ActionEvent e) {
+        if (Variables.Droit < 1) {
+            Message.MessageAlerte("Droit insuffisant", "Vous n'avez pas les droits de modification, veuillez vous connecter.");
+            return;
+        }
+
         Object source = e.getSource();
-        ArticleVue vue = (ArticleVue) Vue;
-        ArticleModel model = (ArticleModel) Model;
 
         // ouvre la fenêtre d'ajout de nouveau client
-        if (source == vue.boutonAjouter) {
+        if (source == Vue.boutonAjouter) {
             fenetreCreationModification = new ArticleCreerOuModifier(null, this);
             PC.JF.setContentPane(fenetreCreationModification);
             PC.JF.refresh();
@@ -38,17 +44,17 @@ public class ArticleController extends Controller {
         }
 
         // recherche de client selon son nom
-        if (source == vue.boutonRecherche) {
-            Vue.afficherListe(Model.chercher(vue.getStringRecherche()), this);
+        if (source == Vue.boutonRecherche) {
+            Vue.afficherListe(Model.chercher(Vue.getStringRecherche()), this);
             PC.JF.refresh();
             return;
         }
 
         // ouvre la fenêtre de modification de client (parcours boutons modification)
-        List<JButton> boutonsModif = vue.getListBoutonsModification();
+        List<JButton> boutonsModif = Vue.getListBoutonsModification();
         for (int i = 0; i < boutonsModif.size(); i++) {
             if(source == boutonsModif.get(i)) {
-                fenetreCreationModification = new ArticleCreerOuModifier(model.recupererListe().get(i), this);
+                fenetreCreationModification = new ArticleCreerOuModifier(((ArticleModel)Model).recupererListe().get(i), this);
                 PC.JF.setContentPane(fenetreCreationModification);
                 PC.JF.refresh();
                 return;

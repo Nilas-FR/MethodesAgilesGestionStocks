@@ -20,13 +20,15 @@ public class FournisseurController extends Controller {
 	}
 
     public void actionPerformed(ActionEvent e) {
+		if (Variables.Droit < 1) {
+			Message.MessageAlerte("Droit insuffisant", "Vous n'avez pas les droits de modification, veuillez vous connecter.");
+			return;
+		}
+
     	JButton JB = (JButton) e.getSource();
 		FournisseurVue vue = (FournisseurVue) Vue;
 		FournisseurModel model = (FournisseurModel) Model;
-		if (Variables.Droit < 1) {
-			Message.MessageAlerte("Droit insuffisant", "Vous n'avez pas les droits de modification.");
-			return;
-		}
+
     	if (JB.getText().equals("Supprimer")) {
 			model.supprimerFournisseur(JB.getToolTipText());
     		vue.MaJ(model.getListeFournisseurs(), this);

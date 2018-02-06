@@ -141,7 +141,56 @@ public class CommandeDAO {
 	 * @return nombre de lignes modifiées
 	 */
 	public int modifier(Commande commande, boolean changerDate) {
-		return supprimer(commande) + ajouter(commande, changerDate);
+		Connection con = null;
+		PreparedStatement ps = null;
+		int retour=0;
+
+		//connexion à la base de données
+		try {
+			//tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+
+			/*
+			 * Supprime les articles de la commande
+			 */
+			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
+			ps = con.prepareStatement("DELETE FROM inclu_article WHERE Commande = ?");
+			ps.setInt(1, commande.getIdentifiant());
+
+			//Exécution de la requête
+			retour = ps.executeUpdate();
+
+			/*
+			 * Update la commande
+			 */
+			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
+			if (changerDate) {
+				ps = con.prepareStatement("UPDATE commande SET Client = ?, DateCommande = ? WHERE Identifiant = ?");
+				ps.setInt(1, commande.getClient().getIdentifiant());
+				ps.setTimestamp(2, new java.sql.Timestamp(new java.util.Date().getTime()));
+				ps.setInt(3, commande.getIdentifiant());
+
+			} else {
+				ps = con.prepareStatement("UPDATE commande SET Client = ? WHERE Identifiant = ?");
+				ps.setInt(1, commande.getClient().getIdentifiant());
+				ps.setInt(2, commande.getIdentifiant());
+			}
+
+			//Exécution de la requête
+			retour += ps.executeUpdate();
+
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			//fermeture du preparedStatement et de la connexion
+			try {if (ps != null)ps.close();} catch (Exception ignored) {}
+			try {if (con != null)con.close();} catch (Exception ignored) {}
+		}
+
+		// rajoute les articles
+		return retour + ajouterArticles(commande);
 	}
 
 	/**
@@ -292,7 +341,7 @@ public class CommandeDAO {
                 articles.add(new Article(rs.getInt("Reference"),
                         rs.getString("Designation"),
                         rs.getDouble("PrixUnitaireHT"),
-                        rs.getInt("StockReel")));
+                        rs.getInt("Stock")));
             }
 
         } catch (Exception ee) {
@@ -329,7 +378,7 @@ public class CommandeDAO {
 				Article article = new Article(rs.getInt("Reference"),
 						rs.getString("Designation"),
 						rs.getDouble("PrixUnitaireHT"),
-						rs.getInt("StockReel"));
+						rs.getInt("Stock"));
 
 				commande.ajouterArticle(article, rs.getInt("Quantite"));
 			}

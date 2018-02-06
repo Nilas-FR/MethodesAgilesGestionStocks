@@ -15,17 +15,10 @@ public class CommandeModel extends Model {
     private final CommandeDAO commandeDAO;
 
     /**
-     * Liste des commandes
-     */
-    private List<Commande> listeCommandes;
-
-    /**
      * CommandeDAO de gestion des commandes
      */
     public CommandeModel() {
         commandeDAO = new CommandeDAO();
-
-        actualiserListe();
     }
 
     /**
@@ -41,7 +34,6 @@ public class CommandeModel extends Model {
         // affichage du nombre de lignes ajoutées dans la bdd pour vérification
         System.out.println(retour + " ligne ajoutée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -68,7 +60,6 @@ public class CommandeModel extends Model {
         // affichage du nombre de lignes modifiées dans la bdd pour vérification
         System.out.println(retour + " ligne modifiée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -85,7 +76,6 @@ public class CommandeModel extends Model {
         // affichage du nombre de lignes supprimées dans la bdd pour vérification
         System.out.println(retour + " ligne supprimée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -101,7 +91,7 @@ public class CommandeModel extends Model {
      */
     @Override
     public List<Commande> recupererListe() {
-        return listeCommandes;
+        return commandeDAO.getListeCommandes();
     }
 
     /**
@@ -118,14 +108,6 @@ public class CommandeModel extends Model {
      */
     public Article[] recupererListeArticles() {
         return commandeDAO.getListeArticles();
-    }
-
-    /**
-     * Permet d'actualiser la liste des commandes, à appeler à chaque changement dans la table des commandes
-     */
-    @Override
-    public void actualiserListe() {
-       listeCommandes = commandeDAO.getListeCommandes();
     }
 }
 

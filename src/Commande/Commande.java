@@ -79,6 +79,14 @@ public class Commande {
 	}
 
 	/**
+	 * Constructeur - seul l'identifiant est enregistré, il sert pour supprimer les commandes d'un client que l'on veut lui même supprimer
+	 * @param identifiant identifiant de la commande
+	 */
+	public Commande(int identifiant) {
+		this.identifiant = identifiant;
+	}
+
+	/**
 	 * Constructeur - commande vide
 	 */
 	public Commande() {

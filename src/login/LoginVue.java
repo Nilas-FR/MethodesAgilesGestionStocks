@@ -16,8 +16,8 @@ public class LoginVue extends Vue {
 	public final JButton BSpecta = new JButton("Spectateur");
 	
 	/** On construit le panel */
-	public LoginVue() {
-		//On divise l'écran en 3 parties
+	public LoginVue(ActionListener listener) {
+		//On divise l'ï¿½cran en 3 parties
 		this.setLayout(new GridLayout(3, 2));
 		//Partie 1 - Login
 		this.add(new JLabel("Login : "));
@@ -28,11 +28,8 @@ public class LoginVue extends Vue {
 		//Partie 3 - Boutons
 		this.add(BValider);
 		this.add(BSpecta);
-	}
 
-	/**Ajoute le listener sur les boutons
-	 * @param listener Le listener des boutons */
-	public void ajouterListener(ActionListener listener) {
+		// ajoute les Ã©couteurs
 		BValider.addActionListener(listener);
 		BSpecta.addActionListener(listener);
 	}

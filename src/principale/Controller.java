@@ -39,7 +39,7 @@ public abstract class Controller implements ActionListener {
 		for (int i = 0; i < boutonsSuppr.size(); i++) {
 			if(source == boutonsSuppr.get(i)) {
 				Model.supprimer(Model.recupererListe().get(i));
-				Vue.afficherListe(Model.recupererListe(), this);
+				PC.updateListeSuppression();
 				PC.JF.refresh();
 				return true;
 			}

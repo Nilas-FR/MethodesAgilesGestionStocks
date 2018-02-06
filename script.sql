@@ -6,8 +6,7 @@ CREATE TABLE IF NOT EXISTS ARTICLE (
 	Reference int(15) NOT NULL AUTO_INCREMENT,
 	Designation varchar(20) NOT NULL,
 	PrixUnitaireHT double NOT NULL,
-	StockReel int(10) NOT NULL,
-	StockVirt int(10) NOT NULL,
+	Stock int(10) NOT NULL,
 	PRIMARY KEY (Reference)
 );
 
@@ -71,12 +70,12 @@ ADD FOREIGN KEY FK_2_INCLU_ARTICLE (Article) REFERENCES ARTICLE (Reference);
 -- Remplissage des tables
 --
 
-INSERT INTO `article` (`Reference`, `Designation`, `PrixUnitaireHT`, `StockReel`, `StockVirt`) VALUES
-(1, 'Article1', 50, 20, 20),
-(2, 'Article2', 100, 5, 5),
-(3, 'Chaise', 199, 3, 3),
-(4, 'Tour Eiffel', 789613, 1, 1),
-(5, 'Pain', 2, 120, 120);
+INSERT INTO `article` (`Reference`, `Designation`, `PrixUnitaireHT`, `Stock`) VALUES
+(1, 'Article1', 50, 20),
+(2, 'Article2', 100, 5),
+(3, 'Chaise', 199, 3),
+(4, 'Tour Eiffel', 789613, 1),
+(5, 'Pain', 2, 120);
 
 INSERT INTO `client` (`Identifiant`, `Nom`, `Prenom`, `Adresse`, `Telephone`, `Email`) VALUES
 (1, 'Ducroz', 'Jules', '10 Avenue XXX', '0384123456', 'jules.ducroz@uha.fr'),

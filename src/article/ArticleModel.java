@@ -10,19 +10,11 @@ public class ArticleModel extends Model {
      * Gestionnaire des articles de la base de données
      */
     private final ArticleDAO articleDAO;
-
-    /**
-     * Liste des articles
-     */
-    private List<Article> listeArticles;
-
     /**
      * UtilisateurDAO de gestion des articles
      */
     public ArticleModel() {
         articleDAO = new ArticleDAO();
-
-        actualiserListe();
     }
 
     /**
@@ -38,7 +30,6 @@ public class ArticleModel extends Model {
         // affichage du nombre de lignes ajoutées dans la bdd pour vérification
         System.out.println(retour + " ligne ajoutée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -55,7 +46,6 @@ public class ArticleModel extends Model {
         // affichage du nombre de lignes modifiées dans la bdd pour vérification
         System.out.println(retour + " ligne modifiée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -72,7 +62,6 @@ public class ArticleModel extends Model {
         // affichage du nombre de lignes supprimées dans la bdd pour vérification
         System.out.println(retour + " ligne supprimée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -84,7 +73,7 @@ public class ArticleModel extends Model {
     @Override
     public List<Article> chercher(String designation) {
         //on demande à la classe de communication d'envoyer l'article dans la table article
-        listeArticles = articleDAO.rechercherArticles(designation);
+        List<Article> listeArticles = articleDAO.rechercherArticles(designation);
         // affichage du nombre de lignes récupérées dans la bdd pour vérification
         System.out.println(listeArticles.size() + " lignes récupérées");
 
@@ -97,15 +86,7 @@ public class ArticleModel extends Model {
      */
     @Override
     public List<Article> recupererListe() {
-        return listeArticles;
-    }
-
-    /**
-     * Permet d'actualiser la liste des articles, à appeler à chaque changement dans la table des articles
-     */
-    @Override
-    protected void actualiserListe() {
-        listeArticles = articleDAO.getListeArticles();
+        return articleDAO.getListeArticles();
     }
 }
 

@@ -1,7 +1,9 @@
 package Commande;
 
+import message.Message;
 import principale.Controller;
 import principale.PrincipaleController;
+import variables.Variables;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,6 +29,11 @@ public class CommandeController extends Controller {
      * @param e bouton qui a déclenché l'évènement
      */
     public void actionPerformed(ActionEvent e) {
+		if (Variables.Droit < 1) {
+			Message.MessageAlerte("Droit insuffisant", "Vous n'avez pas les droits de modification, veuillez vous connecter.");
+			return;
+		}
+
     	Object source = e.getSource();
 
 		// ouvre la fenêtre d'ajout de la nouvelle commande

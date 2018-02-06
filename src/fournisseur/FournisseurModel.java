@@ -38,11 +38,6 @@ public class FournisseurModel extends Model {
         return null;
     }
 
-    @Override
-    protected void actualiserListe() {
-
-    }
-
     public Vector<Fournisseur> getListeFournisseurs() {
         return fournisseurDAO.getListeFournisseurs();
     }

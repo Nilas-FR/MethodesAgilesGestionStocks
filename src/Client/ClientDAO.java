@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import Commande.Commande;
+import Commande.CommandeDAO;
 import variables.Variables;
 
 /**
@@ -34,7 +36,6 @@ public class ClientDAO {
 		} catch (ClassNotFoundException e) {
 			System.err.println("Impossible de charger le pilote de BDD, ne pas oublier d'importer le fichier .jar dans le projet");
 		}
-
 	}
 	
 
@@ -209,6 +210,7 @@ public class ClientDAO {
 	 * @return nombre de lignes supprimées
 	 */
 	public int supprimer(Client client) {
+	    supprimerCommandesClient(client);
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
@@ -235,6 +237,39 @@ public class ClientDAO {
 		}
 		return retour;
 	}
+
+	private int supprimerCommandesClient(Client client) {
+        CommandeDAO commandeDAO = new CommandeDAO();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs=null;
+        int retour=0;
+
+        //connexion à la base de données
+        try {
+            //tentative de connexion
+            con = DriverManager.getConnection(URL, LOGIN, PASS);
+            //préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
+            //les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
+            ps = con.prepareStatement("SELECT Identifiant FROM commande WHERE Client = ?");
+            ps.setInt(1,client.getIdentifiant());
+
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                retour++;
+                commandeDAO.supprimer(new Commande(rs.getInt("Identifiant")));
+            }
+
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        } finally {
+            //fermeture du preparedStatement et de la connexion
+            try {if (ps != null)ps.close();} catch (Exception ignored) {}
+            try {if (con != null)con.close();} catch (Exception ignored) {}
+        }
+        return retour;
+    }
 
 	/**
 	 * Permet de récupérer tous les clients stockés dans la table client

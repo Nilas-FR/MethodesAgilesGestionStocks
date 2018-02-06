@@ -42,10 +42,5 @@ public abstract class Model {
      * @return liste des objets
      */
     public abstract List recupererListe();
-
-    /**
-     * Permet d'actualiser la liste des objets, à appeler à chaque changement dans la table des objets
-     */
-    protected abstract void actualiserListe();
 }
 

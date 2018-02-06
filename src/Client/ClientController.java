@@ -3,8 +3,10 @@ package client;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import message.Message;
 import principale.Controller;
 import principale.PrincipaleController;
+import variables.Variables;
 
 import javax.swing.*;
 
@@ -18,6 +20,10 @@ public class ClientController extends Controller {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (Variables.Droit < 1) {
+			Message.MessageAlerte("Droit insuffisant", "Vous n'avez pas les droits de modification, veuillez vous connecter.");
+			return;
+		}
 		Object source = e.getSource();
 
 		// ouvre la fenêtre d'ajout de nouveau client

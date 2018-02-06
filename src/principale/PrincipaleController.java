@@ -3,7 +3,9 @@ package principale;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import Commande.Commande;
 import Commande.CommandeController;
+import article.Article;
 import article.ArticleController;
 import client.ClientController;
 import fournisseur.FournisseurController;
@@ -32,6 +34,7 @@ public class PrincipaleController implements MouseListener {
 	/** Constructeur */
 	public PrincipaleController() {
 		JF.setActionListener(this);
+        updateMenuConnecte();
 		refreshActive();
 	}
 	
@@ -45,6 +48,28 @@ public class PrincipaleController implements MouseListener {
 		
 		JF.refresh();
 	}
+
+    /**
+     * Change le texte du menu de connexion en fonction de si l'utilisateur est connecté ou non
+     */
+	public void updateMenuConnecte() {
+        if (Variables.VueActive == 0) {
+            JF.menuLogin.setText("Se connecter");
+        } else if (Variables.VueActive == 1) {
+            JF.menuLogin.setText("Se déconnecter");
+        }
+    }
+
+    /**
+     * Met à jour les listes impactées par la suppression d'un client ou d'un article :
+     * article et commande pour article
+     * client et commande pour client
+     */
+    public void updateListeSuppression() {
+        Client.Vue.afficherListe(Client.Model.recupererListe(), Client);
+        Article.Vue.afficherListe(Article.Model.recupererListe(), Article);
+        Commande.Vue.afficherListe(Commande.Model.recupererListe(), Commande);
+    }
 	
 	/**Gère l'action une option du menu est cliquée */
 	@Override

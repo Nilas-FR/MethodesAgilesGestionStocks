@@ -12,16 +12,10 @@ public class ClientModel extends Model {
     private final ClientDAO clientDAO;
 
     /**
-     * Liste des clients
-     */
-    private List<Client> listeClients;
-
-    /**
      * ClientDAO de gestion des clients
      */
     public ClientModel() {
         clientDAO = new ClientDAO();
-        actualiserListe();
     }
 
     /**
@@ -37,7 +31,6 @@ public class ClientModel extends Model {
         // affichage du nombre de lignes ajoutées dans la bdd pour vérification
         System.out.println(retour + " ligne ajoutée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -54,7 +47,6 @@ public class ClientModel extends Model {
         // affichage du nombre de lignes modifiées dans la bdd pour vérification
         System.out.println(retour + " ligne modifiée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -71,7 +63,6 @@ public class ClientModel extends Model {
         // affichage du nombre de lignes supprimées dans la bdd pour vérification
         System.out.println(retour + " ligne supprimée");
 
-        actualiserListe();
         return retour;
     }
 
@@ -83,7 +74,7 @@ public class ClientModel extends Model {
     @Override
     public List<Client> chercher(String nom) {
         //on demande à la classe de communication d'envoyer l'article dans la table article
-        listeClients = clientDAO.rechercherClients(nom);
+        List<Client> listeClients = clientDAO.rechercherClients(nom);
         // affichage du nombre de lignes récupérées dans la bdd pour vérification
         System.out.println(listeClients.size() + " ligne(s) récupérée(s)");
 
@@ -96,15 +87,7 @@ public class ClientModel extends Model {
      */
     @Override
     public List<Client> recupererListe() {
-        return listeClients;
-    }
-
-    /**
-     * Permet d'actualiser la liste des clients, à appeler à chaque changement dans la table des clients
-     */
-    @Override
-    protected void actualiserListe() {
-        listeClients = clientDAO.getListeClients();
+        return clientDAO.getListeClients();
     }
 }
 

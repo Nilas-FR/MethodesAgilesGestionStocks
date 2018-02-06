@@ -12,17 +12,23 @@ import variables.Variables;
 
 public class PrincipaleController implements MouseListener {
 	
+	/** Pointeur vers la vue */
 	public final PrincipaleVue JF = new PrincipaleVue();
 	
+	/** Pointeur vers le module de connection */
 	public final LoginController Login = new LoginController(this);
+	/** Pointeur vers le module des fournisseurs */
 	public final FournisseurController Fournisseur = new FournisseurController(this);
+	/** Pointeur vers le module des clients */
 	public final ClientController Client = new ClientController(this);
 	
+	/** Constructeur */
 	public PrincipaleController() {
 		JF.setActionListener(this);
 		refreshActive();
 	}
 	
+	/** Actualise le panel sélectionné*/
 	public void refreshActive() {
 		if (Variables.VueActive == 0) Login.setActive();
 		else Login.setUnactive();
@@ -34,6 +40,7 @@ public class PrincipaleController implements MouseListener {
 		JF.refresh();
 	}
 	
+	/**Gère l'action une option du menu est cliquée */
 	@Override
     public void mouseClicked(MouseEvent e) {
         Object source = e.getSource();
@@ -43,7 +50,10 @@ public class PrincipaleController implements MouseListener {
         	return;
         }
 
-        if (source == JF.menuArticles) {
+        if (source == JF.menuLogin) {
+        	Variables.VueActive = 0;
+        	Variables.Droit = -1;
+        } else if (source == JF.menuArticles) {
         	Variables.VueActive = 1;
         } else if (source == JF.menuFournisseurs) {
         	Variables.VueActive = 2;
@@ -75,6 +85,7 @@ public class PrincipaleController implements MouseListener {
 
     }
 
+    /** Lanceur de l'application : Main principal*/
 	public static void main(String[] args) {
 		new PrincipaleController();
 	}

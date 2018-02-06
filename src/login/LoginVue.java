@@ -9,8 +9,8 @@ import principale.Vue;
 
 public class LoginVue extends Vue {
 	
-	private final JTextField TFLogin 	= new JTextField();
-	private final JPasswordField TFMdp = new JPasswordField();
+	public final JTextField TFLogin   = new JTextField();
+	public final JPasswordField TFMdp = new JPasswordField();
 	public final JButton BValider = new JButton("Se connecter");
 	public final JButton BSpecta = new JButton("Spectateur");
 	
@@ -27,18 +27,6 @@ public class LoginVue extends Vue {
 		//Partie 3 - Boutons
 		this.add(BValider);
 		this.add(BSpecta);
-	}
-	
-	/**Retourne le login entré par l'utilisateur
-	 * @return le login */
-	public String getLogin() {
-		return TFLogin.getText();
-	}
-	
-	/**Retourne le mot de passe entré par l'utilisateur
-	 * @return le mot de passe */
-	public String getPassword() {
-		return String.valueOf(TFMdp.getPassword());
 	}
 
 	/**Ajoute le listener sur les boutons

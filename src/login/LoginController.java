@@ -29,7 +29,7 @@ public class LoginController extends Controller implements ActionListener {
 		//Si le bouton est "Valider"
 		if (source == vue.BValider) {
 			//On récupère les informations
-			String login = vue.getLogin(), pswd = vue.getPassword();
+			String login = vue.TFLogin.getText(), pswd = vue.TFMdp.getText();
 			//On vérifie s'il ont été renseigné sinon on avertie l'utilisateur
 			if (login.length() > 0 && pswd.length() > 0) {
 				//On vérifie les informations dans la base de données
@@ -39,6 +39,7 @@ public class LoginController extends Controller implements ActionListener {
 					//On le passe à la vue suivante
 					Variables.VueActive = 1;
 					//On actualise le controller principale
+					vue.TFMdp.setText("");
 					PC.refreshActive();
 				} else Message.MessageAlerte("Attention", "Les informations que vous avez entré sont érronées");
 			} else Message.MessageAlerte("Attention", "Veuillez remplir les 2 champs");

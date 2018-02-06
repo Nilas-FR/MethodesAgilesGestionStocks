@@ -1,13 +1,17 @@
 package fournisseur;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import principale.PrincipaleVue;
@@ -16,39 +20,53 @@ import variables.Variables;
 
 public class FournisseurVue extends Vue {
 	
+	/** Champ pour ajouter un fournisseur */
 	public final JTextField TFSiret		= new JTextField();
+	/** Champ pour ajouter un fournisseur */
 	public final JTextField TFNom		= new JTextField();
+	/** Champ pour ajouter un fournisseur */
 	public final JTextField TFAdresse	= new JTextField();
 	
+	/** Bouton pour ajouter un fournisseur */
 	public final JButton BAjouter = new JButton("Ajouter");
 	
+	/** Constructeur */
 	public FournisseurVue() {
 		MaJ(new Vector<Fournisseur>(), null);
 	}
 	
+	/** Mets à jour le tableau des fournisseurs et le réaffiche */
 	public void MaJ(Vector<Fournisseur> Fournisseurs, ActionListener listener) {
 		this.removeAll();
-		this.setLayout(new GridLayout(2 + Fournisseurs.size(), 4));
+		JPanel Top = new JPanel();
+		JPanel Bot = new JPanel();
+		this.setLayout(new GridLayout(2, 1));
+		Top.setLayout(new GridLayout(2, 4));
+		Bot.setLayout(new GridLayout(Fournisseurs.size(), 4));
 		//Partie 1 - Titre
-		this.add(new JLabel("Siret"));
-		this.add(new JLabel("Nom"));
-		this.add(new JLabel("Adresse"));
-		this.add(new JLabel(""));
+		Top.add(new JLabel("Siret"));
+		Top.add(new JLabel("Nom"));
+		Top.add(new JLabel("Adresse"));
+		Top.add(new JLabel(""));
 		//Partie 2 - Ajouter
-		this.add(TFSiret);
-		this.add(TFNom);
-		this.add(TFAdresse);
-		this.add(BAjouter);
+		TFSiret.setPreferredSize(new Dimension(150, 20));
+		Top.add(TFSiret);
+		Top.add(TFNom);
+		Top.add(TFAdresse);
+		Top.add(BAjouter);
 		//Partie N - Fournisseur N
 		for (int i = 0; i < Fournisseurs.size(); i++) {
-			this.add(new JLabel(Fournisseurs.elementAt(i).Siret));
-			this.add(new JLabel(Fournisseurs.elementAt(i).Nom));
-			this.add(new JLabel(Fournisseurs.elementAt(i).Adresse));
+			Bot.add(new JLabel(Fournisseurs.elementAt(i).Siret));
+			Bot.add(new JLabel(Fournisseurs.elementAt(i).Nom));
+			Bot.add(new JLabel(Fournisseurs.elementAt(i).Adresse));
 			JButton JB = new JButton("Supprimer");
 			JB.setToolTipText(Fournisseurs.elementAt(i).Siret);
 			JB.addActionListener(listener);
-			this.add(JB);
+			Bot.add(JB);
 		}
+		setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		this.add(Top);
+		this.add(new JScrollPane(Bot));
 	}
 	
 	/**Ajoute le listener sur les boutons

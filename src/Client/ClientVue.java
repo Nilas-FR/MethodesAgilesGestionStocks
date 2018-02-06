@@ -248,9 +248,4 @@ public class ClientVue extends Vue {
 	public void ajouterListener(ActionListener listener) {
 		// Inutile
 	}
-	
-	public void setActive(JFrame JF) {
-		JF.setTitle("Client");
-		JF.add(this);
-	}
 }

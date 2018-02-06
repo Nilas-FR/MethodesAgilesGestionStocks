@@ -21,8 +21,7 @@ public class ClientModel extends Model {
      */
     public ClientModel() {
         clientDAO = new ClientDAO();
-
-        //actualiserListe();
+        actualiserListe();
     }
 
     /**

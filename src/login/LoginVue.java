@@ -2,6 +2,7 @@ package login;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -35,12 +36,10 @@ public class LoginVue extends Vue {
 		BValider.addActionListener(listener);
 		BSpecta.addActionListener(listener);
 	}
-	
-	/**On ajoute le panel à la fenêtre principale, on change son titre et sa taille
-	 * @param JF est la fenêtre principale
-	 */
-	public void setActive(JFrame JF) {
-		JF.setTitle("Login");
-		JF.add(this);
+
+	@Override
+	public void afficherListe(List liste, ActionListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }

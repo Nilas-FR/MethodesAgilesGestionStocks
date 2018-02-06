@@ -17,7 +17,7 @@ public class ClientController extends Controller implements ActionListener {
 		super(PC);
 		Vue = new ClientVue(this);
 		Model = new ClientModel();
-		//Vue.afficherListe(Model.recupererListe(), this);
+		Vue.afficherListe(Model.recupererListe(), this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -29,6 +29,8 @@ public class ClientController extends Controller implements ActionListener {
 		if (source == vue.boutonAjouter) {
 			fenetreCreerOuModifierClient = new ClientCreerOuModifier(null, this);
 			// TODO PC.JF.setContentPane(fenetreCreerOuModifierClient);
+			PC.JF.setContentPane(fenetreCreerOuModifierClient);
+			PC.JF.refresh();
 			return;
 		}
 

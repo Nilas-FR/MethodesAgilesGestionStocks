@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 
 import Client.ClientController;
 import fournisseur.FournisseurController;
+import login.LoginController;
 import message.Message;
 import variables.Variables;
 
@@ -17,6 +18,8 @@ public class PrincipaleController implements MouseListener {
 	public final FournisseurController Fournisseur = new FournisseurController(this);
 	/** Pointeur vers le module des clients */
 	public final ClientController Client = new ClientController(this);
+	/** Pointeur vers le module de connection */
+	public final LoginController Login = new LoginController(this);
 	
 	/** Constructeur */
 	public PrincipaleController() {
@@ -26,10 +29,9 @@ public class PrincipaleController implements MouseListener {
 	
 	/** Actualise le panel sélectionné*/
 	public void refreshActive() {
-		if (Variables.VueActive == 2) Fournisseur.setActive();
-		else Fournisseur.setUnactive();
-		if (Variables.VueActive == 3) Client.setActive();
-		else Client.setUnactive();
+		if (Variables.VueActive == 0) Login.setActive("Login");
+		if (Variables.VueActive == 2) Fournisseur.setActive("Fournisseur");
+		if (Variables.VueActive == 3) Client.setActive("Client");
 		
 		JF.refresh();
 	}
@@ -40,8 +42,8 @@ public class PrincipaleController implements MouseListener {
         Object source = e.getSource();
         
         if (Variables.VueActive == 0) {
-        	Message.MessageSimple("Connection requise", "Veuillez d'abord vous connecter.");
-        	return;
+        	//Message.MessageSimple("Connection requise", "Veuillez d'abord vous connecter.");
+        	//return; //TODO Enlever pour la version livrable
         }
 
         if (source == JF.menuLogin) {

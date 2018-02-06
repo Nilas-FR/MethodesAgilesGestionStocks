@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -81,5 +82,11 @@ public class FournisseurVue extends Vue {
 	public void setActive(JFrame JF) {
 		JF.setTitle("Fournisseur");
 		JF.add(this);
+	}
+
+	@Override
+	public void afficherListe(List liste, ActionListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }

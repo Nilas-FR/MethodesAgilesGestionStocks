@@ -19,13 +19,8 @@ public class Controller {
 	}
 	
 	/** Ce module est maintenant actif */
-	public void setActive() {
-		Vue.setActive(PC.JF);
-	}
-	
-	/** Ce module est maintenant inactif */
-	public void setUnactive() {
-		Vue.setUnactive(PC.JF);
+	public void setActive(String titre) {
+		Vue.setActive(PC.JF, titre);
 	}
 
 }

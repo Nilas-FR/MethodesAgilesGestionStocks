@@ -33,7 +33,7 @@ public class CommandeController extends Controller implements ActionListener {
     	CommandeVue vue = (CommandeVue) Vue;
     	CommandeModel model = (CommandeModel) Model;
 
-		// ouvre la fenêtre d'ajout de nouveau client
+		// ouvre la fenêtre d'ajout de la nouvelle commande
 		if (source == vue.boutonAjouter) {
 			fenetreCreerOuModifierCommande = new CommandeCreerOuModifier(null, model.recupererListeClients(), this);
 			PC.JF.setContentPane(fenetreCreerOuModifierCommande);
@@ -41,7 +41,7 @@ public class CommandeController extends Controller implements ActionListener {
 			return;
 		}
 
-		// ouvre la fenêtre de modification de client (parcours boutons modification)
+		// ouvre la fenêtre de modification de commande (parcours boutons modification)
 		List<JButton> boutonsModif = vue.getListBoutonsModification();
 		for (int i = 0; i < boutonsModif.size(); i++) {
 			if(source == boutonsModif.get(i)) {
@@ -53,7 +53,7 @@ public class CommandeController extends Controller implements ActionListener {
 		}
 
 		/*
-		 * Vérifie l'écouteur des boutons de suppression de la liste des articles
+		 * Vérifie l'écouteur des boutons de suppression de la liste des commande
 		 */
 		List<JButton> boutonsSuppr = vue.getListBoutonsSuppression();
 		for (int i = 0; i < boutonsSuppr.size(); i++) {
@@ -65,29 +65,70 @@ public class CommandeController extends Controller implements ActionListener {
 			}
 		}
 
-		// l'évènement a été délenché sur la page de modification/création de client
+		// l'évènement a été délenché sur la page de modification/création de commande
 		if (fenetreCreerOuModifierCommande != null) {
 			// valider l'ajout d'un client
 			if (source == fenetreCreerOuModifierCommande.boutonAjouter) {
 				model.ajouter(fenetreCreerOuModifierCommande.validerCreation());
+				fermerFenetreAjoutModificationCommande();
+				return;
 			}
 			// valider la modification d'un client
 			if (source == fenetreCreerOuModifierCommande.boutonValiderModification) {
 				model.modifier(fenetreCreerOuModifierCommande.validerModification());
+				fermerFenetreAjoutModificationCommande();
+				return;
 			}
 			// Annuler la modification/création d'un client
-			// Aucune action n'est requise pour l'annulation
+			if (source == fenetreCreerOuModifierCommande.boutonAnnulerModification) {
+				fermerFenetreAjoutModificationCommande();
+				return;
+			}
 
 			if (source == fenetreCreerOuModifierCommande.boutonAjouterArticle) {
+				System.out.println("ajout article");
 				fenetreAjoutArticle = new AjouterArticle(fenetreCreerOuModifierCommande.getCommande(), model.recupererListeArticles(),this);
-			} else {
-				// ferme la fenêtre de modification/ajout
-				Vue.afficherListe(Model.recupererListe(), this);
-				PC.JF.setContentPane(Vue);
+				PC.JF.setContentPane(fenetreAjoutArticle);
 				PC.JF.refresh();
+				return;
 			}
+
+			// l'évènement a été délenché sur la page de d'ajout d'article dans la commande
+			if (fenetreAjoutArticle != null) {
+				if (source == fenetreAjoutArticle.boutonValider) {
+					fenetreAjoutArticle.validerAjout();
+					fermerFenetreAjoutArticle();
+					return;
+				}
+
+				if (source == fenetreAjoutArticle.boutonAnnuler) {
+					fermerFenetreAjoutArticle();
+					return;
+				}
+			}
+
 		}
     }
+
+	/**
+	 * Ferme la fenêtre d'ajout/modification de commande et retourne sur la fenêtre listant les commandes
+	 */
+	private void fermerFenetreAjoutModificationCommande() {
+		Vue.afficherListe(Model.recupererListe(), this);
+		PC.JF.setContentPane(Vue);
+		PC.JF.refresh();
+		fenetreCreerOuModifierCommande = null;
+	}
+
+	/**
+	 * Ferme la fenêtre d'ajout d'article dans la commande et retourne sur la fenêtre de modification/ajout de commande
+	 */
+	private void fermerFenetreAjoutArticle() {
+		PC.JF.setContentPane(fenetreCreerOuModifierCommande);
+		fenetreCreerOuModifierCommande.afficherListeArticles(this);
+		PC.JF.refresh();
+		fenetreAjoutArticle = null;
+	}
 }
 
 

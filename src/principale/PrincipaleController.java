@@ -70,6 +70,10 @@ public class PrincipaleController implements MouseListener {
         Article.Vue.afficherListe(Article.Model.recupererListe(), Article);
         Commande.Vue.afficherListe(Commande.Model.recupererListe(), Commande);
     }
+
+    public void updateListeDeductionStockCommande() {
+        Article.Vue.afficherListe(Article.Model.recupererListe(), Article);
+    }
 	
 	/**Gère l'action une option du menu est cliquée */
 	@Override

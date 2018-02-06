@@ -47,7 +47,8 @@ public class CommandeController extends Controller {
 		List<JButton> boutonsModif = Vue.getListBoutonsModification();
 		for (int i = 0; i < boutonsModif.size(); i++) {
 			if(source == boutonsModif.get(i)) {
-				fenetreCreationModification = new CommandeCreerOuModifier(((CommandeModel)Model).recupererListe().get(i), ((CommandeModel)Model).recupererListeClients(), this);
+				fenetreCreationModification = new CommandeCreerOuModifier(null, ((CommandeModel)Model).recupererListeClients(), this);
+				//fenetreCreationModification = new CommandeCreerOuModifier(((CommandeModel)Model).recupererListe().get(i), ((CommandeModel)Model).recupererListeClients(), this);
 				PC.afficherJPanel(fenetreCreationModification);
 				return;
 			}
@@ -62,6 +63,7 @@ public class CommandeController extends Controller {
 			// valider l'ajout d'un client
 			if (source == fenetreCreerOuModifierCommande.boutonAjouter) {
 				Model.ajouter(fenetreCreerOuModifierCommande.validerCreation());
+				PC.updateListeDeductionStockCommande();
 				fermerFenetreAjoutModificationCommande();
 				return;
 			}

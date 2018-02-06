@@ -33,11 +33,6 @@ import client.Client;
 public class CommandeVue extends Vue {
 
 	/**
-	 * bouton de création de commande
-	 */
-	public final JButton boutonAjouter = new JButton("Créer une commande");
-
-	/**
 	 * Zone de texte pour afficher les commandes
 	 */
 	private final JPanel pan = new JPanel();
@@ -84,7 +79,6 @@ public class CommandeVue extends Vue {
 	@Override
 	public void afficherListe(List liste, ActionListener listener) {
 		List<Commande> commandes = liste;
-		boutonAjouter.addActionListener(listener);
 
 		pan.removeAll();
 		listeBoutonsModifier.clear();

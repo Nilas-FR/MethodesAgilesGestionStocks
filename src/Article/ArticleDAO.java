@@ -167,12 +167,11 @@ public class ArticleDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
 			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
-			ps = con.prepareStatement("UPDATE article SET Designation = ?, PrixUnitaireHT = ?, StockReel = ?, StockVirt = ? WHERE Reference = ?");
+			ps = con.prepareStatement("UPDATE article SET Designation = ?, PrixUnitaireHT = ?, Stock = ? WHERE Reference = ?");
 			ps.setString(1,article.getDesignation());
 			ps.setDouble(2,article.getPuHt());
 			ps.setInt(3,article.getQteStock());
 			ps.setInt(4,article.getQteStock());
-			ps.setInt(5,article.getReference());
 
 			//Exécution de la requ�te
 			retour=ps.executeUpdate();

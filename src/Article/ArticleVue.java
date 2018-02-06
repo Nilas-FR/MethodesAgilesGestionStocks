@@ -64,9 +64,6 @@ public class ArticleVue extends Vue {
 		textFieldRecherche=new JTextField();
 
 		pan = new JPanel();
-		/*
-	  Zone de défilement pour la zone de texte
-	 */
 		JScrollPane zoneDefilement = new JScrollPane(pan);
 		zoneDefilement.setPreferredSize(new Dimension(500, 250));
 		

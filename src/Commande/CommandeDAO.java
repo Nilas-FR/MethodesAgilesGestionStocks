@@ -279,6 +279,35 @@ public class CommandeDAO {
 		return retour;
 	}
 
+	private int reduireStockArticles(Article article, int quantite) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int retour=0;
+
+		//connexion à la base de données
+		try {
+			//tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			//préparation de l'instruction SQL, chaque ? représente une valeur à communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
+			ps = con.prepareStatement("UPDATE article SET Stock = Stock - ? WHERE Reference = ?");
+			ps.setInt(1,quantite);
+			ps.setInt(2,article.getReference());
+
+			//Exécution de la requ�te
+			retour=ps.executeUpdate();
+
+
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			//fermeture du preparedStatement et de la connexion
+			try {if (ps != null)ps.close();} catch (Exception ignored) {}
+			try {if (con != null)con.close();} catch (Exception ignored) {}
+		}
+		return retour;
+	}
+
     /**
      * Permet de récupérer tous les clients afin de les afficher pour créer/modifier une commande
      * @return tableau de tous les clients
@@ -419,7 +448,7 @@ public class CommandeDAO {
 				ps.setInt(3, article.getValue());
 
 				//Exécution de la requête
-				retour += ps.executeUpdate();
+				retour += ps.executeUpdate() + reduireStockArticles(article.getKey(), article.getValue());
 			}
 
 		} catch (Exception ee) {

@@ -85,7 +85,7 @@ public class ClientModel extends Model {
         //on demande à la classe de communication d'envoyer l'article dans la table article
         listeClients = clientDAO.rechercherClients(nom);
         // affichage du nombre de lignes récupérées dans la bdd pour vérification
-        System.out.println(listeClients.size() + " lignes récupérées");
+        System.out.println(listeClients.size() + " ligne(s) récupérée(s)");
 
         return listeClients;
     }

@@ -28,10 +28,15 @@ public class ClientController extends Controller implements ActionListener {
 		// ouvre la fenêtre d'ajout de nouveau Client
 		if (source == vue.boutonAjouter) {
 			fenetreCreerOuModifierClient = new ClientCreerOuModifier(null, this);
-			// TODO PC.JF.setContentPane(fenetreCreerOuModifierClient);
 			PC.JF.setContentPane(fenetreCreerOuModifierClient);
 			PC.JF.refresh();
 			return;
+		}
+
+		// recherche de client selon son nom
+		if (source == vue.boutonRecherche) {
+			Vue.afficherListe(Model.chercher(vue.getDesignationRecherche()), this);
+			PC.JF.refresh();
 		}
 
 		// ouvre la fenêtre de modification de Client (parcours boutons modification)
@@ -39,7 +44,8 @@ public class ClientController extends Controller implements ActionListener {
         for (int i = 0; i < boutonsModifClient.size(); i++) {
             if(source == boutonsModifClient.get(i)) {
 				fenetreCreerOuModifierClient = new ClientCreerOuModifier(model.recupererListe().get(i), this);
-				// TODO PC.JF.setContentPane(fenetreCreerOuModifierClient);
+				PC.JF.setContentPane(fenetreCreerOuModifierClient);
+				PC.JF.refresh();
                 return;
             }
         }
@@ -52,6 +58,7 @@ public class ClientController extends Controller implements ActionListener {
             if(source == boutonsSupprClient.get(i)) {
                 model.supprimer(model.recupererListe().get(i));
 				Vue.afficherListe(Model.recupererListe(), this);
+				PC.JF.refresh();
                 return;
             }
         }
@@ -72,6 +79,10 @@ public class ClientController extends Controller implements ActionListener {
 
 			// ferme la fenêtre de modification/ajout
 			// TODO réafficher la vue ClientVue
+
+			Vue.afficherListe(Model.recupererListe(), this);
+			PC.JF.setContentPane(Vue);
+			PC.JF.refresh();
 		}
 	}
 

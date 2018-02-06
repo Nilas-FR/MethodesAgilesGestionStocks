@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 
 /**
- * Classe CommandeFenetre
+ * Classe CommandeVue
  * Définit et ouvre une fenetre qui :
  *    - Permet l'insertion d'un nouvel article dans la table article via
  * la saisie des valeurs de désignation, prix et quantité en stock
@@ -26,7 +26,7 @@ import java.awt.event.ActionListener;
 public class ClientCreerOuModifier extends JPanel {
     /**
      * numero de version pour classe serialisable
-     * Permet d'eviter le warning "The serializable class CommandeFenetre does not declare a static final serialVersionUID field of type long"
+     * Permet d'eviter le warning "The serializable class CommandeVue does not declare a static final serialVersionUID field of type long"
      */
     private static final long serialVersionUID = 1L;
 

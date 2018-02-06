@@ -18,8 +18,11 @@ public class FournisseurController extends Controller implements ActionListener 
 	public FournisseurController(PrincipaleController PC) {
 		super(PC);
 		this.Vue = new FournisseurVue();
-		Vue.ajouterListener(this);
-		((FournisseurVue) Vue).MaJ(Model.getListeFournisseurs(), this); 
+		//this.Vue = new FournisseurVue(this);
+		Model = new FournisseurModel();
+		//Vue.afficherListe(Model.recupererListe(), this);
+		/*Vue.ajouterListener(this);
+		((FournisseurVue) Vue.MaJ(Model.getListeFournisseurs(), this); */
 	}
 
     public void actionPerformed(ActionEvent e) {

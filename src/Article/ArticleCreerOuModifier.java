@@ -14,7 +14,7 @@ import javax.swing.Box;
 
 
 /**
- * Classe CommandeFenetre
+ * Classe CommandeVue
  * Définit et ouvre une fenetre qui :
  *    - Permet l'insertion d'un nouvel article dans la table article via
  * la saisie des valeurs de désignation, prix et quantité en stock
@@ -34,7 +34,7 @@ import javax.swing.Box;
 public class ArticleCreerOuModifier extends JPanel {
     /**
      * numero de version pour classe serialisable
-     * Permet d'eviter le warning "The serializable class CommandeFenetre does not declare a static final serialVersionUID field of type long"
+     * Permet d'eviter le warning "The serializable class CommandeVue does not declare a static final serialVersionUID field of type long"
      */
     private static final long serialVersionUID = 1L;
 
@@ -89,11 +89,6 @@ public class ArticleCreerOuModifier extends JPanel {
     public final JButton boutonAnnulerModification = new JButton("Annuler");
 
     /**
-     * Panel contenant les bouton pour valider ou annuler une modification d'article
-     */
-    private JPanel conteneurBoutons;
-
-    /**
      * Sauvegarde la référence de l'article sujet à une modification si il y en a une en cours
      */
     private Article article;
@@ -146,7 +141,7 @@ public class ArticleCreerOuModifier extends JPanel {
         add(labelReference);
         add(Box.createRigidArea(new Dimension(0,5)));
 
-        conteneurBoutons = new JPanel();
+        JPanel conteneurBoutons = new JPanel();
         conteneurBoutons.setOpaque(false);
         if (article == null)
             conteneurBoutons.add(boutonAjouter);
@@ -168,7 +163,7 @@ public class ArticleCreerOuModifier extends JPanel {
     /**
      * Ajoute des écouteurs sur les boutons du panel
      */
-    public void ajouterListener(ActionListener listener) {
+    private void ajouterListener(ActionListener listener) {
         boutonAjouter.addActionListener(listener);
         boutonAnnulerModification.addActionListener(listener);
         boutonValiderModification.addActionListener(listener);

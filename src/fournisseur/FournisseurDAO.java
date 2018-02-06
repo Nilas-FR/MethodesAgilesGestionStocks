@@ -3,7 +3,6 @@ package fournisseur;
 import java.sql.*;
 import java.util.Vector;
 
-import Article.Article;
 import message.Message;
 import variables.*;
 

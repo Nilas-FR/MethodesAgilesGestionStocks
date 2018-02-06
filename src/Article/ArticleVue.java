@@ -21,7 +21,7 @@ import java.util.List;
 
 
 /**
- * Classe CommandeFenetre
+ * Classe CommandeVue
  * Définit et ouvre une fenetre qui :
  *    - Permet l'insertion d'un nouvel article dans la table article via
  * la saisie des valeurs de désignation, prix et quantité en stock
@@ -39,12 +39,6 @@ import java.util.List;
 
 
 public class ArticleVue extends Vue {
-
-	/**
-	 * numero de version pour classe serialisable
-	 * Permet d'eviter le warning "The serializable class CommandeFenetre does not declare a static final serialVersionUID field of type long"
-	 */
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * zone de texte pour la recherche d'article
@@ -67,26 +61,10 @@ public class ArticleVue extends Vue {
 	private JPanel pan;
 
 	/**
-	 * Liste des boutons associés aux articles pour leur modification
-	 */
-	private List<JButton> listeBoutonsModifierArticle;
-
-	/**
-	 * Liste des boutons associés aux articles pour leur suppression
-	 */
-	private List<JButton> listeBoutonsSupprimerArticle;
-
-	/**
-	 * Zone de défilement pour la zone de texte
-	 */
-	private JScrollPane zoneDefilement;
-
-	/**
 	 * Constructeur
 	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 */
 	public ArticleVue(ActionListener listener) {
-		
 		//choix du Layout pour ce conteneur
 		//il permet de gérer la position des éléments
 		//il autorisera un retaillage de la fenêtre en conservant la présentation
@@ -95,13 +73,16 @@ public class ArticleVue extends Vue {
 		
 		//choix de la couleur pour le conteneur
         setBackground(Color.LIGHT_GRAY);
-        
+
         
 		//instantiation des  composants graphiques
 		textFieldRecherche=new JTextField();
 
 		pan = new JPanel();
-		zoneDefilement = new JScrollPane(pan);
+		/*
+	  Zone de défilement pour la zone de texte
+	 */
+		JScrollPane zoneDefilement = new JScrollPane(pan);
 		zoneDefilement.setPreferredSize(new Dimension(500, 250));
 		
 		//ajout des composants sur le container
@@ -129,20 +110,12 @@ public class ArticleVue extends Vue {
 		//ajouter une bordure vide de taille constante autour de l'ensemble des composants
 		setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-		listeBoutonsModifierArticle = new ArrayList<>();
-		listeBoutonsSupprimerArticle = new ArrayList<>();
+		listeBoutonsModifier = new ArrayList<>();
+		listeBoutonsSupprimer = new ArrayList<>();
 
 		// ajoute les écouteurs sur les boutons
 		boutonAjouter.addActionListener(listener);
 		boutonRecherche.addActionListener(listener);
-	}
-
-	/**
-	 * Ajoute des écouteurs sur les boutons de la liste des articles
-	 * @return valeur du champ de recherche
-	 */
-	public String getDesignationRecherche() {
-		return textFieldRecherche.getText();
 	}
 
 	/**
@@ -154,12 +127,12 @@ public class ArticleVue extends Vue {
 	public void afficherListe(List liste, ActionListener listener) {
 		List<Article> articles = liste;
 		pan.removeAll();
-		listeBoutonsModifierArticle.clear();
-		listeBoutonsSupprimerArticle.clear();
+		listeBoutonsModifier.clear();
+		listeBoutonsSupprimer.clear();
 
 		if (articles.isEmpty()) {
 			pan.setLayout(new GridLayout(1,1));
-			pan.add(creerLabelListeArticles("Il n'y a aucun article dans la base de données"));
+			pan.add(creerLabelListe("Il n'y a aucun article dans la base de données"));
 			return;
 		}
 
@@ -167,77 +140,35 @@ public class ArticleVue extends Vue {
 		pan.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 
 		// créé tous les labels avec à chaque fois une lineBorder et un texte aligné au centre
-		pan.add(creerLabelListeArticles("Désignation"));
-		pan.add(creerLabelListeArticles("Prix/u HT"));
-		pan.add(creerLabelListeArticles("Quantité"));
-		pan.add(creerLabelListeArticles("Actions"));
+		pan.add(creerLabelListe("Désignation"));
+		pan.add(creerLabelListe("Prix/u HT"));
+		pan.add(creerLabelListe("Quantité"));
+		pan.add(creerLabelListe("Actions"));
 
 		for (Article article : articles) {
-			pan.add(creerLabelListeArticles(article.getDesignation()));
-			pan.add(creerLabelListeArticles(Double.toString(article.getPuHt())));
-			pan.add(creerLabelListeArticles(Integer.toString(article.getQteStock())));
+			pan.add(creerLabelListe(article.getDesignation()));
+			pan.add(creerLabelListe(Double.toString(article.getPuHt())));
+			pan.add(creerLabelListe(Integer.toString(article.getQteStock())));
 
 			JPanel conteneurActions = new JPanel();
 			conteneurActions.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			JButton boutonModif = new JButton("Modifier");
+			boutonModif.addActionListener(listener);
 			JButton boutonSuppr = new JButton("Supprimer");
-			listeBoutonsModifierArticle.add(boutonModif);
-			listeBoutonsSupprimerArticle.add(boutonSuppr);
+			boutonSuppr.addActionListener(listener);
+			listeBoutonsModifier.add(boutonModif);
+			listeBoutonsSupprimer.add(boutonSuppr);
 			conteneurActions.add(boutonModif);
 			conteneurActions.add(boutonSuppr);
 			pan.add(conteneurActions);
 		}
-
-		ajouterListenerListeArticles(listener);
 	}
 
 	/**
-	 * Créé un JLabel avec le texte passé en paramètr avec une bordure noire et le texte aligné au centre
-	 * @param texte texte qui sera placé dans le JLabel
-	 * @return JLabel créé
+	 * Ajoute des écouteurs sur les boutons de la liste des articles
+	 * @return valeur du champ de recherche
 	 */
-	private JLabel creerLabelListeArticles(String texte) {
-		JLabel label = new JLabel(texte);
-		label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		label.setHorizontalAlignment(JLabel.CENTER);
-		return label;
-	}
-
-	/**
-	 * Ajoute des écouteurs sur les boutons de modification et de suppression des articles
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 */
-	private void ajouterListenerListeArticles(ActionListener listener) {
-		for (JButton bouton : listeBoutonsModifierArticle) {
-			bouton.addActionListener(listener);
-		}
-		for (JButton bouton : listeBoutonsSupprimerArticle) {
-			bouton.addActionListener(listener);
-		}
-	}
-
-	/**
-	 * Renvoie la liste des boutons correspondant aux modification des articles
-	 * @return liste des boutons de modification
-	 */
-	public List<JButton> getListBoutonsModificationArticles() {
-		return listeBoutonsModifierArticle;
-	}
-
-	/**
-	 * Renvoie la liste des boutons correspondant aux modification des articles
-	 * @return liste des boutons de suppression
-	 */
-	public List<JButton> getListBoutonsSuppressionArticles() {
-		return listeBoutonsSupprimerArticle;
-	}
-
-	/**
-	 * Ajoute des écouteurs sur les boutons du panel
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 */
-	@Override
-	public void ajouterListener(ActionListener listener) {
-		// Inutile
+	public String getDesignationRecherche() {
+		return textFieldRecherche.getText();
 	}
 }

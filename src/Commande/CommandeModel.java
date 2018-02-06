@@ -1,7 +1,7 @@
 package Commande;
 
-import Article.Article;
-import Client.Client;
+import article.Article;
+import client.Client;
 
 import java.util.List;
 
@@ -25,60 +25,82 @@ public class CommandeModel extends Model {
     public CommandeModel() {
         commandeDAO = new CommandeDAO();
 
-        actualiserListeCommandes();
+        actualiserListe();
     }
 
     /**
      * Ajoute un commande dans la base de données
-     * @param commande commande à ajouter à la base
+     * @param objet commande à ajouter à la base
      * @return le succès de l'opération
      */
-    public int ajouterCommande(Commande commande) {
+    @Override
+    public int ajouter(Object objet) {
+        Commande commande = (Commande) objet;
         //on demande à la classe de communication d'envoyer l'commande dans la table commande
         int retour = commandeDAO.ajouter(commande, true);
         // affichage du nombre de lignes ajoutées dans la bdd pour vérification
         System.out.println(retour + " ligne ajoutée");
 
-        actualiserListeCommandes();
+        actualiserListe();
         return retour;
     }
 
     /**
+     * Modifie la commande passée en paramètre dans la base de données sans modifier la date
+     * @param objet commande à modifier
+     * @return le succès de l'opération
+     */
+    @Override
+    public int modifier(Object objet) {
+        return modifier(objet, false);
+    }
+
+    /**
      * Modifie la commande passée en paramètre dans la base de données
-     * @param commande commande à modifier
+     * @param objet commande à modifier
      * @param changerDate indique si il faut modifier la date de la commande ou non
      * @return le succès de l'opération
      */
-    public int modifierCommande(Commande commande, boolean changerDate) {
+    public int modifier(Object objet, boolean changerDate) {
+        Commande commande = (Commande) objet;
         //on demande à la classe de communication d'envoyer l'commande dans la table commande
         int retour = commandeDAO.modifier(commande, changerDate);
         // affichage du nombre de lignes modifiées dans la bdd pour vérification
         System.out.println(retour + " ligne modifiée");
 
-        actualiserListeCommandes();
+        actualiserListe();
         return retour;
     }
 
     /**
      * Supprime la commande passée en paramètre dans la base de données
-     * @param commande commande à supprimer
+     * @param objet commande à supprimer
      * @return le succès de l'opération
      */
-    public int supprimerCommande(Commande commande) {
+    @Override
+    public int supprimer(Object objet) {
+        Commande commande = (Commande) objet;
         //on demande à la classe de communication d'envoyer l'commande dans la table commande
         int retour = commandeDAO.supprimer(commande);
         // affichage du nombre de lignes supprimées dans la bdd pour vérification
         System.out.println(retour + " ligne supprimée");
 
-        actualiserListeCommandes();
+        actualiserListe();
         return retour;
+    }
+
+    @Override
+    public List chercher(String pattern) {
+        return null;
+        // non implémentée pour les commandes
     }
 
     /**
      * Renvoie la liste des commandes de la table associée
      * @return liste des commandes
      */
-    public List<Commande> recupererListeCommandes() {
+    @Override
+    public List<Commande> recupererListe() {
         return listeCommandes;
     }
 
@@ -101,44 +123,9 @@ public class CommandeModel extends Model {
     /**
      * Permet d'actualiser la liste des commandes, à appeler à chaque changement dans la table des commandes
      */
-    public void actualiserListeCommandes() {
+    @Override
+    public void actualiserListe() {
        listeCommandes = commandeDAO.getListeCommandes();
     }
-
-	@Override
-	public int ajouter(Object object) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int modifier(Object object) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int supprimer(Object object) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List chercher(String pattern) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List recupererListe() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void actualiserListe() {
-		// TODO Auto-generated method stub
-		
-	}
 }
 

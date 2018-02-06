@@ -1,20 +1,16 @@
 package Commande;
 
-import Article.Article;
-import Client.Client;
+import article.Article;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 /**
- * Classe CommandeFenetre
+ * Classe CommandeVue
  * Définit et ouvre une fenetre qui :
  *    - Permet l'insertion d'un nouvel commande dans la table commande via
  * la saisie des valeurs de désignation, prix et quantité en stock
@@ -34,7 +30,7 @@ import java.util.Map;
 public class AjouterArticle extends JPanel {
     /**
      * numero de version pour classe serialisable
-     * Permet d'eviter le warning "The serializable class CommandeFenetre does not declare a static final serialVersionUID field of type long"
+     * Permet d'eviter le warning "The serializable class CommandeVue does not declare a static final serialVersionUID field of type long"
      */
     private static final long serialVersionUID = 1L;
 
@@ -67,11 +63,8 @@ public class AjouterArticle extends JPanel {
      * Constructeur
      * Définit la fenêtre et ses composants - affiche la fenêtre
      */
-    public AjouterArticle(JFrame JF, Commande commande, Article[] articles) {
+    public AjouterArticle(Commande commande, Article[] articles, ActionListener listener) {
         this.commande = commande;
-
-        //on fixe le titre de la fenêtre
-        JF.setTitle("Ajouter un article");
 
         //choix du Layout pour ce conteneur
         //il permet de gérer la position des éléments
@@ -116,9 +109,7 @@ public class AjouterArticle extends JPanel {
         //ajouter une bordure vide de taille constante autour de l'ensemble des composants
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        JF.setContentPane(this);
-
-        JF.pack();
+        ajouterListener(listener);
     }
 
     /**
@@ -136,7 +127,7 @@ public class AjouterArticle extends JPanel {
     /**
      * Ajoute des écouteurs sur les boutons
      */
-    public void ajouterListener(ActionListener listener) {
+    private void ajouterListener(ActionListener listener) {
         boutonValider.addActionListener(listener);
         boutonAnnuler.addActionListener(listener);
         comboBoxArticle.addActionListener(listener);

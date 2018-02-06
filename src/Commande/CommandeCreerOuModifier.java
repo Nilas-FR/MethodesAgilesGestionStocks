@@ -2,20 +2,18 @@ package Commande;
 
 import javax.swing.*;
 
-import principale.Vue;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import Article.Article;
-import Client.Client;
+import article.Article;
+import client.Client;
 
 
 /**
- * Classe CommandeFenetre
+ * Classe CommandeVue
  * Définit et ouvre une fenetre qui :
  *    - Permet l'insertion d'un nouvel commande dans la table commande via
  * la saisie des valeurs de désignation, prix et quantité en stock
@@ -32,10 +30,10 @@ import Client.Client;
  * */
 
 
-public class CommandeCreerOuModifier extends Vue {
+public class CommandeCreerOuModifier extends JPanel {
     /**
      * numero de version pour classe serialisable
-     * Permet d'eviter le warning "The serializable class CommandeFenetre does not declare a static final serialVersionUID field of type long"
+     * Permet d'eviter le warning "The serializable class CommandeVue does not declare a static final serialVersionUID field of type long"
      */
     private static final long serialVersionUID = 1L;
 
@@ -62,12 +60,12 @@ public class CommandeCreerOuModifier extends Vue {
     /**
      * bouton d'envoi de création de commande
      */
-    public final JButton boutonValider = new JButton("Valider");
+    public final JButton boutonAjouter = new JButton("Valider");
 
     /**
      * bouton d'ajout d'article
      */
-    public final JButton boutonAjout = new JButton("Ajouter un article");
+    public final JButton boutonAjouterArticle = new JButton("Ajouter un article");
 
     /**
      * bouton d'envoi de modification de commande
@@ -104,7 +102,7 @@ public class CommandeCreerOuModifier extends Vue {
      * Définit la fenêtre et ses composants - affiche la fenêtre
      * Si commande est null, on va créer un nouvel commande, sinon on modifie celui passé en paramètre
      */
-    public CommandeCreerOuModifier(Commande commande, Client[] clients) {
+    public CommandeCreerOuModifier(Commande commande, Client[] clients, ActionListener listener) {
         this.commande = commande;
         listeBoutonsSupprimerArticles = new ArrayList<>();
 
@@ -139,7 +137,7 @@ public class CommandeCreerOuModifier extends Vue {
         }
         add(Box.createRigidArea(new Dimension(0,10)));
 
-        add(boutonAjout);
+        add(boutonAjouterArticle);
 
         pan = new JPanel();
 
@@ -151,7 +149,7 @@ public class CommandeCreerOuModifier extends Vue {
         JPanel conteneurBoutons = new JPanel();
         conteneurBoutons.setOpaque(false);
         if (commande == null)
-            conteneurBoutons.add(boutonValider);
+            conteneurBoutons.add(boutonAjouter);
         else
             conteneurBoutons.add(boutonValiderModification);
 
@@ -165,8 +163,10 @@ public class CommandeCreerOuModifier extends Vue {
 
         if (commande == null) {
             this.commande = new Commande();
-        } else {
         }
+
+        ajouterListener(listener);
+        afficherListeArticles(listener);
     }
 
     /**
@@ -208,16 +208,6 @@ public class CommandeCreerOuModifier extends Vue {
     }
 
     /**
-     * Affiche la fenêtre d'ajout d'article à la commande
-     * @param listener écouteurs pour les boutons
-     * @param articles liste des articles disponibles
-     */
-    public void afficherFenetreAjouterArticle(ActionListener listener, Article[] articles) {
-        //ajouterArticle = new AjouterArticle(JF, commande, articles);
-       // ajouterArticle.ajouterListener(listener);
-    }
-
-    /**
      * Créé un JLabel avec le texte passé en paramètre avec une bordure noire et le texte aligné au centre
      * @param texte texte qui sera placé dans le JLabel
      * @return JLabel créé
@@ -233,8 +223,8 @@ public class CommandeCreerOuModifier extends Vue {
      * Ajoute des écouteurs sur les boutons du panel
      */
     public void ajouterListener(ActionListener listener) {
-        boutonValider.addActionListener(listener);
-        boutonAjout.addActionListener(listener);
+        boutonAjouter.addActionListener(listener);
+        boutonAjouterArticle.addActionListener(listener);
         boutonAnnulerModification.addActionListener(listener);
         boutonValiderModification.addActionListener(listener);
     }
@@ -265,21 +255,6 @@ public class CommandeCreerOuModifier extends Vue {
         Client client = (Client)comboBoxClient.getSelectedItem();
         commande.setClient(client);
         return commande;
-    }
-
-    /**
-     * Récupère la fenêtre d'ajout d'article à la commande
-     * @return fenêtre d'ajout d'article
-     */
-    public AjouterArticle getAjouterArticle() {
-        return ajouterArticle;
-    }
-
-    /**
-     * Annuler l'ajout d'un article et ferme la fenêtre d'ajout d'article
-     */
-    public void annulerAjoutArticle() {
-        ajouterArticle = null;
     }
 
     /**
@@ -316,9 +291,7 @@ public class CommandeCreerOuModifier extends Vue {
         return checkBoxUpdateDate.isSelected();
     }
 
-	@Override
-	public void afficherListe(List liste, ActionListener listener) {
-		// TODO Auto-generated method stub
-		
-	}
+    public Commande getCommande() {
+        return commande;
+    }
 }

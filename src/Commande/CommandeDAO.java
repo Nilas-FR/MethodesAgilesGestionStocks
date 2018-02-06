@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import Client.Client;
-import Article.Article;
+import client.Client;
+import article.Article;
 
 /**
  * Classe d'accès aux données contenues dans la table article

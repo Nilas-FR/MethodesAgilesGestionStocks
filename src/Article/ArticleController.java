@@ -47,9 +47,9 @@ public class ArticleController extends Controller implements ActionListener {
         }
 
         // ouvre la fenêtre de modification de client (parcours boutons modification)
-        List<JButton> boutonsModifArticle = vue.getListBoutonsModificationArticles();
-        for (int i = 0; i < boutonsModifArticle.size(); i++) {
-            if(source == boutonsModifArticle.get(i)) {
+        List<JButton> boutonsModif = vue.getListBoutonsModification();
+        for (int i = 0; i < boutonsModif.size(); i++) {
+            if(source == boutonsModif.get(i)) {
                 fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(model.recupererListe().get(i), this);
                 PC.JF.setContentPane(fenetreCreerOuModifierArticle);
                 PC.JF.refresh();
@@ -60,9 +60,9 @@ public class ArticleController extends Controller implements ActionListener {
         /*
          * Vérifie l'écouteur des boutons de suppression de la liste des articles
          */
-        List<JButton> boutonsSupprArticle = vue.getListBoutonsSuppressionArticles();
-        for (int i = 0; i < boutonsSupprArticle.size(); i++) {
-            if(source == boutonsSupprArticle.get(i)) {
+        List<JButton> boutonsSuppr = vue.getListBoutonsSuppression();
+        for (int i = 0; i < boutonsSuppr.size(); i++) {
+            if(source == boutonsSuppr.get(i)) {
                 model.supprimer(model.recupererListe().get(i));
                 Vue.afficherListe(Model.recupererListe(), this);
                 PC.JF.refresh();
@@ -87,6 +87,7 @@ public class ArticleController extends Controller implements ActionListener {
             Vue.afficherListe(Model.recupererListe(), this);
             PC.JF.setContentPane(Vue);
             PC.JF.refresh();
+            fenetreCreerOuModifierArticle = null;
         }
     }
 }

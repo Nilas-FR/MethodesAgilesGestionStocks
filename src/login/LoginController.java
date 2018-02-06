@@ -16,7 +16,7 @@ public class LoginController extends Controller implements ActionListener {
 	public LoginController(PrincipaleController PC) {
 		super(PC);
 		this.Vue = new LoginVue();
-		Vue.ajouterListener(this);
+		//Vue.ajouterListener(this);
 	}
 
 	/** L'action des boutons est géré ici */

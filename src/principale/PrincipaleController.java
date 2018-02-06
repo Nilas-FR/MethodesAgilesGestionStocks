@@ -3,6 +3,7 @@ package principale;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import Commande.CommandeController;
 import article.ArticleController;
 import client.ClientController;
 import fournisseur.FournisseurController;
@@ -14,14 +15,17 @@ public class PrincipaleController implements MouseListener {
 	/** Pointeur vers la vue */
 	public final PrincipaleVue JF = new PrincipaleVue();
 
+    /** Pointeur vers le module de connection */
+    public final LoginController Login = new LoginController(this);
+
 	/** Pointeur vers le module des fournisseurs */
 	public final FournisseurController Fournisseur = new FournisseurController(this);
 	/** Pointeur vers le module des articles */
 	public final ArticleController Article = new ArticleController(this);
 	/** Pointeur vers le module des clients */
 	public final ClientController Client = new ClientController(this);
-	/** Pointeur vers le module de connection */
-	public final LoginController Login = new LoginController(this);
+    /** Pointeur vers le module de commandes */
+    public final CommandeController Commande = new CommandeController(this);
 	
 	/** Constructeur */
 	public PrincipaleController() {
@@ -34,7 +38,8 @@ public class PrincipaleController implements MouseListener {
 		if (Variables.VueActive == 0) Login.setActive("Login");
 		if (Variables.VueActive == 1) Article.setActive("Article");
 		if (Variables.VueActive == 2) Fournisseur.setActive("Fournisseur");
-		if (Variables.VueActive == 3) Client.setActive("client");
+        if (Variables.VueActive == 3) Client.setActive("Client");
+        if (Variables.VueActive == 4) Commande.setActive("Commande");
 		
 		JF.refresh();
 	}

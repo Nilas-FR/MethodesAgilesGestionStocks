@@ -1,7 +1,7 @@
 package Commande;
 
-import Article.Article;
-import Client.Client;
+import article.Article;
+import client.Client;
 
 import java.util.HashMap;
 import java.util.Map;

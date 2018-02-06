@@ -1,6 +1,9 @@
 package Commande;
 
 import javax.swing.*;
+
+import principale.Vue;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ import Client.Client;
  * */
 
 
-public class CommandeCreerOuModifier extends JPanel {
+public class CommandeCreerOuModifier extends Vue {
     /**
      * numero de version pour classe serialisable
      * Permet d'eviter le warning "The serializable class CommandeFenetre does not declare a static final serialVersionUID field of type long"
@@ -77,11 +80,6 @@ public class CommandeCreerOuModifier extends JPanel {
     public final JButton boutonAnnulerModification = new JButton("Annuler");
 
     /**
-     * Vue de l'application
-     */
-    private JFrame JF;
-
-    /**
      * Sauvegarde la commande sujete à une modification si il y en a une en cours
      */
     private Commande commande;
@@ -106,8 +104,7 @@ public class CommandeCreerOuModifier extends JPanel {
      * Définit la fenêtre et ses composants - affiche la fenêtre
      * Si commande est null, on va créer un nouvel commande, sinon on modifie celui passé en paramètre
      */
-    public CommandeCreerOuModifier(JFrame JF, Commande commande, Client[] clients) {
-        this.JF = JF;
+    public CommandeCreerOuModifier(Commande commande, Client[] clients) {
         this.commande = commande;
         listeBoutonsSupprimerArticles = new ArrayList<>();
 
@@ -166,16 +163,10 @@ public class CommandeCreerOuModifier extends JPanel {
         //ajouter une bordure vide de taille constante autour de l'ensemble des composants
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        JF.setContentPane(this);
-
         if (commande == null) {
             this.commande = new Commande();
-            JF.setTitle("Création de Commande");
         } else {
-            JF.setTitle("Modification de Commande");
         }
-
-        JF.pack();
     }
 
     /**
@@ -188,7 +179,6 @@ public class CommandeCreerOuModifier extends JPanel {
         if (commande == null || commande.getArticles().isEmpty()) {
             pan.setLayout(new GridLayout(1,1));
             pan.add(creerLabelListeArticles("Il n'y a aucun article dans la commande"));
-            JF.pack();
             return;
         }
 
@@ -215,7 +205,6 @@ public class CommandeCreerOuModifier extends JPanel {
         for (JButton bouton : listeBoutonsSupprimerArticles) {
             bouton.addActionListener(listener);
         }
-        JF.pack();
     }
 
     /**
@@ -224,8 +213,8 @@ public class CommandeCreerOuModifier extends JPanel {
      * @param articles liste des articles disponibles
      */
     public void afficherFenetreAjouterArticle(ActionListener listener, Article[] articles) {
-        ajouterArticle = new AjouterArticle(JF, commande, articles);
-        ajouterArticle.ajouterListener(listener);
+        //ajouterArticle = new AjouterArticle(JF, commande, articles);
+       // ajouterArticle.ajouterListener(listener);
     }
 
     /**
@@ -256,9 +245,6 @@ public class CommandeCreerOuModifier extends JPanel {
     public void validerAjoutArticle() {
         ajouterArticle.validerAjout();
         ajouterArticle = null;
-        JF.setContentPane(this);
-        JF.setTitle("Commande");
-        JF.pack();
     }
 
     /**
@@ -294,9 +280,6 @@ public class CommandeCreerOuModifier extends JPanel {
      */
     public void annulerAjoutArticle() {
         ajouterArticle = null;
-        JF.setContentPane(this);
-        JF.setTitle("Commande");
-        JF.pack();
     }
 
     /**
@@ -323,7 +306,6 @@ public class CommandeCreerOuModifier extends JPanel {
         }
         commande.supprimerArticle(article);
         afficherListeArticles(listener);
-        JF.pack();
     }
 
     /**
@@ -333,4 +315,10 @@ public class CommandeCreerOuModifier extends JPanel {
     public boolean changementDateActive() {
         return checkBoxUpdateDate.isSelected();
     }
+
+	@Override
+	public void afficherListe(List liste, ActionListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
 }

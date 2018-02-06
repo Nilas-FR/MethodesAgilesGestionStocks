@@ -1,6 +1,9 @@
 package Commande;
 
 import javax.swing.*;
+
+import principale.Vue;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ import Client.Client;
  * */
 
 
-public class CommandeFenetre extends JPanel {
+public class CommandeFenetre extends Vue {
 
 	/**
 	 * numero de version pour classe serialisable
@@ -55,11 +58,6 @@ public class CommandeFenetre extends JPanel {
 	 */
 	private List<JButton> listeBoutonsSupprimerCommande;
 
-    /**
-	 * Vue de l'application
-	 */
-	private JFrame JF;
-
 	/**
 	 * Fenêtre de création/modification de commande
 	 */
@@ -70,11 +68,8 @@ public class CommandeFenetre extends JPanel {
 	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 * @param JF JFrame globale de l'application
 	 */
-	public CommandeFenetre(JFrame JF) {
-		this.JF = JF;
-
+	public CommandeFenetre() {
 		//on fixe le titre de la fenêtre
-		JF.setTitle("Commande");
 
 		//choix du Layout pour ce conteneur
 		//il permet de gérer la position des éléments
@@ -101,19 +96,6 @@ public class CommandeFenetre extends JPanel {
 
 		listeBoutonsModifierCommande = new ArrayList<>();
 		listeBoutonsSupprimerCommande = new ArrayList<>();
-
-		JF.pack();
-	}
-
-	/**
-	 * Affiche la vue de création de nouvelle commande
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 * @param clients liste des clients de la base
-	 */
-	public void afficherVueNouvelleCommande(ActionListener listener, Client[] clients) {
-		fenetreCreerOuModifierCommande = new CommandeCreerOuModifier(JF, null, clients);
-		fenetreCreerOuModifierCommande.ajouterListener(listener);
-		fenetreCreerOuModifierCommande.afficherListeArticles(listener);
 	}
 
 	/**
@@ -123,20 +105,11 @@ public class CommandeFenetre extends JPanel {
 	 * @param clients liste des clients de la base
 	 */
 	public void afficherVueModifierCommande(ActionListener listener, Commande commande, Client[] clients) {
-        System.out.println("modifier commande ");
+       /* System.out.println("modifier commande ");
         System.out.println(commande);
 		fenetreCreerOuModifierCommande = new CommandeCreerOuModifier(JF, commande, clients);
 		fenetreCreerOuModifierCommande.ajouterListener(listener);
-        fenetreCreerOuModifierCommande.afficherListeArticles(listener);
-	}
-
-	/**
-	 * ferme la fenêtre de modification/création de commande et revient sur la page générale des commandes
-	 */
-	public void fermerFenetreCreationModification() {
-		fenetreCreerOuModifierCommande = null;
-		JF.setContentPane(this);
-		JF.pack();
+        fenetreCreerOuModifierCommande.afficherListeArticles(listener);*/
 	}
 
 	/**
@@ -155,7 +128,6 @@ public class CommandeFenetre extends JPanel {
 		if (commandes.isEmpty()) {
 			pan.setLayout(new GridLayout(1,1));
 			pan.add(creerLabelListeCommandes("Il n'y a aucun article dans la base de données"));
-			JF.pack();
 			return;
 		}
 
@@ -185,8 +157,6 @@ public class CommandeFenetre extends JPanel {
 		}
 
 		ajouterListenerListeCommandes(listener);
-
-		JF.pack();
 	}
 
 	/**
@@ -236,5 +206,16 @@ public class CommandeFenetre extends JPanel {
 	 */
 	public CommandeCreerOuModifier getFenetreCreationOuModificationCommande() {
 		return fenetreCreerOuModifierCommande;
+	}
+
+	@Override
+	public void ajouterListener(ActionListener listener) {
+		boutonAjouter.addActionListener(listener);
+	}
+
+	@Override
+	public void afficherListe(List liste, ActionListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }

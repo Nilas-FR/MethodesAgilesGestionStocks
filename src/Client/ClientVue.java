@@ -27,26 +27,10 @@ import java.util.List;
  * */
 
 public class ClientVue extends Vue {
-
-	/**
-	 * zone de texte pour la recherche de client
-	 */
-	private JTextField textFieldRecherche;
-
-	/**
-	 * bouton d'envoi du client
-	 */
-	public final JButton boutonAjouter = new JButton("Ajouter");
-
-	/**
-	 * bouton de recherche du client
-	 */
-	public final JButton boutonRecherche = new JButton("Rechercher un client selon son nom");
-
 	/**
 	 * Zone de texte pour afficher les clients
 	 */
-	private final JPanel pan = new JPanel();;
+	private final JPanel pan = new JPanel();
 
 	/**
 	 * Constructeur
@@ -100,6 +84,8 @@ public class ClientVue extends Vue {
 		// ajoute les écouteurs sur les boutons
 		boutonAjouter.addActionListener(listener);
 		boutonRecherche.addActionListener(listener);
+
+        boutonRecherche.setText("Recherche un client selon son nom");
 	}
 
 	/**
@@ -150,13 +136,5 @@ public class ClientVue extends Vue {
 			conteneurActions.add(boutonSuppr);
 			pan.add(conteneurActions);
 		}
-	}
-
-	/**
-	 * Ajoute des écouteurs sur les boutons de la liste des clients
-	 * @return valeur du champ de recherche
-	 */
-	public String getDesignationRecherche() {
-		return textFieldRecherche.getText();
 	}
 }

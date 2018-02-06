@@ -23,7 +23,23 @@ public abstract class Vue extends JPanel {
 	 * Liste des boutons associés aux objets pour leur suppression
 	 */
 	protected List<JButton> listeBoutonsSupprimer;
-	
+
+	/**
+	 * zone de texte pour la recherche de client
+	 */
+	protected JTextField textFieldRecherche;
+
+	/**
+	 * bouton d'envoi du client
+	 */
+	public final JButton boutonAjouter = new JButton("Ajouter");
+
+	/**
+	 * bouton de recherche du client
+	 */
+	public final JButton boutonRecherche = new JButton("Rechercher");
+
+
 	/**On ajoute le panel à la fenêtre principale
 	 * @param Titre est le titre de la fenêtre principale
 	 * @param JF est la fenêtre principale
@@ -34,8 +50,6 @@ public abstract class Vue extends JPanel {
 	}
 
 	public abstract void afficherListe(List liste, ActionListener listener);
-
-
 
 	/**
 	 * Créé un JLabel avec le texte passé en paramètre avec une bordure noire et le texte aligné au centre
@@ -63,5 +77,13 @@ public abstract class Vue extends JPanel {
 	 */
 	public List<JButton> getListBoutonsSuppression() {
 		return listeBoutonsSupprimer;
+	}
+
+	/**
+	 * Ajoute des écouteurs sur les boutons de la liste des clients
+	 * @return valeur du champ de recherche
+	 */
+	public String getStringRecherche() {
+		return textFieldRecherche.getText();
 	}
 }

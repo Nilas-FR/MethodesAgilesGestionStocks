@@ -41,21 +41,6 @@ import java.util.List;
 public class ArticleVue extends Vue {
 
 	/**
-	 * zone de texte pour la recherche d'article
-	 */
-	private JTextField textFieldRecherche;
-
-	/**
-	 * bouton d'envoi de l'article
-	 */
-	public final JButton boutonAjouter = new JButton("Ajouter");
-
-	/**
-	 * bouton de recherche d'article
-	 */
-	public final JButton boutonRecherche = new JButton("Rechercher un article selon sa désignation");
-
-	/**
 	 * Zone de texte pour afficher les articles
 	 */
 	private JPanel pan;
@@ -116,6 +101,8 @@ public class ArticleVue extends Vue {
 		// ajoute les écouteurs sur les boutons
 		boutonAjouter.addActionListener(listener);
 		boutonRecherche.addActionListener(listener);
+
+		boutonRecherche.setText("Recherche un article selon sa désignation");
 	}
 
 	/**
@@ -168,7 +155,7 @@ public class ArticleVue extends Vue {
 	 * Ajoute des écouteurs sur les boutons de la liste des articles
 	 * @return valeur du champ de recherche
 	 */
-	public String getDesignationRecherche() {
+	public String getStringRecherche() {
 		return textFieldRecherche.getText();
 	}
 }

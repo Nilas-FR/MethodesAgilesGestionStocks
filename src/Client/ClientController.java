@@ -1,7 +1,6 @@
 package client;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 import principale.Controller;
@@ -9,9 +8,7 @@ import principale.PrincipaleController;
 
 import javax.swing.*;
 
-public class ClientController extends Controller implements ActionListener {
-
-	private ClientCreerOuModifier fenetreCreerOuModifierClient = null;
+public class ClientController extends Controller {
 
 	public ClientController(PrincipaleController PC) {
 		super(PC);
@@ -22,68 +19,38 @@ public class ClientController extends Controller implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		ClientVue vue = (ClientVue) Vue;
-		ClientModel model = (ClientModel) Model;
 
 		// ouvre la fenêtre d'ajout de nouveau client
-		if (source == vue.boutonAjouter) {
-			fenetreCreerOuModifierClient = new ClientCreerOuModifier(null, this);
-			PC.JF.setContentPane(fenetreCreerOuModifierClient);
+		if (source == Vue.boutonAjouter) {
+			fenetreCreationModification = new ClientCreerOuModifier(null, this);
+			PC.JF.setContentPane(fenetreCreationModification);
 			PC.JF.refresh();
 			return;
 		}
 
 		// recherche de client selon son nom
-		if (source == vue.boutonRecherche) {
-			Vue.afficherListe(Model.chercher(vue.getDesignationRecherche()), this);
+		if (source == Vue.boutonRecherche) {
+			Vue.afficherListe(Model.chercher(Vue.getStringRecherche()), this);
 			PC.JF.refresh();
 			return;
 		}
 
 		// ouvre la fenêtre de modification de client (parcours boutons modification)
-        List<JButton> boutonsModif = vue.getListBoutonsModification();
+        List<JButton> boutonsModif = Vue.getListBoutonsModification();
         for (int i = 0; i < boutonsModif.size(); i++) {
             if(source == boutonsModif.get(i)) {
-				fenetreCreerOuModifierClient = new ClientCreerOuModifier(model.recupererListe().get(i), this);
-				PC.JF.setContentPane(fenetreCreerOuModifierClient);
+				fenetreCreationModification = new ClientCreerOuModifier(((ClientModel)Model).recupererListe().get(i), this);
+				PC.JF.setContentPane(fenetreCreationModification);
 				PC.JF.refresh();
                 return;
             }
         }
 
-        /*
-         * Vérifie l'écouteur des boutons de suppression de la liste des articles
-         */
-        List<JButton> boutonsSuppr = vue.getListBoutonsSuppression();
-        for (int i = 0; i < boutonsSuppr.size(); i++) {
-            if(source == boutonsSuppr.get(i)) {
-                model.supprimer(model.recupererListe().get(i));
-				Vue.afficherListe(Model.recupererListe(), this);
-				PC.JF.refresh();
-                return;
-            }
-        }
+        // vérifie si l'event est sur un bouton supprimer
+        if(verifierEventBoutonsSupprimer(source)) return;
 
-
-		// l'évènement a été délenché sur la page de modification/création de client
-		if (fenetreCreerOuModifierClient != null) {
-			// valider l'ajout d'un client
-			if (source == fenetreCreerOuModifierClient.boutonAjouter) {
-				model.ajouter(fenetreCreerOuModifierClient.validerCreation());
-			}
-			// valider la modification d'un client
-			if (source == fenetreCreerOuModifierClient.boutonValiderModification) {
-				model.modifier(fenetreCreerOuModifierClient.validerModification());
-			}
-			// Annuler la modification/création d'un client
-			// Aucune action n'est requise pour l'annulation
-
-			// ferme la fenêtre de modification/ajout
-			Vue.afficherListe(Model.recupererListe(), this);
-			PC.JF.setContentPane(Vue);
-			PC.JF.refresh();
-			fenetreCreerOuModifierClient = null;
-		}
+		// vérifie si l'event est dans la fenêtre d'ajout/modification
+        verifierEventFenetreAjoutModification(source);
 	}
 
 }

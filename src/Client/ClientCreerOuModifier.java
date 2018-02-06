@@ -1,5 +1,7 @@
 package client;
 
+import principale.FenetreCreationModification;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -23,12 +25,7 @@ import java.awt.event.ActionListener;
  * */
 
 
-public class ClientCreerOuModifier extends JPanel {
-    /**
-     * numero de version pour classe serialisable
-     * Permet d'eviter le warning "The serializable class CommandeVue does not declare a static final serialVersionUID field of type long"
-     */
-    private static final long serialVersionUID = 1L;
+public class ClientCreerOuModifier extends FenetreCreationModification {
 
     /**
      * zone de texte pour le  nom
@@ -84,27 +81,6 @@ public class ClientCreerOuModifier extends JPanel {
      * label email
      */
     private JLabel labelEmail;
-
-    /**
-     * bouton d'envoi d'ajout du client
-     */
-    public final JButton boutonAjouter = new JButton("Ajouter");
-
-    /**
-     * bouton d'envoi de modification du client
-     */
-    public final JButton boutonValiderModification = new JButton("Modifier");
-
-    /**
-     * bouton d'annulation de création/modification du client
-     */
-    public final JButton boutonAnnuler = new JButton("Annuler");
-
-    /**
-     * Panel contenant les bouton pour valider ou annuler une modification du client
-     */
-    private JPanel conteneurBoutons;
-
 
     /**
      * Sauvegarde la référence du client sujet à une modification si il y en a une en cours
@@ -172,7 +148,7 @@ public class ClientCreerOuModifier extends JPanel {
         add(labelReference);
         add(Box.createRigidArea(new Dimension(0,5)));
 
-        conteneurBoutons = new JPanel();
+        JPanel conteneurBoutons = new JPanel();
         conteneurBoutons.setOpaque(false);
         if (client == null)
             conteneurBoutons.add(boutonAjouter);
@@ -191,18 +167,10 @@ public class ClientCreerOuModifier extends JPanel {
     }
 
     /**
-     * Ajoute des écouteurs sur les boutons du panel
-     */
-    private void ajouterListener(ActionListener listener) {
-        boutonAjouter.addActionListener(listener);
-        boutonAnnuler.addActionListener(listener);
-        boutonValiderModification.addActionListener(listener);
-    }
-
-    /**
      * Rempli automatiquement les champs text field si un client est à modifier
      */
-    private void remplirChampsModification() {
+    @Override
+    protected void remplirChampsModification() {
         textFieldNom.setText(client.getNom());
         textFieldPrenom.setText(client.getPrenom());
         textFieldAdresse.setText(client.getAdresse());
@@ -214,6 +182,7 @@ public class ClientCreerOuModifier extends JPanel {
      * Renvoie le client à modifier avec les nouveaux paramètres
      * @return client sujet à la modification
      */
+    @Override
     public Client validerModification() {
         client.setNom(textFieldNom.getText());
         client.setPrenom(textFieldPrenom.getText());
@@ -228,6 +197,7 @@ public class ClientCreerOuModifier extends JPanel {
      * Renvoie le nouveau client avec ses paramètres
      * @return client à ajouter
      */
+    @Override
     public Client validerCreation() {
         client = new Client(textFieldNom.getText(),
                 textFieldPrenom.getText(),

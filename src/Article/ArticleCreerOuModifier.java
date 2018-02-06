@@ -1,11 +1,12 @@
 package article;
 
+import principale.FenetreCreationModification;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
@@ -31,12 +32,7 @@ import javax.swing.Box;
  * */
 
 
-public class ArticleCreerOuModifier extends JPanel {
-    /**
-     * numero de version pour classe serialisable
-     * Permet d'eviter le warning "The serializable class CommandeVue does not declare a static final serialVersionUID field of type long"
-     */
-    private static final long serialVersionUID = 1L;
+public class ArticleCreerOuModifier extends FenetreCreationModification {
 
     /**
      * zone de texte pour le champ designation
@@ -72,21 +68,6 @@ public class ArticleCreerOuModifier extends JPanel {
      * label quantité en stock
      */
     private JLabel labelQtestock;
-
-    /**
-     * bouton d'envoi de l'article
-     */
-    public final JButton boutonAjouter = new JButton("Ajouter");
-
-    /**
-     * bouton d'envoi de l'article
-     */
-    public final JButton boutonValiderModification = new JButton("Modifier");
-
-    /**
-     * bouton d'envoi de l'article
-     */
-    public final JButton boutonAnnulerModification = new JButton("Annuler");
 
     /**
      * Sauvegarde la référence de l'article sujet à une modification si il y en a une en cours
@@ -150,7 +131,7 @@ public class ArticleCreerOuModifier extends JPanel {
             remplirChampsModification();
         }
         add(conteneurBoutons);
-        conteneurBoutons.add(boutonAnnulerModification);
+        conteneurBoutons.add(boutonAnnuler);
         add(Box.createRigidArea(new Dimension(0,5)));
 
 
@@ -161,18 +142,10 @@ public class ArticleCreerOuModifier extends JPanel {
     }
 
     /**
-     * Ajoute des écouteurs sur les boutons du panel
-     */
-    private void ajouterListener(ActionListener listener) {
-        boutonAjouter.addActionListener(listener);
-        boutonAnnulerModification.addActionListener(listener);
-        boutonValiderModification.addActionListener(listener);
-    }
-
-    /**
      * Rempli automatiquement les champs text field si un article est à modifier
      */
-    private void remplirChampsModification() {
+    @Override
+    protected void remplirChampsModification() {
         textFieldPuHt.setText(Double.toString(article.getPuHt()));
         textFieldDesignation.setText(article.getDesignation());
         textFieldQteStock.setText(Integer.toString(article.getQteStock()));
@@ -182,6 +155,7 @@ public class ArticleCreerOuModifier extends JPanel {
      * Renvoie l'article à modifier avec les nouveaux paramètres
      * @return article sujet à la modification
      */
+    @Override
     public Article validerModification() {
         article.setDesignation(textFieldDesignation.getText());
         article.setPuHt(Double.parseDouble(textFieldPuHt.getText()));
@@ -194,6 +168,7 @@ public class ArticleCreerOuModifier extends JPanel {
      * Renvoie le nouvel article avec ses paramètres
      * @return article à ajouter
      */
+    @Override
     public Article validerCreation() {
         article = new Article(textFieldDesignation.getText(),
                 Double.parseDouble(textFieldPuHt.getText()),

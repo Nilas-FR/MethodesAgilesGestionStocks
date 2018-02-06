@@ -7,9 +7,7 @@ import java.util.List;
 import principale.Controller;
 import principale.PrincipaleController;
 
-public class ArticleController extends Controller implements ActionListener {
-
-    private ArticleCreerOuModifier fenetreCreerOuModifierArticle = null;
+public class ArticleController extends Controller {
 
     /**
      * Créé le controleur des articles
@@ -33,15 +31,15 @@ public class ArticleController extends Controller implements ActionListener {
 
         // ouvre la fenêtre d'ajout de nouveau client
         if (source == vue.boutonAjouter) {
-            fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(null, this);
-            PC.JF.setContentPane(fenetreCreerOuModifierArticle);
+            fenetreCreationModification = new ArticleCreerOuModifier(null, this);
+            PC.JF.setContentPane(fenetreCreationModification);
             PC.JF.refresh();
             return;
         }
 
         // recherche de client selon son nom
         if (source == vue.boutonRecherche) {
-            Vue.afficherListe(Model.chercher(vue.getDesignationRecherche()), this);
+            Vue.afficherListe(Model.chercher(vue.getStringRecherche()), this);
             PC.JF.refresh();
             return;
         }
@@ -50,45 +48,18 @@ public class ArticleController extends Controller implements ActionListener {
         List<JButton> boutonsModif = vue.getListBoutonsModification();
         for (int i = 0; i < boutonsModif.size(); i++) {
             if(source == boutonsModif.get(i)) {
-                fenetreCreerOuModifierArticle = new ArticleCreerOuModifier(model.recupererListe().get(i), this);
-                PC.JF.setContentPane(fenetreCreerOuModifierArticle);
+                fenetreCreationModification = new ArticleCreerOuModifier(model.recupererListe().get(i), this);
+                PC.JF.setContentPane(fenetreCreationModification);
                 PC.JF.refresh();
                 return;
             }
         }
 
-        /*
-         * Vérifie l'écouteur des boutons de suppression de la liste des articles
-         */
-        List<JButton> boutonsSuppr = vue.getListBoutonsSuppression();
-        for (int i = 0; i < boutonsSuppr.size(); i++) {
-            if(source == boutonsSuppr.get(i)) {
-                model.supprimer(model.recupererListe().get(i));
-                Vue.afficherListe(Model.recupererListe(), this);
-                PC.JF.refresh();
-                return;
-            }
-        }
+        // vérifie si l'event est sur un bouton supprimer
+        if (verifierEventBoutonsSupprimer(source)) return;
 
-        // l'évènement a été délenché sur la page de modification/création de client
-        if (fenetreCreerOuModifierArticle != null) {
-            // valider l'ajout d'un client
-            if (source == fenetreCreerOuModifierArticle.boutonAjouter) {
-                model.ajouter(fenetreCreerOuModifierArticle.validerCreation());
-            }
-            // valider la modification d'un client
-            if (source == fenetreCreerOuModifierArticle.boutonValiderModification) {
-                model.modifier(fenetreCreerOuModifierArticle.validerModification());
-            }
-            // Annuler la modification/création d'un client
-            // Aucune action n'est requise pour l'annulation
-
-            // ferme la fenêtre de modification/ajout
-            Vue.afficherListe(Model.recupererListe(), this);
-            PC.JF.setContentPane(Vue);
-            PC.JF.refresh();
-            fenetreCreerOuModifierArticle = null;
-        }
+        // vérifie si l'event est dans la fenêtre d'ajout/modification
+        verifierEventFenetreAjoutModification(source);
     }
 }
 

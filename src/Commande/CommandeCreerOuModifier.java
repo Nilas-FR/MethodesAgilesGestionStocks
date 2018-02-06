@@ -10,6 +10,7 @@ import java.util.Map;
 
 import article.Article;
 import client.Client;
+import principale.FenetreCreationModification;
 
 
 /**
@@ -30,12 +31,7 @@ import client.Client;
  * */
 
 
-public class CommandeCreerOuModifier extends JPanel {
-    /**
-     * numero de version pour classe serialisable
-     * Permet d'eviter le warning "The serializable class CommandeVue does not declare a static final serialVersionUID field of type long"
-     */
-    private static final long serialVersionUID = 1L;
+public class CommandeCreerOuModifier extends FenetreCreationModification {
 
     /**
      * choix du client de la commande
@@ -58,24 +54,9 @@ public class CommandeCreerOuModifier extends JPanel {
     private JLabel labelDate;
 
     /**
-     * bouton d'envoi de création de commande
-     */
-    public final JButton boutonAjouter = new JButton("Valider");
-
-    /**
      * bouton d'ajout d'article
      */
     public final JButton boutonAjouterArticle = new JButton("Ajouter un article");
-
-    /**
-     * bouton d'envoi de modification de commande
-     */
-    public final JButton boutonValiderModification = new JButton("Modifier");
-
-    /**
-     * bouton d'annulation de modification/création de commande
-     */
-    public final JButton boutonAnnulerModification = new JButton("Annuler");
 
     /**
      * Sauvegarde la commande sujete à une modification si il y en a une en cours
@@ -155,7 +136,7 @@ public class CommandeCreerOuModifier extends JPanel {
 
 
         add(conteneurBoutons);
-        conteneurBoutons.add(boutonAnnulerModification);
+        conteneurBoutons.add(boutonAnnuler);
         add(Box.createRigidArea(new Dimension(0,5)));
 
         //ajouter une bordure vide de taille constante autour de l'ensemble des composants
@@ -166,6 +147,8 @@ public class CommandeCreerOuModifier extends JPanel {
         }
 
         ajouterListener(listener);
+        boutonAjouterArticle.addActionListener(listener);
+
         afficherListeArticles(listener);
     }
 
@@ -212,7 +195,7 @@ public class CommandeCreerOuModifier extends JPanel {
      * @param texte texte qui sera placé dans le JLabel
      * @return JLabel créé
      */
-    public JLabel creerLabelListeArticles(String texte) {
+    private JLabel creerLabelListeArticles(String texte) {
         JLabel label = new JLabel(texte);
         label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         label.setHorizontalAlignment(JLabel.CENTER);
@@ -220,27 +203,16 @@ public class CommandeCreerOuModifier extends JPanel {
     }
 
     /**
-     * Ajoute des écouteurs sur les boutons du panel
+     * Inutile
      */
-    public void ajouterListener(ActionListener listener) {
-        boutonAjouter.addActionListener(listener);
-        boutonAjouterArticle.addActionListener(listener);
-        boutonAnnulerModification.addActionListener(listener);
-        boutonValiderModification.addActionListener(listener);
-    }
-
-    /**
-     * Valide l'ajout d'un article à la commande et ferme la fenêtre d'ajout d'article
-     */
-    public void validerAjoutArticle() {
-        ajouterArticle.validerAjout();
-        ajouterArticle = null;
-    }
+    @Override
+    protected void remplirChampsModification() { }
 
     /**
      * Valide la modification de la commande
      * @return la commande à modifier dans la base
      */
+    @Override
     public Commande validerModification() {
         Client client = (Client)comboBoxClient.getSelectedItem();
         commande.setClient(client);
@@ -251,36 +223,11 @@ public class CommandeCreerOuModifier extends JPanel {
      * Valide la création de la commande
      * @return la commande à insérer dans la base
      */
+    @Override
     public Commande validerCreation() {
         Client client = (Client)comboBoxClient.getSelectedItem();
         commande.setClient(client);
         return commande;
-    }
-
-    /**
-     * Récupère la liste des boutons de suppression des articles de la commande
-     * @return liste des boutons de suppression
-     */
-    public List<JButton> getListeBoutonsSupprimerArticles() {
-        return listeBoutonsSupprimerArticles;
-    }
-
-    /**
-     * Supprime un article de la commande en fonction de son index et met à jour la liste des articles
-     * @param index index de l'article à supprimer
-     * @param listener écouteurs à placer sur la liste des articles de la commande une fois mise à jour
-     */
-    public void supprimerArticleCommande(int index, ActionListener listener) {
-        Article article = null;
-        for(Map.Entry<Article, Integer> art : commande.getArticles().entrySet()) {
-            if (index == 0) {
-                article = art.getKey();
-                break;
-            }
-            index--;
-        }
-        commande.supprimerArticle(article);
-        afficherListeArticles(listener);
     }
 
     /**

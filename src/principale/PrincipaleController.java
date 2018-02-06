@@ -10,6 +10,8 @@ import fournisseur.FournisseurController;
 import login.LoginController;
 import variables.Variables;
 
+import javax.swing.*;
+
 public class PrincipaleController implements MouseListener {
 	
 	/** Pointeur vers la vue */
@@ -67,6 +69,11 @@ public class PrincipaleController implements MouseListener {
         	Variables.VueActive = 4;
         }
         refreshActive();
+    }
+
+    public void afficherJPanel(JPanel panel) {
+        JF.setContentPane(panel);
+        JF.refresh();
     }
 
     @Override

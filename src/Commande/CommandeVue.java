@@ -115,7 +115,7 @@ public class CommandeVue extends Vue {
 			JButton boutonModif = new JButton("Modifier");
 			boutonModif.addActionListener(listener);
 			JButton boutonSuppr = new JButton("Supprimer");
-			boutonModif.addActionListener(listener);
+			boutonSuppr.addActionListener(listener);
 			listeBoutonsModifier.add(boutonModif);
 			listeBoutonsSupprimer.add(boutonSuppr);
 			conteneurActions.add(boutonModif);

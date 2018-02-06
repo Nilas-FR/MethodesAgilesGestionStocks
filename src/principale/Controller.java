@@ -4,9 +4,12 @@ public class Controller {
 	
 	/** Un pointeur vers le controller principale */
 	protected PrincipaleController PC;
-	
+
 	/** Un pointeur vers la vue du module */
 	protected Vue Vue;
+
+	/** Un pointeur vers le model du module */
+	protected Model Model;
 	
 	/**Constructeur
 	 * @param PC controller principale

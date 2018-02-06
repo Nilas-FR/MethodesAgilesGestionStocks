@@ -4,9 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import Client.ClientController;
-import Client.ClientVue;
 import fournisseur.FournisseurController;
-import login.LoginController;
 import message.Message;
 import variables.Variables;
 
@@ -14,9 +12,7 @@ public class PrincipaleController implements MouseListener {
 	
 	/** Pointeur vers la vue */
 	public final PrincipaleVue JF = new PrincipaleVue();
-	
-	/** Pointeur vers le module de connection */
-	public final LoginController Login = new LoginController(this);
+
 	/** Pointeur vers le module des fournisseurs */
 	public final FournisseurController Fournisseur = new FournisseurController(this);
 	/** Pointeur vers le module des clients */
@@ -30,8 +26,6 @@ public class PrincipaleController implements MouseListener {
 	
 	/** Actualise le panel sélectionné*/
 	public void refreshActive() {
-		if (Variables.VueActive == 0) Login.setActive();
-		else Login.setUnactive();
 		if (Variables.VueActive == 2) Fournisseur.setActive();
 		else Fournisseur.setUnactive();
 		if (Variables.VueActive == 3) Client.setActive();

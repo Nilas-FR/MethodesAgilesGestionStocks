@@ -80,10 +80,8 @@ public class ClientVue extends Vue {
 	/**
 	 * Constructeur
 	 * Définit la fenêtre et ses composants - affiche la fenêtre
-	 * @param JF JFrame globale de l'application
 	 */
-	public ClientVue() {
-		
+	public ClientVue(ActionListener listener) {
 		//choix du Layout pour ce conteneur
 		//il permet de gérer la position des éléments
 		//il autorisera un retaillage de la fenêtre en conservant la présentation
@@ -128,9 +126,11 @@ public class ClientVue extends Vue {
 
 		listeBoutonsModifierClient = new ArrayList<>();
 		listeBoutonsSupprimerClient = new ArrayList<>();
-	}
 
-	
+		// ajoute les écouteurs sur les boutons
+		boutonAjouter.addActionListener(listener);
+		boutonRecherche.addActionListener(listener);
+	}
 
 	/**
 	 * Ajoute des écouteurs sur les boutons de la liste des clients
@@ -140,44 +140,15 @@ public class ClientVue extends Vue {
 		return textFieldRecherche.getText();
 	}
 
-	/**
-	 * Affiche la vue de modification du client
-	 * @param listener écouteurs à placer sur les boutons de la fenêtre
-	 * @param client client sujet à la modification
-	 */
-	//TODO
-	//public void afficherVueModifierClient(ActionListener listener, Client client) {
-	//	fenetreCreerOuModifierClient = new ClientCreerOuModifier(JF, client);
-	//	fenetreCreerOuModifierClient.ajouterListener(listener);
-	//}
-
-	/**
-	 * Valider la création d'un client
-	 * @return client à entrer dans la base
-	 */
-	public Client validerCreation() {
-		Client client = fenetreCreerOuModifierClient.validerCreation();
-		fenetreCreerOuModifierClient = null;
-		//fermerFenetreCreationModification();
-		return client;
-	}
-
-	/**
-	 * ferme la fenêtre de modification/création du client et revient sur la page générale des clients
-	 */
-	//TODO
-	//public void fermerFenetreCreationModification() {
-	//	fenetreCreerOuModifierClient = null;
-	//	JF.setContentPane(this);
-	//	JF.pack();
-	//}
 
 	/**
 	 * Affiche la liste des clients avec leur paramètres ainsi qu'un bouton pour les modifier
-	 * @param clients liste des clients à afficher
+	 * @param liste liste des clients à afficher
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
-	public void afficherListeClients(List<Client> clients, ActionListener listener) {
+	@Override
+	public void afficherListe(List liste, ActionListener listener) {
+		List<Client> clients = liste;
 		pan.removeAll();
 		listeBoutonsModifierClient.clear();
 		listeBoutonsSupprimerClient.clear();
@@ -225,7 +196,7 @@ public class ClientVue extends Vue {
 	 * @param texte texte qui sera placé dans le JLabel
 	 * @return JLabel créé
 	 */
-	public JLabel creerLabelListeClients(String texte) {
+	private JLabel creerLabelListeClients(String texte) {
 		JLabel label = new JLabel(texte);
 		label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		label.setHorizontalAlignment(JLabel.CENTER);
@@ -236,7 +207,7 @@ public class ClientVue extends Vue {
 	 * Ajoute des écouteurs sur les boutons de modification et de suppression des clients
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
-	public void ajouterListenerListeClients(ActionListener listener) {
+	private void ajouterListenerListeClients(ActionListener listener) {
 		for (JButton bouton : listeBoutonsModifierClient) {
 			bouton.addActionListener(listener);
 		}
@@ -268,14 +239,14 @@ public class ClientVue extends Vue {
 	public ClientCreerOuModifier getFenetreCreationOuModificationClient() {
 		return fenetreCreerOuModifierClient;
 	}
-	
+
 	/**
 	 * Ajoute des écouteurs sur les boutons du panel
 	 * @param listener écouteurs à placer sur les boutons de la fenêtre
 	 */
+	@Override
 	public void ajouterListener(ActionListener listener) {
-		boutonAjouter.addActionListener(listener);
-		boutonRecherche.addActionListener(listener);
+		// Inutile
 	}
 	
 	public void setActive(JFrame JF) {

@@ -86,29 +86,25 @@ public class ClientCreerOuModifier extends JPanel {
     private JLabel labelEmail;
 
     /**
-     * bouton d'envoi du client
+     * bouton d'envoi d'ajout du client
      */
     public final JButton boutonAjouter = new JButton("Ajouter");
 
     /**
-     * bouton d'envoi du client
+     * bouton d'envoi de modification du client
      */
     public final JButton boutonValiderModification = new JButton("Modifier");
 
     /**
-     * bouton d'envoi du client
+     * bouton d'annulation de création/modification du client
      */
-    public final JButton boutonAnnulerModification = new JButton("Annuler");
+    public final JButton boutonAnnuler = new JButton("Annuler");
 
     /**
      * Panel contenant les bouton pour valider ou annuler une modification du client
      */
     private JPanel conteneurBoutons;
 
-    /**
-     * Vue de l'application
-     */
-    private JFrame JF;
 
     /**
      * Sauvegarde la référence du client sujet à une modification si il y en a une en cours
@@ -120,12 +116,8 @@ public class ClientCreerOuModifier extends JPanel {
      * Définit la fenêtre et ses composants - affiche la fenêtre
      * Si client est null, on va créer un nouveau client, sinon on modifie celui passé en paramètre
      */
-    public ClientCreerOuModifier(JFrame JF, Client client) {
-        this.JF = JF;
+    public ClientCreerOuModifier(Client client, ActionListener listener) {
         this.client = client;
-
-        //on fixe le titre de la fenêtre
-        JF.setTitle("Client");
 
         //choix du Layout pour ce conteneur
         //il permet de gérer la position des éléments
@@ -142,7 +134,7 @@ public class ClientCreerOuModifier extends JPanel {
         textFieldTelephone =new JTextField();
         textFieldAdresse =new JTextField();
         textFieldEmail =new JTextField();
-        labelReference=new JLabel("La Référence sera générée par la base de données");
+        labelReference=new JLabel("L'Identifiant sera généré par la base de données");
         labelNom =new JLabel("Nom :");
         labelPrenom =new JLabel("Prénom :");
         labelTelephone =new JLabel("Téléphone :");
@@ -189,23 +181,21 @@ public class ClientCreerOuModifier extends JPanel {
             remplirChampsModification();
         }
         add(conteneurBoutons);
-        conteneurBoutons.add(boutonAnnulerModification);
+        conteneurBoutons.add(boutonAnnuler);
         add(Box.createRigidArea(new Dimension(0,5)));
 
         //ajouter une bordure vide de taille constante autour de l'ensemble des composants
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        JF.setContentPane(this);
-
-        JF.pack();
+        ajouterListener(listener);
     }
 
     /**
      * Ajoute des écouteurs sur les boutons du panel
      */
-    public void ajouterListener(ActionListener listener) {
+    private void ajouterListener(ActionListener listener) {
         boutonAjouter.addActionListener(listener);
-        boutonAnnulerModification.addActionListener(listener);
+        boutonAnnuler.addActionListener(listener);
         boutonValiderModification.addActionListener(listener);
     }
 

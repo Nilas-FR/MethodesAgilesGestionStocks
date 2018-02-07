@@ -3,9 +3,8 @@ package principale;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import commande.Commande;
+import accueil.AccueilController;
 import commande.CommandeController;
-import article.Article;
 import article.ArticleController;
 import client.ClientController;
 import fournisseur.FournisseurController;
@@ -22,6 +21,8 @@ public class PrincipaleController implements MouseListener {
 
     /** Pointeur vers le module de connection */
     public final LoginController Login = new LoginController(this);
+    /** Pointeur vers le module de connection */
+    public final AccueilController Accueil = new AccueilController(this);
 
 	/** Pointeur vers le module des fournisseurs */
 	public final FournisseurController Fournisseur = new FournisseurController(this);
@@ -37,15 +38,17 @@ public class PrincipaleController implements MouseListener {
 		JF.setActionListener(this);
         updateMenuConnecte();
 		refreshActive();
+        Accueil.updateTousLesChamps();
 	}
 	
 	/** Actualise le panel sélectionné*/
 	public void refreshActive() {
 		if (Variables.VueActive == 0) Login.setActive("Login");
-		if (Variables.VueActive == 1) Article.setActive("Article");
+		if (Variables.VueActive == 1) Article.setActive("Accueil");
 		if (Variables.VueActive == 2) Fournisseur.setActive("Fournisseur");
         if (Variables.VueActive == 3) Client.setActive("Client");
         if (Variables.VueActive == 4) Commande.setActive("Commande");
+        if (Variables.VueActive == 5) Accueil.setActive("Accueil");
 		
 		JF.refresh();
 	}
@@ -54,11 +57,15 @@ public class PrincipaleController implements MouseListener {
      * Change le texte du menu de connexion en fonction de si l'utilisateur est connecté ou non
      */
 	public void updateMenuConnecte() {
-        if (Variables.VueActive == 0) {
+        if (Variables.VueActive == 0 || Variables.Droit < 1) {
             JF.menuLogin.setText("Se connecter");
-        } else if (Variables.VueActive == 1) {
+        } else {
             JF.menuLogin.setText("Se déconnecter");
         }
+    }
+
+    public void updateStats() {
+        Accueil.updateTousLesChamps();
     }
 
     /**
@@ -99,8 +106,11 @@ public class PrincipaleController implements MouseListener {
         } else if (source == JF.menuClients) {
         	Variables.VueActive = 3;
         } else if (source == JF.menuCommandes) {
-        	Variables.VueActive = 4;
+            Variables.VueActive = 4;
+        } else if (source == JF.menuAccueil) {
+            Variables.VueActive = 5;
         }
+        updateMenuConnecte();
         refreshActive();
     }
 

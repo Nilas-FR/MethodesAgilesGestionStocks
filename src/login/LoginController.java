@@ -38,7 +38,7 @@ public class LoginController extends Controller implements ActionListener {
 					//On attribue le niveau de droit adéquat
 					Variables.Droit = 1;
 					//On le passe à la vue suivante
-					Variables.VueActive = 1;
+					Variables.VueActive = 5;
 					//On actualise le controller principale
 					vue.TFMdp.setText("");
 					PC.updateMenuConnecte();
@@ -50,7 +50,7 @@ public class LoginController extends Controller implements ActionListener {
 			//On attribue le niveau de droit adéquat
 			Variables.Droit = 0;
 			//On le passe à la vue suivante
-			Variables.VueActive = 2;
+			Variables.VueActive = 5;
 			//On actualise le controller principale
 			PC.refreshActive();
 		}

@@ -40,6 +40,7 @@ public abstract class Controller implements ActionListener {
 			if(source == boutonsSuppr.get(i)) {
 				Model.supprimer(Model.recupererListe().get(i));
 				PC.updateListeSuppression();
+				PC.updateStats();
 				PC.JF.refresh();
 				return true;
 			}
@@ -57,10 +58,12 @@ public abstract class Controller implements ActionListener {
 			// valider l'ajout d'un client
 			if (source == fenetreCreationModification.boutonAjouter) {
 				Model.ajouter(fenetreCreationModification.validerCreation());
+				PC.updateStats();
 			}
 			// valider la modification d'un client
 			if (source == fenetreCreationModification.boutonValiderModification) {
 				Model.modifier(fenetreCreationModification.validerModification());
+				PC.updateStats();
 			}
 			// Annuler la modification/création d'un client
 			// Aucune action n'est requise pour l'annulation

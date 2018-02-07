@@ -14,7 +14,7 @@ public class CommandeController extends Controller {
 	private AjouterArticle fenetreAjoutArticle = null;
 
     /**
-     * Créé le controleur des articles
+     * Crï¿½ï¿½ le controleur des articles
 	 * @param PC controleur principal
      */
     public CommandeController(PrincipaleController PC) {
@@ -25,8 +25,8 @@ public class CommandeController extends Controller {
     }
 
     /**
-     * Cherche les actions à  effectuer en fonction du bouton qui a été déclenché
-     * @param e bouton qui a déclenché l'évènement
+     * Cherche les actions ï¿½ effectuer en fonction du bouton qui a ï¿½tï¿½ dï¿½clenchï¿½
+     * @param e bouton qui a dï¿½clenchï¿½ l'ï¿½vï¿½nement
      */
     public void actionPerformed(ActionEvent e) {
 		if (Variables.Droit < 1) {
@@ -36,34 +36,34 @@ public class CommandeController extends Controller {
 
     	Object source = e.getSource();
 
-		// ouvre la fenêtre d'ajout de la nouvelle commande
+		// ouvre la fenï¿½tre d'ajout de la nouvelle commande
 		if (source == Vue.boutonAjouter) {
 			fenetreCreationModification = new CommandeCreerOuModifier(null, ((CommandeModel)Model).recupererListeClients(), this);
 			PC.afficherJPanel(fenetreCreationModification);
 			return;
 		}
 
-		// ouvre la fenêtre de modification de commande (parcours boutons modification)
+		// ouvre la fenï¿½tre de modification de commande (parcours boutons modification)
 		List<JButton> boutonsModif = Vue.getListBoutonsModification();
 		for (int i = 0; i < boutonsModif.size(); i++) {
 			if(source == boutonsModif.get(i)) {
-				fenetreCreationModification = new CommandeCreerOuModifier(null, ((CommandeModel)Model).recupererListeClients(), this);
-				//fenetreCreationModification = new CommandeCreerOuModifier(((CommandeModel)Model).recupererListe().get(i), ((CommandeModel)Model).recupererListeClients(), this);
+				fenetreCreationModification = new CommandeCreerOuModifier(((CommandeModel)Model).recupererListe().get(i), ((CommandeModel)Model).recupererListeClients(), this);
 				PC.afficherJPanel(fenetreCreationModification);
 				return;
 			}
 		}
 
-		// vérifie si l'event est sur un bouton supprimer
+		// vï¿½rifie si l'event est sur un bouton supprimer
 		if(verifierEventBoutonsSupprimer(source)) return;
 
 		CommandeCreerOuModifier fenetreCreerOuModifierCommande = (CommandeCreerOuModifier) fenetreCreationModification;
-		// l'évènement a été délenché sur la page de modification/création de commande
+		// l'ï¿½vï¿½nement a ï¿½tï¿½ dï¿½lenchï¿½ sur la page de modification/crï¿½ation de commande
 		if (fenetreCreerOuModifierCommande != null) {
 			// valider l'ajout d'un client
 			if (source == fenetreCreerOuModifierCommande.boutonAjouter) {
 				Model.ajouter(fenetreCreerOuModifierCommande.validerCreation());
 				PC.updateListeDeductionStockCommande();
+				PC.updateStats();
 				fermerFenetreAjoutModificationCommande();
 				return;
 			}
@@ -71,9 +71,10 @@ public class CommandeController extends Controller {
 			if (source == fenetreCreerOuModifierCommande.boutonValiderModification) {
 				((CommandeModel)Model).modifier(fenetreCreerOuModifierCommande.validerModification(), fenetreCreerOuModifierCommande.changementDateActive());
 				fermerFenetreAjoutModificationCommande();
+				PC.updateStats();
 				return;
 			}
-			// Annuler la modification/création d'un client
+			// Annuler la modification/crï¿½ation d'un client
 			if (source == fenetreCreerOuModifierCommande.boutonAnnuler) {
 				fermerFenetreAjoutModificationCommande();
 				return;
@@ -87,7 +88,7 @@ public class CommandeController extends Controller {
 				return;
 			}
 
-			// l'évènement a été délenché sur la page de d'ajout d'article dans la commande
+			// l'ï¿½vï¿½nement a ï¿½tï¿½ dï¿½lenchï¿½ sur la page de d'ajout d'article dans la commande
 			if (fenetreAjoutArticle != null) {
 				if (source == fenetreAjoutArticle.boutonValider) {
 					fenetreAjoutArticle.validerAjout();
@@ -104,7 +105,7 @@ public class CommandeController extends Controller {
     }
 
 	/**
-	 * Ferme la fenêtre d'ajout/modification de commande et retourne sur la fenêtre listant les commandes
+	 * Ferme la fenï¿½tre d'ajout/modification de commande et retourne sur la fenï¿½tre listant les commandes
 	 */
 	private void fermerFenetreAjoutModificationCommande() {
 		Vue.afficherListe(Model.recupererListe(), this);
@@ -113,7 +114,7 @@ public class CommandeController extends Controller {
 	}
 
 	/**
-	 * Ferme la fenêtre d'ajout d'article dans la commande et retourne sur la fenêtre de modification/ajout de commande
+	 * Ferme la fenï¿½tre d'ajout d'article dans la commande et retourne sur la fenï¿½tre de modification/ajout de commande
 	 */
 	private void fermerFenetreAjoutArticle() {
 		((CommandeCreerOuModifier)fenetreCreationModification).afficherListeArticles(this);

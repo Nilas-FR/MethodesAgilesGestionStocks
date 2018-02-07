@@ -20,7 +20,7 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
     private JComboBox<Client> comboBoxClient;
 
     /**
-     * check box de la mise à  jour de la date de la commande
+     * check box de la mise ï¿½ jour de la date de la commande
      */
     private JCheckBox checkBoxUpdateDate;
 
@@ -40,7 +40,7 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
     public final JButton boutonAjouterArticle = new JButton("Ajouter un article");
 
     /**
-     * Sauvegarde la commande sujete à  une modification si il y en a une en cours
+     * Sauvegarde la commande sujete ï¿½ une modification si il y en a une en cours
      */
     private Commande commande;
 
@@ -50,28 +50,28 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
     private JPanel pan;
 
     /**
-     * Liste des boutons associés aux articles pour leur suppression
+     * Liste des boutons associï¿½s aux articles pour leur suppression
      */
     private List<JButton> listeBoutonsSupprimerArticles;
 
     /**
-     * Fenetre d'ajout d'article à  la commande
+     * Fenetre d'ajout d'article ï¿½ la commande
      */
     private AjouterArticle ajouterArticle;
 
     /**
      * Constructeur
-     * Définit la fenêtre et ses composants - affiche la fenêtre
-     * Si commande est null, on va créer un nouvel commande, sinon on modifie celui passé en paramà¨tre
+     * Dï¿½finit la fenï¿½tre et ses composants - affiche la fenï¿½tre
+     * Si commande est null, on va crï¿½er un nouvel commande, sinon on modifie celui passï¿½ en paramï¿½tre
      */
     public CommandeCreerOuModifier(Commande commande, Client[] clients, ActionListener listener) {
         this.commande = commande;
         listeBoutonsSupprimerArticles = new ArrayList<>();
 
         //choix du Layout pour ce conteneur
-        //il permet de gérer la position des éléments
-        //il autorisera un retaillage de la fenêtre en conservant la présentation
-        //BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
+        //il permet de gï¿½rer la position des ï¿½lï¿½ments
+        //il autorisera un retaillage de la fenï¿½tre en conservant la prï¿½sentation
+        //BoxLayout permet par exemple de positionner les ï¿½lements sur une colonne ( PAGE_AXIS )
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         //choix de la couleur pour le conteneur
@@ -81,7 +81,7 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
         comboBoxClient = new JComboBox<>(clients);
         labelClient = new JLabel("Client :");
         labelDate = new JLabel("La date de la commande sera la date au moment de validation.");
-        checkBoxUpdateDate = new JCheckBox("Mettre à  jour la date de la commande");
+        checkBoxUpdateDate = new JCheckBox("Mettre ï¿½ jour la date de la commande");
         checkBoxUpdateDate.setOpaque(false);
 
         //ajout des composants sur le container
@@ -134,7 +134,7 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Affiche la liste des articles de la commande et leur quantité ainsi qu'un bouton pour les supprimer
+     * Affiche la liste des articles de la commande et leur quantitï¿½ ainsi qu'un bouton pour les supprimer
      */
     public void afficherListeArticles(ActionListener listener) {
         pan.removeAll();
@@ -149,8 +149,8 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
         pan.setLayout(new GridLayout(commande.getArticles().size()+1,1));
         pan.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 
-        // créé tous les labels avec à  chaque fois une lineBorder et un texte aligné au centre
-        pan.add(creerLabelListeArticles("Article"));
+        // crï¿½ï¿½ tous les labels avec ï¿½ chaque fois une lineBorder et un texte alignï¿½ au centre
+        pan.add(creerLabelListeArticles("Accueil"));
         pan.add(creerLabelListeArticles("Quantite"));
         pan.add(creerLabelListeArticles("Supprimer"));
 
@@ -172,9 +172,9 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Créé un JLabel avec le texte passé en paramà¨tre avec une bordure noire et le texte aligné au centre
-     * @param texte texte qui sera placé dans le JLabel
-     * @return JLabel créé
+     * Crï¿½ï¿½ un JLabel avec le texte passï¿½ en paramï¿½tre avec une bordure noire et le texte alignï¿½ au centre
+     * @param texte texte qui sera placï¿½ dans le JLabel
+     * @return JLabel crï¿½ï¿½
      */
     private JLabel creerLabelListeArticles(String texte) {
         JLabel label = new JLabel(texte);
@@ -191,7 +191,7 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
 
     /**
      * Valide la modification de la commande
-     * @return la commande à  modifier dans la base
+     * @return la commande ï¿½ modifier dans la base
      */
     @Override
     public Commande validerModification() {
@@ -201,8 +201,8 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Valide la création de la commande
-     * @return la commande à  insérer dans la base
+     * Valide la crï¿½ation de la commande
+     * @return la commande ï¿½ insï¿½rer dans la base
      */
     @Override
     public Commande validerCreation() {
@@ -212,8 +212,8 @@ public class CommandeCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Vérifie que le checkbox de mise à  jour de la date pour une modification d'article est activé ou non
-     * @return modification de date activée ou non
+     * Vï¿½rifie que le checkbox de mise ï¿½ jour de la date pour une modification d'article est activï¿½ ou non
+     * @return modification de date activï¿½e ou non
      */
     public boolean changementDateActive() {
         return checkBoxUpdateDate.isSelected();

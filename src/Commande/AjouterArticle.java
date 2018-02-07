@@ -16,12 +16,12 @@ public class AjouterArticle extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * choix de l'article à  ajouter
+     * choix de l'article ï¿½ ajouter
      */
     private JComboBox<Article> comboBoxArticle;
 
     /**
-     * choix de la quantité d'article à  ajouter
+     * choix de la quantitï¿½ d'article ï¿½ ajouter
      */
     private JComboBox<Integer> comboBoxQuantite;
 
@@ -36,21 +36,21 @@ public class AjouterArticle extends JPanel {
     public final JButton boutonAnnuler = new JButton("Annuler");
 
     /**
-     * Commande à  gérer
+     * commande ï¿½ gï¿½rer
      */
     private Commande commande;
 
     /**
      * Constructeur
-     * Définit la fenêtre et ses composants - affiche la fenêtre
+     * Dï¿½finit la fenï¿½tre et ses composants - affiche la fenï¿½tre
      */
     public AjouterArticle(Commande commande, Article[] articles, ActionListener listener) {
         this.commande = commande;
 
         //choix du Layout pour ce conteneur
-        //il permet de gérer la position des éléments
-        //il autorisera un retaillage de la fenêtre en conservant la présentation
-        //BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
+        //il permet de gï¿½rer la position des ï¿½lï¿½ments
+        //il autorisera un retaillage de la fenï¿½tre en conservant la prï¿½sentation
+        //BoxLayout permet par exemple de positionner les ï¿½lements sur une colonne ( PAGE_AXIS )
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         //choix de la couleur pour le conteneur
@@ -67,7 +67,7 @@ public class AjouterArticle extends JPanel {
             }
         });
 
-        JLabel labelArticle = new JLabel("Article :");
+        JLabel labelArticle = new JLabel("Accueil :");
         JLabel labelQuantite = new JLabel("Quantite :");
 
         //ajout des composants sur le container
@@ -94,7 +94,7 @@ public class AjouterArticle extends JPanel {
     }
 
     /**
-     * Met à  jour le choix des quantités pour l'article sélectionné
+     * Met ï¿½ jour le choix des quantitï¿½s pour l'article sï¿½lectionnï¿½
      */
     private void updateBomboBoxQuantite() {
         Article article = (Article)comboBoxArticle.getSelectedItem();
@@ -106,7 +106,7 @@ public class AjouterArticle extends JPanel {
     }
 
     /**
-     * Ajoute des écouteurs sur les boutons
+     * Ajoute des ï¿½couteurs sur les boutons
      */
     private void ajouterListener(ActionListener listener) {
         boutonValider.addActionListener(listener);
@@ -116,7 +116,7 @@ public class AjouterArticle extends JPanel {
     }
 
     /**
-     * Valide l'ajout de l'article avec la quantité désirée
+     * Valide l'ajout de l'article avec la quantitï¿½ dï¿½sirï¿½e
      */
     public void validerAjout() {
         Article article = (Article)comboBoxArticle.getSelectedItem();

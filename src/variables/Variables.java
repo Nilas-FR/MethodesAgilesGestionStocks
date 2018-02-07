@@ -18,7 +18,7 @@ public class Variables {
 	/** Vue actuelle
 	 *  -1, Aucune
 	 *   0, Login
-	 *	 1, Article   
+	 *	 1, Accueil
 	 *   */
 	public static int VueActive = 0;
 }

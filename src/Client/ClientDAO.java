@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import Commande.Commande;
-import Commande.CommandeDAO;
+import commande.Commande;
+import commande.CommandeDAO;
 import variables.Variables;
 
 /**

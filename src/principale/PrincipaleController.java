@@ -3,8 +3,8 @@ package principale;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import Commande.Commande;
-import Commande.CommandeController;
+import commande.Commande;
+import commande.CommandeController;
 import article.Article;
 import article.ArticleController;
 import client.ClientController;

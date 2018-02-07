@@ -47,6 +47,10 @@ public abstract class Controller implements ActionListener {
 		return false;
 	}
 
+	/**
+	 * Vérifie si l'event déclenché est sur la fenêtre de modification/ajout d'objet dans la base
+	 * @param source event récupéré
+	 */
 	protected void verifierEventFenetreAjoutModification(Object source) {
 		// l'évènement a été délenché sur la page de modification/création de client
 		if (fenetreCreationModification != null) {

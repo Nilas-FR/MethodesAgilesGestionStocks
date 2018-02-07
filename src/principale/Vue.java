@@ -49,6 +49,11 @@ public abstract class Vue extends JPanel {
 		JF.setTitle(Titre);
 	}
 
+	/**
+	 * Affiche la liste de la fenetre dans le scrollpane et place les écouteurs sur les boutons
+	 * @param liste
+	 * @param listener
+	 */
 	public abstract void afficherListe(List liste, ActionListener listener);
 
 	/**

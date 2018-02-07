@@ -37,8 +37,7 @@ public class ClientController extends Controller
 		// ouvre la fenêtre d'ajout de nouveau client
 		if (source == Vue.boutonAjouter) {
 			fenetreCreationModification = new ClientCreerOuModifier(null, this);
-			PC.JF.setContentPane(fenetreCreationModification);
-			PC.JF.refresh();
+			PC.afficherJPanel(fenetreCreationModification);
 			return;
 		}
 
@@ -54,8 +53,7 @@ public class ClientController extends Controller
         for (int i = 0; i < boutonsModif.size(); i++) {
             if(source == boutonsModif.get(i)) {
 				fenetreCreationModification = new ClientCreerOuModifier(((ClientModel)Model).recupererListe().get(i), this);
-				PC.JF.setContentPane(fenetreCreationModification);
-				PC.JF.refresh();
+				PC.afficherJPanel(fenetreCreationModification);
                 return;
             }
         }

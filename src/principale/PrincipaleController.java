@@ -10,6 +10,7 @@ import article.ArticleController;
 import client.ClientController;
 import fournisseur.FournisseurController;
 import login.LoginController;
+import message.Message;
 import variables.Variables;
 
 import javax.swing.*;
@@ -71,6 +72,9 @@ public class PrincipaleController implements MouseListener {
         Commande.Vue.afficherListe(Commande.Model.recupererListe(), Commande);
     }
 
+    /**
+     * Met à jour la fenêtre article pour actualiser les stock après une commande
+     */
     public void updateListeDeductionStockCommande() {
         Article.Vue.afficherListe(Article.Model.recupererListe(), Article);
     }
@@ -81,8 +85,8 @@ public class PrincipaleController implements MouseListener {
         Object source = e.getSource();
         
         if (Variables.VueActive == 0) {
-        	//Message.MessageSimple("Connection requise", "Veuillez d'abord vous connecter.");
-        	//return; //TODO Enlever pour la version livrable
+        	Message.MessageSimple("Connection requise", "Veuillez d'abord vous connecter.");
+        	return;
         }
 
         if (source == JF.menuLogin) {
@@ -100,11 +104,19 @@ public class PrincipaleController implements MouseListener {
         refreshActive();
     }
 
+    /**
+     * Affiche le panel passé en paramètre
+     * @param panel
+     */
     public void afficherJPanel(JPanel panel) {
         JF.setContentPane(panel);
         JF.refresh();
     }
 
+    /**
+     * Récupération des évènements liés à la souris
+     * @param e
+     */
     @Override
     public void mousePressed(MouseEvent e) {
 

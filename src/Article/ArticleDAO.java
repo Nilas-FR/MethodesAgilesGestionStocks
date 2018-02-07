@@ -4,19 +4,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static variables.Variables.LOGIN;
+import static variables.Variables.PASS;
+import static variables.Variables.URL;
+
 /**
  * Classe d'accès aux données contenues dans la table article
  * @version 1.1
  * */
 public class ArticleDAO {
-
-	/**
-	 * Paramètres de connexion à la base de données MySQL
-	 * URL, LOGIN et PASS sont des constantes
-	 */
-	private final static String URL = "jdbc:mysql://localhost/stocks";
-	private final static String LOGIN="root";
-	private final static String PASS="";
 
 	/**
 	 * Constructeur de la classe
@@ -109,7 +105,6 @@ public class ArticleDAO {
 			try {if (con != null)con.close();} catch (Exception ignored) {}
 		}
 		return retour;
-
 	}
 
 	/**

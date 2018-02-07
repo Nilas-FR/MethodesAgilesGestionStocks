@@ -7,11 +7,12 @@ import java.util.List;
 public class ArticleModel extends Model {
 
     /**
-     * Gestionnaire des articles de la base de données
+     * Gestionnaire des articles (DAO) de la base de données
      */
     private final ArticleDAO articleDAO;
+
     /**
-     * UtilisateurDAO de gestion des articles
+     * Constructeur, initialise le DAO
      */
     public ArticleModel() {
         articleDAO = new ArticleDAO();

@@ -1,5 +1,4 @@
-DROP DATABASE IF EXISTS stocks;
-CREATE DATABASE stocks;
+CREATE DATABASE IF NOT EXISTS stocks;
 USE stocks;
 
 CREATE TABLE IF NOT EXISTS ARTICLE (
@@ -71,16 +70,17 @@ ADD FOREIGN KEY FK_2_INCLU_ARTICLE (Article) REFERENCES ARTICLE (Reference);
 --
 
 INSERT INTO `article` (`Reference`, `Designation`, `PrixUnitaireHT`, `Stock`) VALUES
-(1, 'Article1', 50, 20),
-(2, 'Article2', 100, 5),
+(1, 'Star Wars 7', -100, 5000),
+(2, 'Pain au chocolat', 5, 10),
 (3, 'Chaise', 199, 3),
-(4, 'Tour Eiffel', 789613, 1),
+(4, 'Prototype de WC', 150, 2),
 (5, 'Pain', 2, 120);
 
 INSERT INTO `client` (`Identifiant`, `Nom`, `Prenom`, `Adresse`, `Telephone`, `Email`) VALUES
 (1, 'Ducroz', 'Jules', '10 Avenue XXX', '0384123456', 'jules.ducroz@uha.fr'),
 (2, 'Couchot', 'Adrien', '3 Rue ZZZ', '0666666666', 'adrien.couchot@uha.fr'),
-(3, 'Hammoudi', 'Karim', '28 Boulevard AAA', '0389987654', 'karim.hammoudi@uha.fr');
+(3, 'Hammoudi', 'Karim', '28 Boulevard AAA', '0389987654', 'karim.hammoudi@uha.fr'),
+(4, 'Chouhad', 'Hicham', '101 Rue du Pigeon', '', '');
 
 
 INSERT INTO `fournisseur` (`Siret`, `Adresse`, `Nom`) VALUES
@@ -109,10 +109,10 @@ INSERT INTO `inclu_article` (`Commande`, `Article`, `Quantite`) VALUES
 
 INSERT INTO `fourni_article` (`Reference`, `Siret`, `PrixUnitaireHT`) VALUES
 (1, "12345678901234", 25),
-(1, "51947352782728", 23),
 (2, "12345678901234", 1),
 (3, "51947352782728", 140.5),
 (3, "78913528728286", 150.9),
 (4, "78913528728286", 10),
-(5, "78913528728286", 0.5);
+(5, "51947352782728", 23),
+(1, "78913528728286", 0.5);
 

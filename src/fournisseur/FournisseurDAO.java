@@ -8,6 +8,9 @@ import variables.*;
 
 public class FournisseurDAO {
 	
+	/**
+	 * Constructeur
+	 */
 	public FournisseurDAO() {
 		// chargement du pilote de bases de données
 		try {
@@ -17,6 +20,10 @@ public class FournisseurDAO {
 		}
 	}
 	
+	/**
+	 * Récupère la liste des fournisseurs dans la base de données
+	 * @return un vector des fournisseurs
+	 */
 	public Vector<Fournisseur> getListeFournisseurs() {
 		Vector<Fournisseur> fournisseurs = new Vector<Fournisseur>(10,10);
 		Connection con = null;
@@ -45,6 +52,10 @@ public class FournisseurDAO {
 		return fournisseurs;
 	}
 	
+	/**
+	 * Supprime un fournisseur de la base de données
+	 * @param Siret le siret du fournisseur à supprimer
+	 */
 	public void supprimerFournisseur(String Siret) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -65,6 +76,10 @@ public class FournisseurDAO {
 		}
 	}
 	
+	/**
+	 * Ajoute un fournisseur à la base de données
+	 * @param F le fournisseur à ajouter
+	 */
 	public void ajouterFournisseur(Fournisseur F) {
 		Connection con = null;
 		PreparedStatement ps = null;

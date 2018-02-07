@@ -1,4 +1,4 @@
-package Commande;
+package commande;
 
 import javax.swing.*;
 
@@ -11,25 +11,6 @@ import java.util.List;
 
 import client.Client;
 
-
-/**
- * Classe CommandeVue
- * DÃ©finit et ouvre une fenetre qui :
- *    - Permet l'insertion d'un nouvel article dans la table article via
- * la saisie des valeurs de dÃ©signation, prix et quantitÃ© en stock
- *    - Permet l'affichage de tous les articles une zone de texte
- *    
- *    Pour aller plus loin : 
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/panel.html
- *    DiffÃ©rents types de composants graphiques sont disponibles
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/componentlist.html
- *    Sans oublier la rÃ©fÃ©rence d'ouvrage utilisÃ©e dans le cours "programmer avec Java"
- *    
- * @version 1.2
- * */
-
-
 public class CommandeVue extends Vue {
 
 	/**
@@ -39,13 +20,13 @@ public class CommandeVue extends Vue {
 
 	/**
 	 * Constructeur
-	 * DÃ©finit la fenÃªtre et ses composants - affiche la fenÃªtre
+	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 */
 	public CommandeVue(ActionListener listener) {
 		//choix du Layout pour ce conteneur
-		//il permet de gÃ©rer la position des Ã©lÃ©ments
-		//il autorisera un retaillage de la fenÃªtre en conservant la prÃ©sentation
-		//BoxLayout permet par exemple de positionner les Ã©lements sur une colonne ( PAGE_AXIS )
+		//il permet de gérer la position des éléments
+		//il autorisera un retaillage de la fenêtre en conservant la présentation
+		//BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		//choix de la couleur pour le conteneur
@@ -73,8 +54,8 @@ public class CommandeVue extends Vue {
 	/**
 	 * Affiche la liste des commandes avec l'identifiant, le client et la date de validation
      * ainsi qu'un bouton pour les modifier ou les supprimer
-	 * @param liste liste des commandes Ã  afficher
-	 * @param listener Ã©couteurs Ã  placer sur les boutons de la liste
+	 * @param liste liste des commandes à  afficher
+	 * @param listener écouteurs à  placer sur les boutons de la liste
 	 */
 	@Override
 	public void afficherListe(List liste, ActionListener listener) {
@@ -86,14 +67,14 @@ public class CommandeVue extends Vue {
 
 		if (commandes.isEmpty()) {
 			pan.setLayout(new GridLayout(1,1));
-			pan.add(creerLabelListe("Il n'y a aucun article dans la base de donnÃ©es"));
+			pan.add(creerLabelListe("Il n'y a aucun article dans la base de données"));
 			return;
 		}
 
 		pan.setLayout(new GridLayout(commandes.size()+1,1));
 		pan.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 
-		// crÃ©Ã© tous les labels avec Ã  chaque fois une lineBorder et un texte alignÃ© au centre
+		// créé tous les labels avec à  chaque fois une lineBorder et un texte aligné au centre
 		pan.add(creerLabelListe("Identifiant"));
 		pan.add(creerLabelListe("Client"));
 		pan.add(creerLabelListe("Date"));

@@ -52,7 +52,6 @@ public class FournisseurVue extends Vue {
 		Top.add(TFNom);
 		Top.add(TFAdresse);
 		Top.add(boutonAjouter);
-        boutonAjouter.addActionListener(listener);
 		//Partie N - Fournisseur N
 		for (int i = 0; i < Fournisseurs.size(); i++) {
 			Bot.add(new JLabel(Fournisseurs.elementAt(i).Siret));

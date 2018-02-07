@@ -1,4 +1,4 @@
-package Commande;
+package commande;
 
 import article.Article;
 import client.Client;
@@ -10,7 +10,7 @@ import principale.Model;
 public class CommandeModel extends Model {
 
     /**
-     * Gestionnaire des commandes de la base de donnÃ©es
+     * Gestionnaire des commandes de la base de données
      */
     private final CommandeDAO commandeDAO;
 
@@ -22,25 +22,25 @@ public class CommandeModel extends Model {
     }
 
     /**
-     * Ajoute un commande dans la base de donnÃ©es
-     * @param objet commande Ã  ajouter Ã  la base
-     * @return le succÃ¨s de l'opÃ©ration
+     * Ajoute un commande dans la base de données
+     * @param objet commande à  ajouter à  la base
+     * @return le succès de l'opération
      */
     @Override
     public int ajouter(Object objet) {
         Commande commande = (Commande) objet;
-        //on demande Ã  la classe de communication d'envoyer l'commande dans la table commande
+        //on demande à  la classe de communication d'envoyer l'commande dans la table commande
         int retour = commandeDAO.ajouter(commande, true);
-        // affichage du nombre de lignes ajoutÃ©es dans la bdd pour vÃ©rification
-        System.out.println(retour + " ligne ajoutÃ©e");
+        // affichage du nombre de lignes ajoutées dans la bdd pour vérification
+        System.out.println(retour + " ligne ajoutée");
 
         return retour;
     }
 
     /**
-     * Modifie la commande passÃ©e en paramÃ¨tre dans la base de donnÃ©es sans modifier la date
-     * @param objet commande Ã  modifier
-     * @return le succÃ¨s de l'opÃ©ration
+     * Modifie la commande passée en paramètre dans la base de données sans modifier la date
+     * @param objet commande à  modifier
+     * @return le succès de l'opération
      */
     @Override
     public int modifier(Object objet) {
@@ -48,33 +48,33 @@ public class CommandeModel extends Model {
     }
 
     /**
-     * Modifie la commande passÃ©e en paramÃ¨tre dans la base de donnÃ©es
-     * @param objet commande Ã  modifier
+     * Modifie la commande passée en paramètre dans la base de données
+     * @param objet commande à  modifier
      * @param changerDate indique si il faut modifier la date de la commande ou non
-     * @return le succÃ¨s de l'opÃ©ration
+     * @return le succès de l'opération
      */
     public int modifier(Object objet, boolean changerDate) {
         Commande commande = (Commande) objet;
-        //on demande Ã  la classe de communication d'envoyer l'commande dans la table commande
+        //on demande à  la classe de communication d'envoyer l'commande dans la table commande
         int retour = commandeDAO.modifier(commande, changerDate);
-        // affichage du nombre de lignes modifiÃ©es dans la bdd pour vÃ©rification
-        System.out.println(retour + " ligne modifiÃ©e");
+        // affichage du nombre de lignes modifiées dans la bdd pour vérification
+        System.out.println(retour + " ligne modifiée");
 
         return retour;
     }
 
     /**
-     * Supprime la commande passÃ©e en paramÃ¨tre dans la base de donnÃ©es
-     * @param objet commande Ã  supprimer
-     * @return le succÃ¨s de l'opÃ©ration
+     * Supprime la commande passée en paramètre dans la base de données
+     * @param objet commande à  supprimer
+     * @return le succès de l'opération
      */
     @Override
     public int supprimer(Object objet) {
         Commande commande = (Commande) objet;
-        //on demande Ã  la classe de communication d'envoyer l'commande dans la table commande
+        //on demande à  la classe de communication d'envoyer l'commande dans la table commande
         int retour = commandeDAO.supprimer(commande);
-        // affichage du nombre de lignes supprimÃ©es dans la bdd pour vÃ©rification
-        System.out.println(retour + " ligne supprimÃ©e");
+        // affichage du nombre de lignes supprimées dans la bdd pour vérification
+        System.out.println(retour + " ligne supprimée");
 
         return retour;
     }
@@ -82,11 +82,11 @@ public class CommandeModel extends Model {
     @Override
     public List chercher(String pattern) {
         return null;
-        // non implÃ©mentÃ©e pour les commandes
+        // non implémentée pour les commandes
     }
 
     /**
-     * Renvoie la liste des commandes de la table associÃ©e
+     * Renvoie la liste des commandes de la table associée
      * @return liste des commandes
      */
     @Override

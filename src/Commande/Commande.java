@@ -1,4 +1,4 @@
-package Commande;
+package commande;
 
 import article.Article;
 import client.Client;
@@ -18,7 +18,7 @@ public class Commande {
 	private int identifiant;
 
 	/**
-	 * Liste des articles avec leur quantitÃ©
+	 * Liste des articles avec leur quantité
 	 */
 	private HashMap<Article, Integer> articles;
 
@@ -34,7 +34,7 @@ public class Commande {
 
 	/**
 	 * Constructeur
-	 * @param identifiant rÃ©fÃ©rence de la commande
+	 * @param identifiant référence de la commande
 	 * @param client client de la commande
 	 * @param articles articles de la commande
 	 */
@@ -46,7 +46,7 @@ public class Commande {
 
 	/**
 	 * Constructeur
-	 * @param identifiant rÃ©fÃ©rence de la commande
+	 * @param identifiant référence de la commande
 	 * @param client client de la commande
 	 * @param date date de la commande
 	 */
@@ -58,7 +58,7 @@ public class Commande {
 	}
 
 	/**
-	 * Constructeur - la rÃ©fÃ©rence n'est pas fixÃ©e dans le programme
+	 * Constructeur - la référence n'est pas fixée dans le programme
 	 * @param client client de la commande
 	 * @param articles articles de la commande
 	 */
@@ -69,7 +69,7 @@ public class Commande {
 	}
 
 	/**
-	 * Constructeur - la rÃ©fÃ©rence n'est pas fixÃ©e dans le programme
+	 * Constructeur - la référence n'est pas fixée dans le programme
 	 * @param client client de la commande
 	 */
 	public Commande(Client client) {
@@ -79,7 +79,7 @@ public class Commande {
 	}
 
 	/**
-	 * Constructeur - seul l'identifiant est enregistrÃ©, il sert pour supprimer les commandes d'un client que l'on veut lui mÃªme supprimer
+	 * Constructeur - seul l'identifiant est enregistré, il sert pour supprimer les commandes d'un client que l'on veut lui màªme supprimer
 	 * @param identifiant identifiant de la commande
 	 */
 	public Commande(int identifiant) {
@@ -113,7 +113,7 @@ public class Commande {
 
 	/**
 	 * getter pour l'attribut articles
-	 * @return liste des articles avec leur quantitÃ©
+	 * @return liste des articles avec leur quantité
 	 */
 	public HashMap<Article, Integer> getArticles() {
 		return articles;
@@ -152,13 +152,13 @@ public class Commande {
 	}
 
 	/**
-	 * Ajoute quantite article Ã  la commande, Ã©crase l'ancience valeur si dÃ©ja existante
+	 * Ajoute quantite article à  la commande, écrase l'ancience valeur si déja existante
 	 * @param article article de la commande
 	 * @param quantite quantite d'article
 	 */
 	public void ajouterArticle(Article article, int quantite) {
 		for(Map.Entry<Article, Integer> art : articles.entrySet()) {
-			// si article dÃ©ja dans le hashmap
+			// si article déja dans le hashmap
 			if (article.getReference() == art.getKey().getReference()) {
 				articles.put(art.getKey(), quantite);
 				return;
@@ -169,19 +169,19 @@ public class Commande {
 
 	/**
 	 * Supprime l'article de la liste
-	 * @param article article Ã  supprimer
+	 * @param article article à  supprimer
 	 */
 	public void supprimerArticle(Article article) {
 		articles.remove(article);
 	}
 
 	/**
-	 * RedÃ©finition de la mÃ©thode toString permettant de dÃ©finir la traduction de l'objet en String
+	 * Redéfinition de la méthode toString permettant de définir la traduction de l'objet en String
 	 * pour l'affichage par exemple
 	 */
 	@Override
 	public String toString() {
-		StringBuilder com = new StringBuilder("Commande [rÃ©f : " + Integer.toString(identifiant) + " - client " + client + " - articles :");
+		StringBuilder com = new StringBuilder("Commande [réf : " + Integer.toString(identifiant) + " - client " + client + " - articles :");
 		for(Map.Entry<Article, Integer> article : articles.entrySet()) {
 			com.append("\t ").append(article.getValue()).append(" ").append(article.getKey());
 		}

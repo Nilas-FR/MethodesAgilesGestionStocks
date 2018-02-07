@@ -12,6 +12,9 @@ import variables.Variables;
 
 public class FournisseurController extends Controller {
 
+	/**Constructeur
+	 * @param PC Fenêtre principale
+	 */
 	public FournisseurController(PrincipaleController PC) {
 		super(PC);
 		this.Vue = new FournisseurVue(this);
@@ -19,12 +22,14 @@ public class FournisseurController extends Controller {
 		((FournisseurVue)Vue).MaJ(((FournisseurModel)Model).getListeFournisseurs(), this);
 	}
 
+	/** Action lorsqu'un bouton est cliqué */
     public void actionPerformed(ActionEvent e) {
 		if (Variables.Droit < 1) {
 			Message.MessageAlerte("Droit insuffisant", "Vous n'avez pas les droits de modification, veuillez vous connecter.");
 			return;
 		}
 
+		// On récupèrele bouton cliqué
     	JButton JB = (JButton) e.getSource();
 		FournisseurVue vue = (FournisseurVue) Vue;
 		FournisseurModel model = (FournisseurModel) Model;

@@ -1,4 +1,4 @@
-package Commande;
+package commande;
 
 import article.Article;
 
@@ -8,25 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-
-/**
- * Classe CommandeVue
- * DÃ©finit et ouvre une fenetre qui :
- *    - Permet l'insertion d'un nouvel commande dans la table commande via
- * la saisie des valeurs de dÃ©signation, prix et quantitÃ© en stock
- *    - Permet l'affichage de tous les articles une zone de texte
- *
- *    Pour aller plus loin :
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/panel.html
- *    DiffÃ©rents types de composants graphiques sont disponibles
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/componentlist.html
- *    Sans oublier la rÃ©fÃ©rence d'ouvrage utilisÃ©e dans le cours "programmer avec Java"
- *
- * @version 1.2
- * */
-
-
 public class AjouterArticle extends JPanel {
     /**
      * numero de version pour classe serialisable
@@ -35,12 +16,12 @@ public class AjouterArticle extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * choix de l'article Ã  ajouter
+     * choix de l'article à  ajouter
      */
     private JComboBox<Article> comboBoxArticle;
 
     /**
-     * choix de la quantitÃ© d'article Ã  ajouter
+     * choix de la quantité d'article à  ajouter
      */
     private JComboBox<Integer> comboBoxQuantite;
 
@@ -55,21 +36,21 @@ public class AjouterArticle extends JPanel {
     public final JButton boutonAnnuler = new JButton("Annuler");
 
     /**
-     * Commande Ã  gÃ©rer
+     * Commande à  gérer
      */
     private Commande commande;
 
     /**
      * Constructeur
-     * DÃ©finit la fenÃªtre et ses composants - affiche la fenÃªtre
+     * Définit la fenêtre et ses composants - affiche la fenêtre
      */
     public AjouterArticle(Commande commande, Article[] articles, ActionListener listener) {
         this.commande = commande;
 
         //choix du Layout pour ce conteneur
-        //il permet de gÃ©rer la position des Ã©lÃ©ments
-        //il autorisera un retaillage de la fenÃªtre en conservant la prÃ©sentation
-        //BoxLayout permet par exemple de positionner les Ã©lements sur une colonne ( PAGE_AXIS )
+        //il permet de gérer la position des éléments
+        //il autorisera un retaillage de la fenêtre en conservant la présentation
+        //BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         //choix de la couleur pour le conteneur
@@ -113,7 +94,7 @@ public class AjouterArticle extends JPanel {
     }
 
     /**
-     * Met Ã  jour le choix des quantitÃ©s pour l'article sÃ©lectionnÃ©
+     * Met à  jour le choix des quantités pour l'article sélectionné
      */
     private void updateBomboBoxQuantite() {
         Article article = (Article)comboBoxArticle.getSelectedItem();
@@ -125,7 +106,7 @@ public class AjouterArticle extends JPanel {
     }
 
     /**
-     * Ajoute des Ã©couteurs sur les boutons
+     * Ajoute des écouteurs sur les boutons
      */
     private void ajouterListener(ActionListener listener) {
         boutonValider.addActionListener(listener);
@@ -135,7 +116,7 @@ public class AjouterArticle extends JPanel {
     }
 
     /**
-     * Valide l'ajout de l'article avec la quantitÃ© dÃ©sirÃ©e
+     * Valide l'ajout de l'article avec la quantité désirée
      */
     public void validerAjout() {
         Article article = (Article)comboBoxArticle.getSelectedItem();

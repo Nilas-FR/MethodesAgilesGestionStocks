@@ -1,4 +1,4 @@
-package Commande;
+package commande;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,13 +9,13 @@ import client.Client;
 import article.Article;
 
 /**
- * Classe d'accÃ¨s aux donnÃ©es contenues dans la table article
+ * Classe d'accès aux données contenues dans la table article
  * @version 1.1
  * */
 public class CommandeDAO {
 
 	/**
-	 * ParamÃ¨tres de connexion Ã  la base de donnÃ©es MySQL
+	 * Paramètres de connexion à  la base de données MySQL
 	 * URL, LOGIN et PASS sont des constantes
 	 */
 	private final static String URL = "jdbc:mysql://localhost/stocks";
@@ -26,7 +26,7 @@ public class CommandeDAO {
 	 * Constructeur de la classe
 	 */
 	public CommandeDAO() {
-		// chargement du pilote de bases de donnÃ©es
+		// chargement du pilote de bases de données
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -36,23 +36,23 @@ public class CommandeDAO {
 
 	/**
 	 * Permet d'ajouter une commande dans la table commande
-	 * l'identifiant de la commande est produit automatiquement par la base de donnÃ©es en utilisant une sÃ©quence
-	 * Le mode est auto-commit par dÃ©faut : chaque insertion est validÃ©e
-	 * @param nouvCommande l'article Ã  ajouter
-	 * @param changerDate si true, enregistrer la date courante, sinon la date enregistrÃ©e dans la commande
-	 * @return le nombre de ligne ajoutÃ©es dans la table
+	 * l'identifiant de la commande est produit automatiquement par la base de données en utilisant une séquence
+	 * Le mode est auto-commit par défaut : chaque insertion est validée
+	 * @param nouvCommande l'article à  ajouter
+	 * @param changerDate si true, enregistrer la date courante, sinon la date enregistrée dans la commande
+	 * @return le nombre de ligne ajoutées dans la table
 	 */
 	public int ajouter(Commande nouvCommande, boolean changerDate) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
 
-		//connexion Ã  la base de donnÃ©es
+		//connexion à  la base de données
 		try {
 			//tentative de connexion
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			//prÃ©paration de l'instruction SQL, chaque ? reprÃ©sente une valeur Ã  communiquer dans l'insertion
-			//les getters permettent de rÃ©cupÃ©rer les valeurs des attributs souhaitÃ©s de nouvCommande
+			//préparation de l'instruction SQL, chaque ? représente une valeur à  communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvCommande
 			ps = con.prepareStatement("INSERT INTO commande (Client, DateCommande) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, nouvCommande.getClient().getIdentifiant());
 			java.sql.Timestamp date;
@@ -63,10 +63,10 @@ public class CommandeDAO {
 
 			ps.setTimestamp(2, date);
 
-			//ExÃ©cution de la requÃªte
+			//Exécution de la requête
 			retour=ps.executeUpdate();
 
-			// rÃ©cupÃ¨re l'identifiant de la commande insÃ©rÃ©e
+			// récupère l'identifiant de la commande insérée
 			ResultSet generatedKeys = ps.getGeneratedKeys();
 			if (generatedKeys.next()) {
 				nouvCommande.setIdentifiant(generatedKeys.getInt(1));
@@ -89,8 +89,8 @@ public class CommandeDAO {
 	}
 
 	/**
-	 * Permet de rÃ©cupÃ©rer une commande Ã  partir de son identifiant passÃ© en paramÃ¨tre
-	 * @param identifiant dÃ©signation du ou des articles Ã  rÃ©cupÃ©rer
+	 * Permet de récupérer une commande à  partir de son identifiant passé en paramètre
+	 * @param identifiant désignation du ou des articles à  récupérer
 	 * @return la commande dont l'identifiant correspond
 	 */
 	public Commande rechercherCommande(int identifiant) {
@@ -99,7 +99,7 @@ public class CommandeDAO {
 		ResultSet rs = null;
 		Commande retour = null;
 
-		//connexion Ã  la base de donnÃ©es
+		//connexion à  la base de données
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
@@ -108,10 +108,10 @@ public class CommandeDAO {
 
 			ps.setInt(1,identifiant);
 
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ¨re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la première ligne retournée
 			rs=ps.executeQuery();
-			//passe Ã  la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à  la première (et unique) ligne retournée
 
 			while(rs.next()) {
 				Client client = new Client(rs.getInt("Identifiant"),
@@ -135,17 +135,17 @@ public class CommandeDAO {
 	}
 
 	/**
-	 * Modifie une commande en la supprimant puis la rÃ©insÃ©rant dans la base avec les bons paramÃ¨tres
-	 * @param commande commande Ã  modifier
-	 * @param changerDate indique si il faut mettre Ã  jour la date ou pas
-	 * @return nombre de lignes modifiÃ©es
+	 * Modifie une commande en la supprimant puis la réinsérant dans la base avec les bons paramètres
+	 * @param commande commande à  modifier
+	 * @param changerDate indique si il faut mettre à  jour la date ou pas
+	 * @return nombre de lignes modifiées
 	 */
 	public int modifier(Commande commande, boolean changerDate) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
 
-		//connexion Ã  la base de donnÃ©es
+		//connexion à  la base de données
 		try {
 			//tentative de connexion
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
@@ -153,19 +153,19 @@ public class CommandeDAO {
 			/*
 			 * Supprime les articles de la commande
 			 */
-			//prÃ©paration de l'instruction SQL, chaque ? reprÃ©sente une valeur Ã  communiquer dans l'insertion
-			//les getters permettent de rÃ©cupÃ©rer les valeurs des attributs souhaitÃ©s de nouvArticle
+			//préparation de l'instruction SQL, chaque ? représente une valeur à  communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
 			ps = con.prepareStatement("DELETE FROM inclu_article WHERE Commande = ?");
 			ps.setInt(1, commande.getIdentifiant());
 
-			//ExÃ©cution de la requÃªte
+			//Exécution de la requête
 			retour = ps.executeUpdate();
 
 			/*
 			 * Update la commande
 			 */
-			//prÃ©paration de l'instruction SQL, chaque ? reprÃ©sente une valeur Ã  communiquer dans l'insertion
-			//les getters permettent de rÃ©cupÃ©rer les valeurs des attributs souhaitÃ©s de nouvArticle
+			//préparation de l'instruction SQL, chaque ? représente une valeur à  communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
 			if (changerDate) {
 				ps = con.prepareStatement("UPDATE commande SET Client = ?, DateCommande = ? WHERE Identifiant = ?");
 				ps.setInt(1, commande.getClient().getIdentifiant());
@@ -178,7 +178,7 @@ public class CommandeDAO {
 				ps.setInt(2, commande.getIdentifiant());
 			}
 
-			//ExÃ©cution de la requÃªte
+			//Exécution de la requête
 			retour += ps.executeUpdate();
 
 		} catch (Exception ee) {
@@ -194,16 +194,16 @@ public class CommandeDAO {
 	}
 
 	/**
-	 * Supprime la commande passÃ© en paramÃ¨tre de la base de donnÃ©es avec les articles associÃ©s
-	 * @param commande commande Ã  supprimer
-	 * @return nombre de lignes modifiÃ©es
+	 * Supprime la commande passé en paramètre de la base de données avec les articles associés
+	 * @param commande commande à  supprimer
+	 * @return nombre de lignes modifiées
 	 */
 	public int supprimer(Commande commande) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
 
-		//connexion Ã  la base de donnÃ©es
+		//connexion à  la base de données
 		try {
 			//tentative de connexion
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
@@ -211,23 +211,23 @@ public class CommandeDAO {
 			/*
 			 * Supprime les articles de la commande
 			 */
-			//prÃ©paration de l'instruction SQL, chaque ? reprÃ©sente une valeur Ã  communiquer dans l'insertion
-			//les getters permettent de rÃ©cupÃ©rer les valeurs des attributs souhaitÃ©s de nouvArticle
+			//préparation de l'instruction SQL, chaque ? représente une valeur à  communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
 			ps = con.prepareStatement("DELETE FROM inclu_article WHERE Commande = ?");
 			ps.setInt(1, commande.getIdentifiant());
 
-			//ExÃ©cution de la requÃªte
+			//Exécution de la requête
 			retour = ps.executeUpdate();
 
 			/*
 			 * Supprime la commande
 			 */
-			//prÃ©paration de l'instruction SQL, chaque ? reprÃ©sente une valeur Ã  communiquer dans l'insertion
-			//les getters permettent de rÃ©cupÃ©rer les valeurs des attributs souhaitÃ©s de nouvArticle
+			//préparation de l'instruction SQL, chaque ? représente une valeur à  communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
 			ps = con.prepareStatement("DELETE FROM commande WHERE Identifiant = ?");
 			ps.setInt(1, commande.getIdentifiant());
 
-			//ExÃ©cution de la requÃªte
+			//Exécution de la requête
 			retour += ps.executeUpdate();
 
 		} catch (Exception ee) {
@@ -241,7 +241,7 @@ public class CommandeDAO {
 	}
 
 	/**
-	 * Permet de rÃ©cupÃ©rer toutes les commandes stockÃ©es dans la table commande
+	 * Permet de récupérer toutes les commandes stockées dans la table commande
 	 * @return un ArrayList de commandes
 	 */
 	public List<Commande> getListeCommandes() {
@@ -250,14 +250,14 @@ public class CommandeDAO {
 		ResultSet rs=null;
 		List<Commande> retour=new ArrayList<Commande>();
 
-		//connexion Ã  la base de donnÃ©es
+		//connexion à  la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT c.Identifiant idComm, c.DateCommande, cl.* FROM commande c INNER JOIN client cl ON c.Client = cl.Identifiant");
 
-			//on exÃ©cute la requÃªte
+			//on exécute la requête
 			rs=ps.executeQuery();
-			//on parcourt les lignes du rÃ©sultat
+			//on parcourt les lignes du résultat
 			while(rs.next()) {
 				Client client = new Client(rs.getInt("Identifiant"),
 						rs.getString("Nom"),
@@ -284,17 +284,17 @@ public class CommandeDAO {
 		PreparedStatement ps = null;
 		int retour=0;
 
-		//connexion Ã  la base de donnÃ©es
+		//connexion à  la base de données
 		try {
 			//tentative de connexion
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			//prÃ©paration de l'instruction SQL, chaque ? reprÃ©sente une valeur Ã  communiquer dans l'insertion
-			//les getters permettent de rÃ©cupÃ©rer les valeurs des attributs souhaitÃ©s de nouvArticle
+			//préparation de l'instruction SQL, chaque ? représente une valeur à  communiquer dans l'insertion
+			//les getters permettent de récupérer les valeurs des attributs souhaités de nouvArticle
 			ps = con.prepareStatement("UPDATE article SET Stock = Stock - ? WHERE Reference = ?");
 			ps.setInt(1,quantite);
 			ps.setInt(2,article.getReference());
 
-			//ExÃ©cution de la requï¿½te
+			//Exécution de la requï¿½te
 			retour=ps.executeUpdate();
 
 
@@ -309,7 +309,7 @@ public class CommandeDAO {
 	}
 
     /**
-     * Permet de rÃ©cupÃ©rer tous les clients afin de les afficher pour crÃ©er/modifier une commande
+     * Permet de récupérer tous les clients afin de les afficher pour créer/modifier une commande
      * @return tableau de tous les clients
      */
     public Client[] getListeClients() {
@@ -319,14 +319,14 @@ public class CommandeDAO {
 
         List<Client> clients = new ArrayList<Client>();
 
-        //connexion Ã  la base de donnÃ©es
+        //connexion à  la base de données
         try {
             con = DriverManager.getConnection(URL, LOGIN, PASS);
             ps = con.prepareStatement("SELECT * FROM client");
 
-            //on exÃ©cute la requÃªte
+            //on exécute la requête
             rs=ps.executeQuery();
-            //on parcourt les lignes du rÃ©sultat
+            //on parcourt les lignes du résultat
             while(rs.next()) {
                 clients.add(new Client(rs.getInt("Identifiant"),
                         rs.getString("Nom"),
@@ -348,7 +348,7 @@ public class CommandeDAO {
     }
 
     /**
-     * Permet de rÃ©cupÃ©rer tous les articles afin de les afficher pour ajouter un article dans une commande
+     * Permet de récupérer tous les articles afin de les afficher pour ajouter un article dans une commande
      * @return tableau de tous les articles
      */
     public Article[] getListeArticles() {
@@ -358,14 +358,14 @@ public class CommandeDAO {
 
         List<Article> articles = new ArrayList<Article>();
 
-        //connexion Ã  la base de donnÃ©es
+        //connexion à  la base de données
         try {
             con = DriverManager.getConnection(URL, LOGIN, PASS);
             ps = con.prepareStatement("SELECT * FROM article");
 
-            //on exÃ©cute la requÃªte
+            //on exécute la requête
             rs=ps.executeQuery();
-            //on parcourt les lignes du rÃ©sultat
+            //on parcourt les lignes du résultat
             while(rs.next()) {
                 articles.add(new Article(rs.getInt("Reference"),
                         rs.getString("Designation"),
@@ -385,24 +385,24 @@ public class CommandeDAO {
     }
 
 	/**
-	 * Permet de rÃ©cupÃ©rer les articles d'une commande
-	 * @param commande la commande dont les articles sont Ã  rÃ©cupÃ©rer
-	 * @return la commande avec les articles ajoutÃ©s
+	 * Permet de récupérer les articles d'une commande
+	 * @param commande la commande dont les articles sont à  récupérer
+	 * @return la commande avec les articles ajoutés
 	 */
 	public Commande getArticlesCommande(Commande commande) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		//connexion Ã  la base de donnÃ©es
+		//connexion à  la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT a.*, ia.Quantite FROM article a INNER JOIN inclu_article ia ON a.Reference = ia.Article WHERE ia.Commande = ?");
 			ps.setInt(1, commande.getIdentifiant());
 
-			//on exÃ©cute la requÃªte
+			//on exécute la requête
 			rs=ps.executeQuery();
-			//on parcourt les lignes du rÃ©sultat
+			//on parcourt les lignes du résultat
 			while(rs.next()) {
 				Article article = new Article(rs.getInt("Reference"),
 						rs.getString("Designation"),
@@ -424,30 +424,30 @@ public class CommandeDAO {
 	}
 
 	/**
-	 * Ajoute tous les articles de la commande passÃ©e en paramÃ¨tre dans la table inclu_article
-	 * @param commande commande dont les articles doivent Ãªtre ajoutÃ©s Ã  la base
-	 * @return nombre de lignes insÃ©rÃ©es
+	 * Ajoute tous les articles de la commande passée en paramètre dans la table inclu_article
+	 * @param commande commande dont les articles doivent être ajoutés à  la base
+	 * @return nombre de lignes insérées
 	 */
 	private int ajouterArticles(Commande commande) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int retour=0;
 
-		//connexion Ã  la base de donnÃ©es
+		//connexion à  la base de données
 		try {
 			//tentative de connexion
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 
 			// ajoute tous les articles de la commande dans la base
 			for(Map.Entry<Article, Integer> article : commande.getArticles().entrySet()) {
-				//prÃ©paration de l'instruction SQL, chaque ? reprÃ©sente une valeur Ã  communiquer dans l'insertion
-				//les getters permettent de rÃ©cupÃ©rer les valeurs des attributs souhaitÃ©s de nouvCommande
+				//préparation de l'instruction SQL, chaque ? représente une valeur à  communiquer dans l'insertion
+				//les getters permettent de récupérer les valeurs des attributs souhaités de nouvCommande
 				ps = con.prepareStatement("INSERT INTO inclu_article (Commande, Article, Quantite) VALUES (?, ?, ?)");
 				ps.setInt(1, commande.getIdentifiant());
 				ps.setInt(2, article.getKey().getReference());
 				ps.setInt(3, article.getValue());
 
-				//ExÃ©cution de la requÃªte
+				//Exécution de la requête
 				retour += ps.executeUpdate() + reduireStockArticles(article.getKey(), article.getValue());
 			}
 

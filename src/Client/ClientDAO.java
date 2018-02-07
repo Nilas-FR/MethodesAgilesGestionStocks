@@ -27,7 +27,6 @@ public class ClientDAO {
 
 	/**
 	 * Constructeur de la classe
-	 *
 	 */
 	public ClientDAO() {
 		// chargement du pilote de bases de données
@@ -205,7 +204,6 @@ public class ClientDAO {
 
 	/**
 	 * Permet de supprimer le client passé en paramètre de la base de données
-	 * TODO Penser à supprimer les commandes dont le client fait partie
 	 * @param client client à supprimer
 	 * @return nombre de lignes supprimées
 	 */
@@ -238,6 +236,11 @@ public class ClientDAO {
 		return retour;
 	}
 
+	/**
+	 * Supprimer les commandes d'un client avant de supprimer le client lui même (contraintes)
+	 * @param client dont les commandes sont à supprimer
+	 * @return nombre de lignes supprimées
+	 */
 	private int supprimerCommandesClient(Client client) {
         CommandeDAO commandeDAO = new CommandeDAO();
         Connection con = null;
@@ -273,7 +276,7 @@ public class ClientDAO {
 
 	/**
 	 * Permet de récupérer tous les clients stockés dans la table client
-	 * @return une ArrayList de client
+	 * @return une ArrayList de clients
 	 */
 	public List<Client> getListeClients() {
 		Connection con = null;

@@ -7,24 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 
-/**
- * Classe CommandeVue
- * Définit et ouvre une fenetre qui :
- *    - Permet l'insertion d'un nouvel article dans la table article via
- * la saisie des valeurs de désignation, prix et quantité en stock
- *    - Permet l'affichage de tous les articles une zone de texte
- *
- *    Pour aller plus loin :
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/panel.html
- *    Différents types de composants graphiques sont disponibles
- *    http://docs.oracle.com/javase/tutorial/uiswing/components/componentlist.html
- *    Sans oublier la référence d'ouvrage utilisée dans le cours "programmer avec Java"
- *
- * @version 1.2
- * */
-
-
 public class ClientCreerOuModifier extends FenetreCreationModification {
 
     /**

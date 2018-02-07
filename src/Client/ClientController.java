@@ -10,15 +10,23 @@ import variables.Variables;
 
 import javax.swing.*;
 
-public class ClientController extends Controller {
-
+public class ClientController extends Controller
+{
+	/**
+	 * Créé le controleur des clients
+	 * @param PC controleur principal
+	 */
 	public ClientController(PrincipaleController PC) {
 		super(PC);
 		Vue = new ClientVue(this);
 		Model = new ClientModel();
 		Vue.afficherListe(Model.recupererListe(), this);
 	}
-	
+
+	/**
+	 * Cherche les actions à effectuer en fonction du bouton qui a été déclenché
+	 * @param e bouton qui a déclenché l'évènement
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (Variables.Droit < 1) {
 			Message.MessageAlerte("Droit insuffisant", "Vous n'avez pas les droits de modification, veuillez vous connecter.");

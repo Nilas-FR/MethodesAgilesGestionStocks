@@ -7,7 +7,7 @@ import java.util.List;
 public class AccueilModel extends Model {
 
     /**
-     * Gestionnaire de l'accueil (DAO) de la base de donnÃ©es
+     * Gestionnaire de l'accueil (DAO) de la base de données
      */
     private final AccueilDAO accueilDAO;
 
@@ -20,31 +20,31 @@ public class AccueilModel extends Model {
 
 
     public String nombreArticlesStock() {
-        return "QuantitÃ© d'articles en stock : " + accueilDAO.getNombreArticleStock();
+        return "Quantité d'articles en stock : " + accueilDAO.getNombreArticleStock();
     }
 
     public String valeurStock() {
-        return "Valeur totale des articles en stock : " + accueilDAO.getValeurStock() + "â‚¬";
+        return "Valeur totale des articles en stock : " + accueilDAO.getValeurStock() + "€";
     }
 
     public String nombreArticles() {
-        return "Nombre d'articles diffÃ©rents : " + accueilDAO.getNombreArticle();
+        return "Nombre d'articles différents : " + accueilDAO.getNombreArticle();
     }
 
     public String nombreClients() {
-        return "Nombre de clients diffÃ©rents : " + accueilDAO.getNombreClient();
+        return "Nombre de clients différents : " + accueilDAO.getNombreClient();
     }
 
     public String nombreFournisseurs() {
-        return "Nombre de fournisseurs diffÃ©rents : " + accueilDAO.getNombreFournisseur();
+        return "Nombre de fournisseurs différents : " + accueilDAO.getNombreFournisseur();
     }
 
     public String nombreCommandes() {
-        return "Nombre de commandes diffÃ©rents : " + accueilDAO.getNombreCommande();
+        return "Nombre de commandes différents : " + accueilDAO.getNombreCommande();
     }
 
     public String meilleurClient() {
-        return "Meilleur client : " + accueilDAO.getMeilleurClientNomPrenom() + " (" + accueilDAO.getMeilleurClientSommeHT() + " â‚¬ de commandes)";
+        return "Meilleur client : " + accueilDAO.getMeilleurClientNomPrenom() + " (" + accueilDAO.getMeilleurClientSommeHT() + " € de commandes)";
     }
 
     public String articleMieuxVendu() {
@@ -52,7 +52,7 @@ public class AccueilModel extends Model {
     }
 
     public String articleMeilleurGain() {
-        return "Article ayant rapportÃ© le plus : " + accueilDAO.getMeilleurGainArticleNom() + " (" + accueilDAO.getMeilleurArticleGainSomme() + " â‚¬)";
+        return "Article ayant rapporté le plus : " + accueilDAO.getMeilleurGainArticleNom() + " (" + accueilDAO.getMeilleurArticleGainSomme() + " €)";
     }
 
     public String nombreArticlesVendus() {
@@ -60,12 +60,12 @@ public class AccueilModel extends Model {
     }
 
     public String valeurArticlesVendus() {
-        return "Valeur totale des articles vendus : " + accueilDAO.getValeurArticlesVendus() + "â‚¬";
+        return "Valeur totale des articles vendus : " + accueilDAO.getValeurArticlesVendus() + "€";
     }
 
     /**
      * Fonctions inutile pour la page d'accueil
-     * @param object objet Ã  ajouter Ã  la base
+     * @param object objet à  ajouter à  la base
      * @return 0
      */
     @Override

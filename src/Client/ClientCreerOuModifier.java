@@ -15,7 +15,7 @@ public class ClientCreerOuModifier extends FenetreCreationModification {
     private JTextField textFieldNom;
 
     /**
-     * zone de texte pour le  prÃ©nom
+     * zone de texte pour le  prénom
      */
     private JTextField textFieldPrenom;
 
@@ -25,7 +25,7 @@ public class ClientCreerOuModifier extends FenetreCreationModification {
     private JTextField textFieldAdresse;
 
     /**
-     * zone de texte pour le tÃ©lÃ©phone
+     * zone de texte pour le téléphone
      */
     private JTextField textFieldTelephone;
 
@@ -45,17 +45,17 @@ public class ClientCreerOuModifier extends FenetreCreationModification {
     private JLabel labelNom;
 
     /**
-     * label prÃ©nom
+     * label prénom
      */
     private JLabel labelPrenom;
 
     /**
-     * label quantitÃ© en stock
+     * label quantité en stock
      */
     private JLabel labelAdresse;
 
     /**
-     * label tÃ©lÃ©phone
+     * label téléphone
      */
     private JLabel labelTelephone;
 
@@ -65,22 +65,22 @@ public class ClientCreerOuModifier extends FenetreCreationModification {
     private JLabel labelEmail;
 
     /**
-     * Sauvegarde la rÃ©fÃ©rence du client sujet Ã  une modification si il y en a une en cours
+     * Sauvegarde la référence du client sujet à  une modification si il y en a une en cours
      */
     private Client client;
 
     /**
      * Constructeur
-     * DÃ©finit la fenÃªtre et ses composants - affiche la fenÃªtre
-     * Si client est null, on va crÃ©er un nouveau client, sinon on modifie celui passÃ© en paramÃ¨tre
+     * Définit la fenêtre et ses composants - affiche la fenêtre
+     * Si client est null, on va créer un nouveau client, sinon on modifie celui passé en paramètre
      */
     public ClientCreerOuModifier(Client client, ActionListener listener) {
         this.client = client;
 
         //choix du Layout pour ce conteneur
-        //il permet de gÃ©rer la position des Ã©lÃ©ments
-        //il autorisera un retaillage de la fenÃªtre en conservant la prÃ©sentation
-        //BoxLayout permet par exemple de positionner les Ã©lements sur une colonne ( PAGE_AXIS )
+        //il permet de gérer la position des éléments
+        //il autorisera un retaillage de la fenêtre en conservant la présentation
+        //BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         //choix de la couleur pour le conteneur
@@ -92,10 +92,10 @@ public class ClientCreerOuModifier extends FenetreCreationModification {
         textFieldTelephone =new JTextField();
         textFieldAdresse =new JTextField();
         textFieldEmail =new JTextField();
-        labelReference=new JLabel("L'Identifiant sera gÃ©nÃ©rÃ© par la base de donnÃ©es");
+        labelReference=new JLabel("L'Identifiant sera généré par la base de données");
         labelNom =new JLabel("Nom :");
-        labelPrenom =new JLabel("PrÃ©nom :");
-        labelTelephone =new JLabel("TÃ©lÃ©phone :");
+        labelPrenom =new JLabel("Prénom :");
+        labelTelephone =new JLabel("Téléphone :");
         labelAdresse =new JLabel("Adresse :");
         labelEmail =new JLabel("Email :");
 
@@ -149,7 +149,7 @@ public class ClientCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Rempli automatiquement les champs text field si un client est Ã  modifier
+     * Rempli automatiquement les champs text field si un client est à  modifier
      */
     @Override
     protected void remplirChampsModification() {
@@ -161,8 +161,8 @@ public class ClientCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Renvoie le client Ã  modifier avec les nouveaux paramÃ¨tres
-     * @return client sujet Ã  la modification
+     * Renvoie le client à  modifier avec les nouveaux paramètres
+     * @return client sujet à  la modification
      */
     @Override
     public Client validerModification() {
@@ -176,8 +176,8 @@ public class ClientCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Renvoie le nouveau client avec ses paramÃ¨tres
-     * @return client Ã  ajouter
+     * Renvoie le nouveau client avec ses paramètres
+     * @return client à  ajouter
      */
     @Override
     public Client validerCreation() {

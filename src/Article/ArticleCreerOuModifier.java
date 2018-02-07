@@ -47,27 +47,27 @@ public class ArticleCreerOuModifier extends FenetreCreationModification {
     private JLabel labelPu_ht;
 
     /**
-     * label quantitÃ© en stock
+     * label quantité en stock
      */
     private JLabel labelQtestock;
 
     /**
-     * Sauvegarde la rÃ©fÃ©rence de l'article sujet Ã  une modification si il y en a une en cours
+     * Sauvegarde la référence de l'article sujet à  une modification si il y en a une en cours
      */
     private Article article;
 
     /**
      * Constructeur
-     * DÃ©finit la fenÃªtre et ses composants - affiche la fenÃªtre
-     * Si article est null, on va crÃ©er un nouvel article, sinon on modifie celui passÃ© en paramÃ¨tre
+     * Définit la fenêtre et ses composants - affiche la fenêtre
+     * Si article est null, on va créer un nouvel article, sinon on modifie celui passé en paramètre
      */
     public ArticleCreerOuModifier(Article article, ActionListener listener) {
         this.article = article;
 
         //choix du Layout pour ce conteneur
-        //il permet de gÃ©rer la position des Ã©lÃ©ments
-        //il autorisera un retaillage de la fenÃªtre en conservant la prÃ©sentation
-        //BoxLayout permet par exemple de positionner les Ã©lements sur une colonne ( PAGE_AXIS )
+        //il permet de gérer la position des éléments
+        //il autorisera un retaillage de la fenêtre en conservant la présentation
+        //BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         //choix de la couleur pour le conteneur
@@ -78,10 +78,10 @@ public class ArticleCreerOuModifier extends FenetreCreationModification {
         textFieldDesignation=new JTextField();
         textFieldPuHt=new JTextField();
         textFieldQteStock=new JTextField();
-        labelReference=new JLabel("La RÃ©fÃ©rence sera gÃ©nÃ©rÃ©e par la base de donnÃ©es");
-        labelDesignation=new JLabel("DÃ©signation :");
+        labelReference=new JLabel("La Référence sera générée par la base de données");
+        labelDesignation=new JLabel("Désignation :");
         labelPu_ht=new JLabel("Prix unitaire HT :");
-        labelQtestock=new JLabel("QuantitÃ© :");
+        labelQtestock=new JLabel("Quantité :");
 
         //ajout des composants sur le container
         add(labelDesignation);
@@ -124,7 +124,7 @@ public class ArticleCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Rempli automatiquement les champs text field si un article est Ã  modifier
+     * Rempli automatiquement les champs text field si un article est à  modifier
      */
     @Override
     protected void remplirChampsModification() {
@@ -134,8 +134,8 @@ public class ArticleCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Renvoie l'article Ã  modifier avec les nouveaux paramÃ¨tres
-     * @return article sujet Ã  la modification
+     * Renvoie l'article à  modifier avec les nouveaux paramètres
+     * @return article sujet à  la modification
      */
     @Override
     public Article validerModification() {
@@ -147,8 +147,8 @@ public class ArticleCreerOuModifier extends FenetreCreationModification {
     }
 
     /**
-     * Renvoie le nouvel article avec ses paramÃ¨tres
-     * @return article Ã  ajouter
+     * Renvoie le nouvel article avec ses paramètres
+     * @return article à  ajouter
      */
     @Override
     public Article validerCreation() {

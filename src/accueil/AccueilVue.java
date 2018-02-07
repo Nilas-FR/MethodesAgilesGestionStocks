@@ -51,7 +51,7 @@ public class AccueilVue extends Vue {
 	private JLabel articleMieuxVendu;
 
 	/**
-	 * Label de l'article ayant le plus rapportÃ©
+	 * Label de l'article ayant le plus rapporté
 	 */
 	private JLabel articleMeilleurGain;
 
@@ -67,13 +67,13 @@ public class AccueilVue extends Vue {
 
 	/**
 	 * Constructeur
-	 * DÃ©finit la fenÃªtre et ses composants - affiche la fenÃªtre
+	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 */
 	public AccueilVue(ActionListener listener) {
 		//choix du Layout pour ce conteneur
-		//il permet de gÃ©rer la position des Ã©lÃ©ments
-		//il autorisera un retaillage de la fenÃªtre en conservant la prÃ©sentation
-		//BoxLayout permet par exemple de positionner les Ã©lements sur une colonne ( PAGE_AXIS )
+		//il permet de gérer la position des éléments
+		//il autorisera un retaillage de la fenêtre en conservant la présentation
+		//BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		//choix de la couleur pour le conteneur
@@ -136,88 +136,88 @@ public class AccueilVue extends Vue {
 	}
 
 	/**
-	 * Met Ã  jour le champs du nombre d'articles en stock
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs du nombre d'articles en stock
+	 * @param valeur texte à  remplacer
 	 */
 	public void nombreArticlesStock(String valeur) {
 		nombreArticlesStock.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs de la valeur du stock
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs de la valeur du stock
+	 * @param valeur texte à  remplacer
 	 */
 	public void valeurStock(String valeur) {
 		valeurStock.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs du nombre d'articles diffÃ©rents
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs du nombre d'articles différents
+	 * @param valeur texte à  remplacer
 	 */
 	public void nombreArticles(String valeur) {
 		nombreArticles.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs du nombre de clients
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs du nombre de clients
+	 * @param valeur texte à  remplacer
 	 */
 	public void nombreClients(String valeur) {
 		nombreClients.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs du nombre de fournisseurs
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs du nombre de fournisseurs
+	 * @param valeur texte à  remplacer
 	 */
 	public void nombreFournisseurs(String valeur) {
 		nombreFournisseurs.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs du nombre de commandes
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs du nombre de commandes
+	 * @param valeur texte à  remplacer
 	 */
 	public void nombreCommandes(String valeur) {
 		nombreCommandes.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs du meilleur client
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs du meilleur client
+	 * @param valeur texte à  remplacer
 	 */
 	public void meilleurClient(String valeur) {
 		meilleurClient.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs de l'article le mieux vendu
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs de l'article le mieux vendu
+	 * @param valeur texte à  remplacer
 	 */
 	public void articleMieuxVendu(String valeur) {
 		articleMieuxVendu.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs de l'article ayant le meilleur gain
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs de l'article ayant le meilleur gain
+	 * @param valeur texte à  remplacer
 	 */
 	public void articleMeilleurGain(String valeur) {
 		articleMeilleurGain.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs du nombre d'articles vendus
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs du nombre d'articles vendus
+	 * @param valeur texte à  remplacer
 	 */
 	public void nombreArticlesVendus(String valeur) {
 		nombreArticlesVendus.setText(valeur);
 	}
 
 	/**
-	 * Met Ã  jour le champs de la valeur des articles vendus
-	 * @param valeur texte Ã  remplacer
+	 * Met à  jour le champs de la valeur des articles vendus
+	 * @param valeur texte à  remplacer
 	 */
 	public void valeurArticlesVendus(String valeur) {
 		valeurArticlesVendus.setText(valeur);
@@ -225,8 +225,8 @@ public class AccueilVue extends Vue {
 
 	/**
 	 * Inutile, aucune liste dans l'accueil
-	 * @param liste liste Ã  afficher
-	 * @param listener Ã©couteurs Ã  placer sur les boutons de la fenÃªtre
+	 * @param liste liste à  afficher
+	 * @param listener écouteurs à  placer sur les boutons de la fenêtre
 	 */
 	@Override
 	public void afficherListe(List liste, ActionListener listener) { }

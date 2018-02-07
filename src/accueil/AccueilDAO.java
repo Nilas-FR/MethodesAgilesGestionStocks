@@ -15,7 +15,7 @@ public class AccueilDAO {
 	 * Constructeur
 	 */
 	public AccueilDAO() {
-		// chargement du pilote de bases de donnÃ©es
+		// chargement du pilote de bases de données
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -24,7 +24,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re le nombre de client dans la base de donnÃ©es
+	 * Récupère le nombre de client dans la base de données
 	 * @return le nombre de client, -1 en cas d'erreur
 	 */
 	public int getNombreClient() {
@@ -32,14 +32,14 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT COUNT(Identifiant) as nb FROM client");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs = ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if (rs.next())
 				nb = rs.getInt("nb");
 		} catch (Exception ee) {
@@ -63,7 +63,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re le nombre de fournisseur dans la base de donnÃ©es
+	 * Récupère le nombre de fournisseur dans la base de données
 	 * @return le nombre de fournisseur, -1 en cas d'erreur
 	 */
 	public int getNombreFournisseur() {
@@ -71,14 +71,14 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT COUNT(siret) as nb FROM fournisseur");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs = ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if (rs.next())
 				nb = rs.getInt("nb");
 
@@ -103,7 +103,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re le nombre de article dans la base de donnÃ©es
+	 * Récupère le nombre de article dans la base de données
 	 * @return le nombre de article, -1 en cas d'erreur
 	 */
 	public int getNombreArticle() {
@@ -111,14 +111,14 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT COUNT(Reference) as nb FROM article");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs = ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if (rs.next())
 				nb = rs.getInt("nb");
 
@@ -143,7 +143,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re le nombre de article en stock dans la base de donnÃ©es
+	 * Récupère le nombre de article en stock dans la base de données
 	 * @return le nombre de article, -1 en cas d'erreur
 	 */
 	public int getNombreArticleStock() {
@@ -151,14 +151,14 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT SUM(Stock) as nb FROM article");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs = ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if (rs.next())
 				nb = rs.getInt("nb");
 
@@ -183,7 +183,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re la somme des achats dans la base de donnÃ©es
+	 * Récupère la somme des achats dans la base de données
 	 * @return la somme des achats, -1 en cas d'erreur
 	 */
 	public int getValeurArticlesVendus() {
@@ -191,15 +191,15 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT SUM(ia.Quantite * a.PrixUnitaireHT) as nb FROM inclu_article ia " +
 					"INNER JOIN article a ON ia.Article = a.Reference");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs = ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if (rs.next())
 				nb = rs.getInt("nb");
 
@@ -224,7 +224,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re le nombre de article dans la base de donnÃ©es
+	 * Récupère le nombre de article dans la base de données
 	 * @return le nombre de article, -1 en cas d'erreur
 	 */
 	public int getValeurStock() {
@@ -232,14 +232,14 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT SUM(Stock * PrixUnitaireHT) as nb FROM article");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs = ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if (rs.next())
 				nb = rs.getInt("nb");
 
@@ -264,7 +264,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re le nombre de commande dans la base de donnÃ©es
+	 * Récupère le nombre de commande dans la base de données
 	 * @return le nombre de commande, -1 en cas d'erreur
 	 */
 	public int getNombreCommande() {
@@ -272,14 +272,14 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT COUNT(Identifiant) as nb FROM commande");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs = ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if (rs.next())
 				nb = rs.getInt("nb");
 
@@ -304,7 +304,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re la somme des achats dans la base de donnÃ©es
+	 * Récupère la somme des achats dans la base de données
 	 * @return la somme des achats, -1 en cas d'erreur
 	 */
 	public int getNombreArticlesVendus() {
@@ -312,14 +312,14 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT SUM(Quantite) as nb FROM inclu_article");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs = ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if (rs.next())
 				nb = rs.getInt("nb");
 
@@ -344,7 +344,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re le nom de l'article ayant Ã©tÃ© le plus vendu dans la base de donnÃ©es
+	 * Récupère le nom de l'article ayant été le plus vendu dans la base de données
 	 * @return le nom de l'article, null en cas d'erreur
 	 */
 	public String getMeilleurArticleNom() {
@@ -352,16 +352,16 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		String nom = null;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT a.Designation FROM article as a "
 					+ " INNER JOIN inclu_article as ia on ia.Article = a.Reference "
 					+ " GROUP BY ia.Article ORDER BY SUM(ia.Quantite) DESC");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs=ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if(rs.next())
 				nom = rs.getString("Designation");
 
@@ -377,7 +377,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re le nom de l'article ayant rapportÃ© le plus d'argent dans la base de donnÃ©es
+	 * Récupère le nom de l'article ayant rapporté le plus d'argent dans la base de données
 	 * @return le nom de l'article, null en cas d'erreur
 	 */
 	public String getMeilleurGainArticleNom() {
@@ -385,16 +385,16 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		String nom = null;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT a.Designation FROM article as a "
 					+ " INNER JOIN inclu_article as ia on ia.Article = a.Reference "
 					+ " GROUP BY ia.Article ORDER BY SUM(ia.Quantite*a.PrixUnitaireHT) DESC");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs=ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if(rs.next())
 				nom = rs.getString("Designation");
 
@@ -410,22 +410,22 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re la quantitÃ© de l'article ayant Ã©tÃ© le plus vendu dans la base de donnÃ©es
-	 * @return la quantitÃ© de l'article, -1 en cas d'erreur
+	 * Récupère la quantité de l'article ayant été le plus vendu dans la base de données
+	 * @return la quantité de l'article, -1 en cas d'erreur
 	 */
 	public int getMeilleurArticleQuantite() {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT SUM(Quantite) as nb FROM inclu_article GROUP BY ARTICLE ORDER BY SUM(Quantite) DESC");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs=ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if(rs.next())
 				nb = rs.getInt("nb");
 
@@ -441,7 +441,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re la somme d'argent de l'article ayant rapportÃ© le plus d'argent dans la base de donnÃ©es
+	 * Récupère la somme d'argent de l'article ayant rapporté le plus d'argent dans la base de données
 	 * @return la somme d'argent de l'article, -1 en cas d'erreur
 	 */
 	public int getMeilleurArticleGainSomme() {
@@ -449,16 +449,16 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT SUM(ia.Quantite*a.PrixUnitaireHT) as nb FROM article as a "
 					+ " INNER JOIN inclu_article as ia on ia.Article = a.Reference "
 					+ " GROUP BY ia.Article ORDER BY SUM(ia.Quantite*a.PrixUnitaireHT) DESC");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs=ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if(rs.next())
 				nb = rs.getInt("nb");
 
@@ -475,15 +475,15 @@ public class AccueilDAO {
 
 
 	/**
-	 * RÃ©cupÃ¨re le nom / prÃ©nom du meilleur client dans la base de donnÃ©es
-	 * @return le nom / prÃ©nom, -1 en cas d'erreur
+	 * Récupère le nom / prénom du meilleur client dans la base de données
+	 * @return le nom / prénom, -1 en cas d'erreur
 	 */
 	public String getMeilleurClientNomPrenom() {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		String client = null;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement(
@@ -492,10 +492,10 @@ public class AccueilDAO {
 							+ " INNER JOIN inclu_article as ia on c.Identifiant = ia.Commande"
 							+ " INNER JOIN article as a on a.Reference = ia.Article"
 							+ " GROUP BY c.Identifiant,cl.Identifiant ORDER BY SUM(a.PrixUnitaireHT*ia.Quantite) DESC");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs=ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if(rs.next())
 				client = rs.getString("Nom") + " " + rs.getString("Prenom");
 
@@ -511,7 +511,7 @@ public class AccueilDAO {
 	}
 
 	/**
-	 * RÃ©cupÃ¨re la somme des achats du meilleur client dans la base de donnÃ©es
+	 * Récupère la somme des achats du meilleur client dans la base de données
 	 * @return la somme des achats, -1 en cas d'erreur
 	 */
 	public int getMeilleurClientSommeHT() {
@@ -519,7 +519,7 @@ public class AccueilDAO {
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		int nb = -1;
-		//connexion Ã   la base de donnÃ©es
+		//connexion à   la base de données
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement(
@@ -528,10 +528,10 @@ public class AccueilDAO {
 							+ " INNER JOIN commande as c on c.identifiant = ia.Commande"
 							+ " INNER JOIN client as cl on c.Client = cl.Identifiant"
 							+ " GROUP BY c.Identifiant,cl.Identifiant ORDER BY SUM(a.PrixUnitaireHT*ia.Quantite) DESC");
-			//on exÃ©cute la requÃªte
-			//rs contient un pointeur situÃ© juste avant la premiÃ©re ligne retournÃ©e
+			//on exécute la requête
+			//rs contient un pointeur situé juste avant la premiére ligne retournée
 			rs=ps.executeQuery();
-			//passe Ã   la premiÃ¨re (et unique) ligne retournÃ©e
+			//passe à   la première (et unique) ligne retournée
 			if(rs.next())
 				nb = rs.getInt("nb");
 

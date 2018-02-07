@@ -22,17 +22,17 @@ import java.util.List;
 
 /**
  * Classe CommandeVue
- * DÃ©finit et ouvre une fenetre qui :
+ * Définit et ouvre une fenetre qui :
  *    - Permet l'insertion d'un nouvel article dans la table article via
- * la saisie des valeurs de dÃ©signation, prix et quantitÃ© en stock
+ * la saisie des valeurs de désignation, prix et quantité en stock
  *    - Permet l'affichage de tous les articles une zone de texte
  *    
  *    Pour aller plus loin : 
  *    http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html
  *    http://docs.oracle.com/javase/tutorial/uiswing/components/panel.html
- *    DiffÃ©rents types de composants graphiques sont disponibles
+ *    Différents types de composants graphiques sont disponibles
  *    http://docs.oracle.com/javase/tutorial/uiswing/components/componentlist.html
- *    Sans oublier la rÃ©fÃ©rence d'ouvrage utilisÃ©e dans le cours "programmer avec Java"
+ *    Sans oublier la référence d'ouvrage utilisée dans le cours "programmer avec Java"
  *    
  * @version 1.2
  * */
@@ -47,13 +47,13 @@ public class ArticleVue extends Vue {
 
 	/**
 	 * Constructeur
-	 * DÃ©finit la fenÃªtre et ses composants - affiche la fenÃªtre
+	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 */
 	public ArticleVue(ActionListener listener) {
 		//choix du Layout pour ce conteneur
-		//il permet de gÃ©rer la position des Ã©lÃ©ments
-		//il autorisera un retaillage de la fenÃªtre en conservant la prÃ©sentation
-		//BoxLayout permet par exemple de positionner les Ã©lements sur une colonne ( PAGE_AXIS )
+		//il permet de gérer la position des éléments
+		//il autorisera un retaillage de la fenêtre en conservant la présentation
+		//BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		//choix de la couleur pour le conteneur
@@ -95,17 +95,17 @@ public class ArticleVue extends Vue {
 		listeBoutonsModifier = new ArrayList<>();
 		listeBoutonsSupprimer = new ArrayList<>();
 
-		// ajoute les Ã©couteurs sur les boutons
+		// ajoute les écouteurs sur les boutons
 		boutonAjouter.addActionListener(listener);
 		boutonRecherche.addActionListener(listener);
 
-		boutonRecherche.setText("Recherche un article selon sa dÃ©signation");
+		boutonRecherche.setText("Recherche un article selon sa désignation");
 	}
 
 	/**
-	 * Affiche la liste des articles avec leur dÃ©signation, prix et quantitÃ© ainsi qu'un bouton pour les modifier
-	 * @param liste liste des articles Ã  afficher
-	 * @param listener Ã©couteurs Ã  placer sur les boutons de la fenÃªtre
+	 * Affiche la liste des articles avec leur désignation, prix et quantité ainsi qu'un bouton pour les modifier
+	 * @param liste liste des articles à  afficher
+	 * @param listener écouteurs à  placer sur les boutons de la fenêtre
 	 */
 	@Override
 	public void afficherListe(List liste, ActionListener listener) {
@@ -116,17 +116,17 @@ public class ArticleVue extends Vue {
 
 		if (articles.isEmpty()) {
 			pan.setLayout(new GridLayout(1,1));
-			pan.add(creerLabelListe("Il n'y a aucun article dans la base de donnÃ©es"));
+			pan.add(creerLabelListe("Il n'y a aucun article dans la base de données"));
 			return;
 		}
 
 		pan.setLayout(new GridLayout(articles.size()+1,1));
 		pan.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 
-		// crÃ©Ã© tous les labels avec Ã  chaque fois une lineBorder et un texte alignÃ© au centre
-		pan.add(creerLabelListe("DÃ©signation"));
+		// créé tous les labels avec à  chaque fois une lineBorder et un texte aligné au centre
+		pan.add(creerLabelListe("Désignation"));
 		pan.add(creerLabelListe("Prix/u HT"));
-		pan.add(creerLabelListe("QuantitÃ©"));
+		pan.add(creerLabelListe("Quantité"));
 		pan.add(creerLabelListe("Actions"));
 
 		for (Article article : articles) {
@@ -149,7 +149,7 @@ public class ArticleVue extends Vue {
 	}
 
 	/**
-	 * Ajoute des Ã©couteurs sur les boutons de la liste des articles
+	 * Ajoute des écouteurs sur les boutons de la liste des articles
 	 * @return valeur du champ de recherche
 	 */
 	public String getStringRecherche() {

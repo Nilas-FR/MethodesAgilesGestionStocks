@@ -19,13 +19,13 @@ public class ClientVue extends Vue {
 
 	/**
 	 * Constructeur
-	 * DÃ©finit la fenÃªtre et ses composants - affiche la fenÃªtre
+	 * Définit la fenêtre et ses composants - affiche la fenêtre
 	 */
 	public ClientVue(ActionListener listener) {
 		//choix du Layout pour ce conteneur
-		//il permet de gÃ©rer la position des Ã©lÃ©ments
-		//il autorisera un retaillage de la fenÃªtre en conservant la prÃ©sentation
-		//BoxLayout permet par exemple de positionner les Ã©lements sur une colonne ( PAGE_AXIS )
+		//il permet de gérer la position des éléments
+		//il autorisera un retaillage de la fenêtre en conservant la présentation
+		//BoxLayout permet par exemple de positionner les élements sur une colonne ( PAGE_AXIS )
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		//choix de la couleur pour le conteneur
@@ -66,7 +66,7 @@ public class ClientVue extends Vue {
 		listeBoutonsModifier = new ArrayList<>();
 		listeBoutonsSupprimer = new ArrayList<>();
 
-		// ajoute les Ã©couteurs sur les boutons
+		// ajoute les écouteurs sur les boutons
 		boutonAjouter.addActionListener(listener);
 		boutonRecherche.addActionListener(listener);
 
@@ -74,9 +74,9 @@ public class ClientVue extends Vue {
 	}
 
 	/**
-	 * Affiche la liste des clients avec leur paramÃ¨tres ainsi qu'un bouton pour les modifier
-	 * @param liste liste des clients Ã  afficher
-	 * @param listener Ã©couteurs Ã  placer sur les boutons de la fenÃªtre
+	 * Affiche la liste des clients avec leur paramètres ainsi qu'un bouton pour les modifier
+	 * @param liste liste des clients à  afficher
+	 * @param listener écouteurs à  placer sur les boutons de la fenêtre
 	 */
 	@Override
 	public void afficherListe(List liste, ActionListener listener) {
@@ -87,18 +87,18 @@ public class ClientVue extends Vue {
 
 		if (clients.isEmpty()) {
 			pan.setLayout(new GridLayout(1,1));
-			pan.add(creerLabelListe("Il n'y a aucun client dans la base de donnÃ©es"));
+			pan.add(creerLabelListe("Il n'y a aucun client dans la base de données"));
 			return;
 		}
 
 		pan.setLayout(new GridLayout(clients.size()+1,1));
 		pan.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 
-		// crÃ©Ã© tous les labels avec Ã  chaque fois une lineBorder et un texte alignÃ© au centre
+		// créé tous les labels avec à  chaque fois une lineBorder et un texte aligné au centre
 		pan.add(creerLabelListe("Nom"));
-		pan.add(creerLabelListe("PrÃ©nom"));
+		pan.add(creerLabelListe("Prénom"));
 		pan.add(creerLabelListe("Adresse"));
-		pan.add(creerLabelListe("TÃ©lÃ©phone"));
+		pan.add(creerLabelListe("Téléphone"));
 		pan.add(creerLabelListe("Email"));
 		pan.add(creerLabelListe("Actions"));
 
